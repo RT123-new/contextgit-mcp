@@ -1,0 +1,634 @@
+{
+  "dimension": "D2/D3 retrieval",
+  "n_needles": 25,
+  "recall_at_1": 1.0,
+  "recall_at_5": 1.0,
+  "MRR": 1.0,
+  "precision_at_5": 0.2,
+  "no_answer_clean_rate": 0.0,
+  "synonym_mismatch_probe": {
+    "id": "syn",
+    "entity": "(synonym)",
+    "expected_ref": "wiki:UploadLimit Memory",
+    "query": "what is the biggest file I can send",
+    "kind": "synonym_mismatch",
+    "rank": 6,
+    "found_at5": false,
+    "selected_refs": [
+      "event:default_00279_user_21e45296",
+      "event:default_00277_user_18646558",
+      "event:default_00275_user_d7ef2300",
+      "event:default_00273_user_5f64be76",
+      "event:default_00271_user_d3d2e3ba"
+    ]
+  },
+  "per_needle": [
+    {
+      "id": 0,
+      "entity": "Nebulon00",
+      "expected_ref": "wiki:Needle00 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon00 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle00 Memory",
+        "event:remember_00251_user_846f68b4",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 1,
+      "entity": "Nebulon01",
+      "expected_ref": "wiki:Needle01 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon01 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle01 Memory",
+        "event:remember_00252_user_c922f6dd",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 2,
+      "entity": "Nebulon02",
+      "expected_ref": "wiki:Needle02 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon02 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle02 Memory",
+        "event:remember_00253_user_4e5af31e",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 3,
+      "entity": "Nebulon03",
+      "expected_ref": "wiki:Needle03 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon03 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle03 Memory",
+        "event:remember_00254_user_da9e6358",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 4,
+      "entity": "Nebulon04",
+      "expected_ref": "wiki:Needle04 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon04 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle04 Memory",
+        "event:remember_00255_user_b46182e2",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 5,
+      "entity": "Nebulon05",
+      "expected_ref": "wiki:Needle05 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon05 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle05 Memory",
+        "event:remember_00256_user_36612b7c",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 6,
+      "entity": "Nebulon06",
+      "expected_ref": "wiki:Needle06 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon06 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle06 Memory",
+        "event:remember_00257_user_264b6be5",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 7,
+      "entity": "Nebulon07",
+      "expected_ref": "wiki:Needle07 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon07 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle07 Memory",
+        "event:remember_00258_user_4b2d9bf6",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 8,
+      "entity": "Nebulon08",
+      "expected_ref": "wiki:Needle08 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon08 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle08 Memory",
+        "event:remember_00259_user_3bf68962",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 9,
+      "entity": "Nebulon09",
+      "expected_ref": "wiki:Needle09 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon09 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle09 Memory",
+        "event:remember_00260_user_f9c9806e",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 10,
+      "entity": "Nebulon10",
+      "expected_ref": "wiki:Needle10 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon10 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle10 Memory",
+        "event:remember_00261_user_6ed2cf1c",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 11,
+      "entity": "Nebulon11",
+      "expected_ref": "wiki:Needle11 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon11 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle11 Memory",
+        "event:remember_00262_user_2d98c784",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 12,
+      "entity": "Nebulon12",
+      "expected_ref": "wiki:Needle12 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon12 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle12 Memory",
+        "event:remember_00263_user_5307ff35",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 13,
+      "entity": "Nebulon13",
+      "expected_ref": "wiki:Needle13 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon13 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle13 Memory",
+        "event:remember_00264_user_47ac23aa",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 14,
+      "entity": "Nebulon14",
+      "expected_ref": "wiki:Needle14 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon14 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle14 Memory",
+        "event:remember_00265_user_e0001f7f",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 15,
+      "entity": "Nebulon15",
+      "expected_ref": "wiki:Needle15 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon15 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle15 Memory",
+        "event:remember_00266_user_fef076c5",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 16,
+      "entity": "Nebulon16",
+      "expected_ref": "wiki:Needle16 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon16 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle16 Memory",
+        "event:remember_00267_user_b5b72d2e",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 17,
+      "entity": "Nebulon17",
+      "expected_ref": "wiki:Needle17 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon17 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle17 Memory",
+        "event:remember_00268_user_43e24274",
+        "wiki:Needle19 Memory",
+        "wiki:Needle18 Memory",
+        "wiki:Needle16 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 18,
+      "entity": "Nebulon18",
+      "expected_ref": "wiki:Needle18 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon18 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle18 Memory",
+        "event:remember_00269_user_9b9fbb0e",
+        "wiki:Needle19 Memory",
+        "wiki:Needle17 Memory",
+        "wiki:Needle16 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 19,
+      "entity": "Nebulon19",
+      "expected_ref": "wiki:Needle19 Memory",
+      "kind": "wiki",
+      "query": "Tell me about the Nebulon19 configuration setting",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "wiki:Needle19 Memory",
+        "event:remember_00270_user_e5a458ab",
+        "wiki:Needle18 Memory",
+        "wiki:Needle17 Memory",
+        "wiki:Needle16 Memory"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 20,
+      "entity": "Pulsar20",
+      "expected_ref": "event:default_00271_user_d3d2e3ba",
+      "kind": "event",
+      "query": "What is the Pulsar20 timeout value",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "event:default_00271_user_d3d2e3ba",
+        "event:default_00279_user_21e45296",
+        "event:default_00277_user_18646558",
+        "event:default_00275_user_d7ef2300",
+        "event:default_00273_user_5f64be76"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 21,
+      "entity": "Pulsar21",
+      "expected_ref": "event:default_00273_user_5f64be76",
+      "kind": "event",
+      "query": "What is the Pulsar21 timeout value",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "event:default_00273_user_5f64be76",
+        "event:default_00279_user_21e45296",
+        "event:default_00277_user_18646558",
+        "event:default_00275_user_d7ef2300",
+        "event:default_00271_user_d3d2e3ba"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 22,
+      "entity": "Pulsar22",
+      "expected_ref": "event:default_00275_user_d7ef2300",
+      "kind": "event",
+      "query": "What is the Pulsar22 timeout value",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "event:default_00275_user_d7ef2300",
+        "event:default_00279_user_21e45296",
+        "event:default_00277_user_18646558",
+        "event:default_00273_user_5f64be76",
+        "event:default_00271_user_d3d2e3ba"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 23,
+      "entity": "Pulsar23",
+      "expected_ref": "event:default_00277_user_18646558",
+      "kind": "event",
+      "query": "What is the Pulsar23 timeout value",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "event:default_00277_user_18646558",
+        "event:default_00279_user_21e45296",
+        "event:default_00275_user_d7ef2300",
+        "event:default_00273_user_5f64be76",
+        "event:default_00271_user_d3d2e3ba"
+      ],
+      "n_selected": 12
+    },
+    {
+      "id": 24,
+      "entity": "Pulsar24",
+      "expected_ref": "event:default_00279_user_21e45296",
+      "kind": "event",
+      "query": "What is the Pulsar24 timeout value",
+      "rank": 1,
+      "found_at5": true,
+      "found_at1": true,
+      "selected_refs": [
+        "event:default_00279_user_21e45296",
+        "event:default_00277_user_18646558",
+        "event:default_00275_user_d7ef2300",
+        "event:default_00273_user_5f64be76",
+        "event:default_00271_user_d3d2e3ba"
+      ],
+      "n_selected": 12
+    }
+  ],
+  "no_answer_detail": [
+    {
+      "query": "What did we decide about Quixotron0 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron1 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron2 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron3 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron4 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron5 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron6 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron7 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron8 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron9 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron10 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron11 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron12 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron13 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    },
+    {
+      "query": "What did we decide about Quixotron14 the hyperloop sprocket",
+      "n_selected": 10,
+      "top_refs": [
+        "event:default_00175_user_7bafc797",
+        "event:default_00095_user_c773ffb4",
+        "event:default_00209_user_7ce8e082"
+      ],
+      "top_score": 0.544288
+    }
+  ],
+  "pass_recall5_ge_0.8": true,
+  "pass_mrr_ge_0.6": true,
+  "pass_precision5_ge_0.6": false,
+  "pass_clean_rate_ge_0.9": false,
+  "_elapsed_s": 6.3
+}

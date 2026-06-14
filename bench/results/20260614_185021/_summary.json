@@ -1,0 +1,57 @@
+{
+  "run_dir": "/Users/regtroka/Downloads/contextgit-mcp/bench/results/20260614_185021",
+  "token_counter": "tiktoken_o200k_base",
+  "contextgit_version": "0.1.0",
+  "dims": {
+    "d1": {
+      "ok": true,
+      "elapsed_s": 22.9,
+      "file": "d1.json"
+    },
+    "d2": {
+      "ok": true,
+      "elapsed_s": 6.3,
+      "file": "d2.json"
+    },
+    "d4": {
+      "ok": true,
+      "elapsed_s": 1.2,
+      "file": "d4.json"
+    },
+    "d5": {
+      "ok": true,
+      "elapsed_s": 0.0,
+      "file": "d5.json"
+    },
+    "d6": {
+      "ok": true,
+      "elapsed_s": 0.4,
+      "file": "d6.json"
+    },
+    "d7": {
+      "ok": true,
+      "elapsed_s": 161.5,
+      "file": "d7.json"
+    },
+    "d8": {
+      "ok": true,
+      "elapsed_s": 42.9,
+      "file": "d8.json"
+    },
+    "d9": {
+      "ok": true,
+      "elapsed_s": 0.9,
+      "file": "d9.json"
+    },
+    "d10": {
+      "ok": true,
+      "elapsed_s": 1.0,
+      "file": "d10.json"
+    },
+    "d11": {
+      "ok": true,
+      "elapsed_s": 1.0,
+      "file": "d11.json"
+    }
+  }
+}

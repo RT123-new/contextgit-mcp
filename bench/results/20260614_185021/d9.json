@@ -1,0 +1,10 @@
+{
+  "dimension": "D9 hallucination",
+  "patch_claims_checked": 60,
+  "patch_claims_traceable_to_store": 60,
+  "fabrication_rate": 0.0,
+  "untraceable_examples": [],
+  "assistant_misstatement_resurfaces_as_context": true,
+  "note": "Summaries are mechanical truncations of stored text -> no fabrication by construction. BUT commit_turn journals the assistant answer too, so a wrong assistant claim is memory-eligible and can resurface as 'context' (propagation, not fabrication).",
+  "_elapsed_s": 0.9
+}

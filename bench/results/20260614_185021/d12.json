@@ -1,0 +1,98 @@
+{
+  "dimension": "D12 integration_smoke",
+  "store_dir": "results/20260614_184035/stores/d12_integration",
+  "query": "I'm starting a new Atlas feature. Which database should I use, and why?",
+  "store_status": {
+    "events": 504,
+    "wiki_pages": 1,
+    "full_history_tokens": 16242,
+    "budget_tokens": 700,
+    "token_counter": "tiktoken_o200k_base"
+  },
+  "prepare_context_patch": "Context Merge Patch:\n- conversation_id: newsession\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(504), about(251), answer(251), question(251), handle(246)\nSelected Context:\n- [wiki:Conversation Memory] wiki; score=0.757; Conversation Memory - Important decision: for the Atlas service we are migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping us at 1...\n- [event:projectwork_00377_user_cc0082c5] event; score=0.736; Important decision: for the Atlas service we are migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping us at 100 rps. Use MySQL. Rem...\n- [event:projectwork_00499_user_82ab36e3] event; score=0.471; Question 60 about Atlas constraints place and constraints endpoint database case tenant discussed place handle we how constraints rate would endpoint we\n- [event:projectwork_00500_assistant_11ede685] event; score=0.454; Answer 60: Atlas tenant team tenant this pipeline limit the the database have case would should migration rate place limit rate limit deploy rate approach given endpoint right d...\n- [event:projectwork_00489_user_e77d2ddb] event; score=0.433; Question 55 about Atlas deploy place database the tenant database migration migration pipeline schema deploy given we what limit pipeline this have\n- [event:projectwork_00479_user_f6ee60d3] event; score=0.411; Question 50 about Atlas case tenant tenant in should the deploy the place have how we system limit schema database constraints migration\n- [event:projectwork_00459_user_8b0102fc] event; score=0.406; Question 40 about Atlas we endpoint given the deploy the be constraints and rate deploy how tenant database team should be tenant\n- [event:projectwork_00490_assistant_7e1045a0] event; score=0.403; Answer 55: Atlas constraints constraints pipeline team limit right schema tenant team what would database rate this team case have deploy schema migration case migration given t...\n- [event:projectwork_00480_assistant_feda8d12] event; score=0.403; Answer 50: Atlas database have team approach would should right deploy schema approach how rate endpoint constraints what rate pipeline handle rate the rate database we in schem...\nProvenance: wiki:Conversation Memory, event:projectwork_00377_user_cc0082c5, event:projectwork_00499_user_82ab36e3, event:projectwork_00500_assistant_11ede685, event:projectwork_00489_user_e77d2ddb, event:projectwork_00479_user_f6ee60d3, event:projectwork_00459_user_8b0102fc, event:projectwork_00490_assistant_7e1045a0, event:projectwork_00480_assistant_feda8d12",
+  "patch_tokens": 657,
+  "patch_selected": [
+    {
+      "ref": "wiki:Conversation Memory",
+      "score": 0.756922,
+      "tokens": 64,
+      "summary": "Conversation Memory - Important decision: for the Atlas service we are migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping us at 1..."
+    },
+    {
+      "ref": "event:projectwork_00377_user_cc0082c5",
+      "score": 0.736301,
+      "tokens": 60,
+      "summary": "Important decision: for the Atlas service we are migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping us at 100 rps. Use MySQL. Rem..."
+    },
+    {
+      "ref": "event:projectwork_00499_user_82ab36e3",
+      "score": 0.47073,
+      "tokens": 23,
+      "summary": "Question 60 about Atlas constraints place and constraints endpoint database case tenant discussed place handle we how constraints rate would endpoint we"
+    },
+    {
+      "ref": "event:projectwork_00500_assistant_11ede685",
+      "score": 0.453893,
+      "tokens": 39,
+      "summary": "Answer 60: Atlas tenant team tenant this pipeline limit the the database have case would should migration rate place limit rate limit deploy rate approach given endpoint right d..."
+    },
+    {
+      "ref": "event:projectwork_00489_user_e77d2ddb",
+      "score": 0.43292,
+      "tokens": 23,
+      "summary": "Question 55 about Atlas deploy place database the tenant database migration migration pipeline schema deploy given we what limit pipeline this have"
+    },
+    {
+      "ref": "event:projectwork_00479_user_f6ee60d3",
+      "score": 0.410791,
+      "tokens": 23,
+      "summary": "Question 50 about Atlas case tenant tenant in should the deploy the place have how we system limit schema database constraints migration"
+    },
+    {
+      "ref": "event:projectwork_00459_user_8b0102fc",
+      "score": 0.405527,
+      "tokens": 23,
+      "summary": "Question 40 about Atlas we endpoint given the deploy the be constraints and rate deploy how tenant database team should be tenant"
+    },
+    {
+      "ref": "event:projectwork_00490_assistant_7e1045a0",
+      "score": 0.403452,
+      "tokens": 39,
+      "summary": "Answer 55: Atlas constraints constraints pipeline team limit right schema tenant team what would database rate this team case have deploy schema migration case migration given t..."
+    },
+    {
+      "ref": "event:projectwork_00480_assistant_feda8d12",
+      "score": 0.402558,
+      "tokens": 39,
+      "summary": "Answer 50: Atlas database have team approach would should right deploy schema approach how rate endpoint constraints what rate pipeline handle rate the rate database we in schem..."
+    }
+  ],
+  "patch_surfaces_mysql_decision": true,
+  "message_stack_without_patch": [
+    {
+      "role": "system",
+      "content": "You are a helpful engineering assistant. Answer concisely using any durable project context provided."
+    },
+    {
+      "role": "user",
+      "content": "I'm starting a new Atlas feature. Which database should I use, and why?"
+    }
+  ],
+  "message_stack_with_patch": [
+    {
+      "role": "system",
+      "content": "You are a helpful engineering assistant. Answer concisely using any durable project context provided.\n\n[Durable project memory]\nContext Merge Patch:\n- conversation_id: newsession\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(504), about(251), answer(251), question(251), handle(246)\nSelected Context:\n- [wiki:Conversation Memory] wiki; score=0.757; Conversation Memory - Important decision: for the Atlas service we are migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping us at 1...\n- [event:projectwork_00377_user_cc0082c5] event; score=0.736; Important decision: for the Atlas service we are migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping us at 100 rps. Use MySQL. Rem...\n- [event:projectwork_00499_user_82ab36e3] event; score=0.471; Question 60 about Atlas constraints place and constraints endpoint database case tenant discussed place handle we how constraints rate would endpoint we\n- [event:projectwork_00500_assistant_11ede685] event; score=0.454; Answer 60: Atlas tenant team tenant this pipeline limit the the database have case would should migration rate place limit rate limit deploy rate approach given endpoint right d...\n- [event:projectwork_00489_user_e77d2ddb] event; score=0.433; Question 55 about Atlas deploy place database the tenant database migration migration pipeline schema deploy given we what limit pipeline this have\n- [event:projectwork_00479_user_f6ee60d3] event; score=0.411; Question 50 about Atlas case tenant tenant in should the deploy the place have how we system limit schema database constraints migration\n- [event:projectwork_00459_user_8b0102fc] event; score=0.406; Question 40 about Atlas we endpoint given the deploy the be constraints and rate deploy how tenant database team should be tenant\n- [event:projectwork_00490_assistant_7e1045a0] event; score=0.403; Answer 55: Atlas constraints constraints pipeline team limit right schema tenant team what would database rate this team case have deploy schema migration case migration given t...\n- [event:projectwork_00480_assistant_feda8d12] event; score=0.403; Answer 50: Atlas database have team approach would should right deploy schema approach how rate endpoint constraints what rate pipeline handle rate the rate database we in schem...\nProvenance: wiki:Conversation Memory, event:projectwork_00377_user_cc0082c5, event:projectwork_00499_user_82ab36e3, event:projectwork_00500_assistant_11ede685, event:projectwork_00489_user_e77d2ddb, event:projectwork_00479_user_f6ee60d3, event:projectwork_00459_user_8b0102fc, event:projectwork_00490_assistant_7e1045a0, event:projectwork_00480_assistant_feda8d12"
+    },
+    {
+      "role": "user",
+      "content": "I'm starting a new Atlas feature. Which database should I use, and why?"
+    }
+  ],
+  "tokens": {
+    "without_patch_input": 34,
+    "with_patch_input": 697,
+    "patch_overhead": 663,
+    "if_full_journal_injected_instead": 16242
+  },
+  "sdk_cost_estimate_note": "An Anthropic-SDK confirmation = 2 messages.create calls (with/without). Input ~697 + ~34 tokens; output a few hundred each. On Opus pricing that is well under 1 US cent total. Mock run is sufficient; SDK run only needed if Reg wants a real-model confirmation."
+}

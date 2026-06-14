@@ -1,0 +1,23 @@
+{
+  "dimension": "D10 concurrency",
+  "concurrent_commits": {
+    "writers": 3,
+    "turns_each": 20,
+    "expected_events": 120,
+    "actual_events": 120,
+    "no_lost_events": true,
+    "duplicate_event_ids": 40,
+    "store_readable": true
+  },
+  "concurrent_remember_same_page": {
+    "writers": 3,
+    "facts_each": 20,
+    "expected_mutations": 60,
+    "actual_mutations": 60,
+    "duplicate_mutation_ids": 0,
+    "wiki_version_number_collisions": 40,
+    "store_reopens": true,
+    "error": null
+  },
+  "_elapsed_s": 1.0
+}

@@ -1,0 +1,43 @@
+{
+  "dimension": "D8 storage",
+  "rows": [
+    {
+      "events": 100,
+      "total_bytes": 46398,
+      "events_jsonl_bytes": 46396,
+      "bytes_per_event": 464.0
+    },
+    {
+      "events": 1000,
+      "total_bytes": 457645,
+      "events_jsonl_bytes": 457643,
+      "bytes_per_event": 457.6
+    },
+    {
+      "events": 10000,
+      "total_bytes": 4579765,
+      "events_jsonl_bytes": 4579763,
+      "bytes_per_event": 458.0
+    }
+  ],
+  "hot_page_growth": [
+    {
+      "bullets": 50,
+      "wiki_versions_bytes": 144879
+    },
+    {
+      "bullets": 100,
+      "wiki_versions_bytes": 529730
+    },
+    {
+      "bullets": 150,
+      "wiki_versions_bytes": 1155955
+    },
+    {
+      "bullets": 200,
+      "wiki_versions_bytes": 2024680
+    }
+  ],
+  "note": "wiki_versions.jsonl rewrites the entire (growing) page content on every save, so a single hot page grows ~quadratically in bullet count.",
+  "_elapsed_s": 42.9
+}

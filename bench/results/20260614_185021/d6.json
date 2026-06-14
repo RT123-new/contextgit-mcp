@@ -1,0 +1,17 @@
+{
+  "dimension": "D6 durability",
+  "kill9_midwrite": {
+    "store_reopens": true,
+    "reopen_error": null,
+    "events_recovered": 11,
+    "note": "append-only + O_APPEND: at worst the last in-flight line is lost/torn."
+  },
+  "torn_line_injection": {
+    "store_still_readable": false,
+    "read_error": "JSONDecodeError: Unterminated string starting at: line 1 column 43 (char 42)",
+    "events_before_corruption": 4,
+    "events_readable_after": null,
+    "severity": "BLOCKER: one torn line makes the whole store unreadable"
+  },
+  "_elapsed_s": 0.4
+}
