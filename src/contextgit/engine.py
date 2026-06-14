@@ -309,7 +309,10 @@ class ContextGit:
                 excluded_count=len(compilation.excluded_context),
                 token_source=token_count_source(),
             )
-        saved = max(0, full_tokens - compilation.estimated_tokens)
+        # Honest accounting: a patch can cost MORE than the full history (e.g. a
+        # small store, or a budget-overflow call) -- report the real net, which may
+        # be negative, instead of clamping losses to zero.
+        saved = full_tokens - compilation.estimated_tokens
         return {
             "context": compilation.rendered_patch,
             "estimated_tokens": compilation.estimated_tokens,

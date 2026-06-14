@@ -493,7 +493,28 @@ class ContextCompiler:
             include_full_history=self.config.include_full_history,
             all_events=segmented,
         )
+        # Graceful degradation: the fully-assembled patch can exceed the budget
+        # even though every greedy per-item check passed, because the final render
+        # also includes the "Avoid Stale/Superseded" block (for stale items ranked
+        # below the greedy cutoff) and the full provenance line -- neither of which
+        # the per-item trial render fully accounted for. Rather than discard ALL
+        # context (which left users with an empty patch on the default budget once
+        # a store accumulated stale facts), drop the lowest-scoring selected items
+        # one at a time until the patch fits.
+        while selected and estimate_tokens(patch) > effective_budget:
+            dropped = selected.pop()  # selected is in descending-score order
+            excluded.append(dropped.model_copy(update={"selected": False, "exclusion_reasons": ["over_token_budget"]}))
+            patch = self._render_patch(
+                conversation_id=conversation_id,
+                selected=selected,
+                excluded=excluded,
+                topic_index=topic_index,
+                include_full_history=self.config.include_full_history,
+                all_events=segmented,
+            )
         if estimate_tokens(patch) > effective_budget:
+            # Only now -- when even an empty selection's boilerplate exceeds the
+            # budget (budget set far too small) -- fall back to the tiny placeholder.
             selected = []
             patch = self._render_patch(
                 conversation_id=conversation_id,
