@@ -88,8 +88,15 @@ All three are *cheap to fix upstream* (guard JSON line reads; cache/incrementali
 
 ---
 
+## Per-project storage (Reg's chosen setup, 2026-06-14)
+Reg chose **per-project stores** (the recommended option). Verified behavior:
+- `contextgit init` in a project root creates a `.contextgit/` there; store resolution **walks up from the working directory**, so a server (or CLI) launched anywhere inside the project uses that project's store. Two projects stay fully isolated (confirmed: project A had its fact, project B was empty).
+- **Claude Code / Cowork** launch the MCP server with the *project* as its working directory → they auto-use that project's `.contextgit/` with **no extra config**. Just run `/Users/regtroka/.local/bin/contextgit init` once in each project where you want isolated memory.
+- **Claude Desktop** launches the server from a non-project directory, so it keeps using the **global** `~/.contextgit/store` for ad-hoc chats. That's fine for light use. To bind Desktop to a specific project store, set `CONTEXTGIT_DIR` (or `--store <path>`) in its config entry — say the word and I'll wire it.
+- Keep each project store under ~1,000 events and `contextgit export` occasionally (torn-line insurance).
+
 ## Open questions (only Reg can decide)
-1. **Primary surface?** If it's Claude Desktop, the current global-store wiring is fine for light use; if you bounce between Desktop/Code/Cowork, switch to **per-project stores** to dodge the concurrency issue.
+1. **Claude Desktop store:** keep it on the global store (current, fine for light ad-hoc use), or bind it to a specific project via `CONTEXTGIT_DIR`? (Claude Code/Cowork are already per-project.)
 2. **Real-model confirmation — DONE (2026-06-14, with your go-ahead).** Two blind Claude calls confirmed the patch flips a wrong default (Postgres) into the correct project answer (MySQL 8); see strength #1 / `bench/results/20260614_185021/d12b_realmodel.json`. No standalone API key exists in this environment, so it ran via authenticated-session subagents (a few cents). No open question remains here.
 3. **Store-size discipline.** Are you comfortable archiving/rotating context periodically (or scoping per project) to stay under the latency knee? If you want one big lifelong store, the compile path needs optimizing first.
 4. **Report upstream?** The torn-line and concurrency issues are small, well-localized fixes. Want these filed as issues on your `RT123-new/contextgit-mcp` fork (not the upstream `contextgit/contextgit`)?
