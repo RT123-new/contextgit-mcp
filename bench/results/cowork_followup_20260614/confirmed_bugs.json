@@ -1,0 +1,18 @@
+{
+  "date": "2026-06-14",
+  "source": "reproductions of bugs surfaced by Reg's live Cowork run",
+  "bug_empty_patch_default_budget": {
+    "confirmed": true,
+    "repro": "store = 9 relevant longish facts + 8 stale (mark_stale'd) facts; query 'describe the schema tables design'; budget=700 (default)",
+    "result": "patch returned EMPTY ('No selected context fits the configured budget'), 0 selected, 20 tokens, despite 9 in-budget relevant facts",
+    "root_cause": "compiler.compile_context final-render path: after greedy selection (which stays under budget), it re-renders with the FULL excluded list; stale items ranked below the greedy cutoff inflate the 'Avoid Stale/Superseded' block that the greedy trials never counted; if that final patch exceeds budget it sets selected=[] and returns force_tiny placeholder -- all-or-nothing, no graceful degradation. Worsens as a store accumulates stale facts.",
+    "file": "src/contextgit/core/compiler.py ~lines 488-506"
+  },
+  "bug_one_sided_savings_metric": {
+    "confirmed": true,
+    "repro": "tiny store (2 short facts, full_history=8 tok); 10 prepare calls with unrelated queries",
+    "result": "each call patch=201 tok vs full_history=8 tok (25x MORE); reported savings_pct=0.0, saved_tokens_total=0; TRUE net = -1930 tokens (spent far more than sending full history)",
+    "root_cause": "saved_tokens = max(0, full_history - patch) per call, so a call that costs MORE than full history is recorded as 0 saved, never negative. Headline savings_pct = sum(saved)/sum(full) counts only wins; the meter cannot report a net loss. On small stores or empty-patch calls every call is a loss the meter hides.",
+    "file": "src/contextgit/engine.py prepare() saved=max(0,...) + usage.py summary()"
+  }
+}

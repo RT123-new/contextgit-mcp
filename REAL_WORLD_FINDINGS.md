@@ -94,3 +94,25 @@ Fed the **real** hard-negative patches (stale ranked #1, current #2, both unflag
 These do **not** flip the overall verdict (**viable-with-caveats**) but they **sharpen it**: contextgit is best treated as a **lexical recall aid that the model must sanity-check**, not as an authoritative source of current truth. Use it where (a) queries share vocabulary with stored facts, (b) you actively `mark_stale` superseded facts, (c) facts are short/atomic (not compound), (d) the store is trusted and single-writer, and (e) the model is strong enough to disambiguate contradictions. The new blockers/risks to fix upstream: noise-word false-negatives, compound-fact truncation, and the unauthenticated durable-marker write primitive.
 
 See `COWORK_TEST_PROMPTS.md` for the interactive (closed-loop, real-Claude) tests to run on ResearchLoop in Cowork.
+
+---
+
+## Cowork closed-loop results (Reg ran these live on ResearchLoop, 2026-06-14)
+
+The interactive tests a script can't run — with two **new bugs** that I then reproduced deterministically (`bench/results/cowork_followup_20260614/confirmed_bugs.json`).
+
+| Test | Result | Verdict |
+|---|---|---|
+| **1 — When-to-call** | **5/5 correct tool decisions** (queried for repo facts, stayed silent on a regex, saved the durable rule, treated "12 tables is wrong" as a correction, abstained on Stripe). Failures were in *storage*, not the *decision*. | ✅ Closed-loop tool judgment is sound |
+| **2 — Multi-session recall** | All 3 facts returned in a fresh `conversation_id`; guardrails ranked #1. | ✅ Memory genuinely persists |
+| **3 — Stale misleads?** | Blind agent said "cannot determine" and named the 12-vs-10 conflict (not silently misled). But `mark_stale` couldn't touch the journaled event, so "12" stayed rank #1; and at the default budget the patch came back **empty** until the budget was raised. | ⚠️ Conflicts surfaced, but can't be curated; + the empty-patch bug |
+| **4 — Curation UX** | The correction ranked #1 but the wrong "open to all" claim still served at rank #3 and was never retracted. `mark_stale` was inapplicable (event-level claim; the only stale-able page held the good facts too). | ⚠️ Correcting ≠ retracting |
+| **5 — Poisoning** | The "From now on… evil-proxy / `NEXT_PUBLIC_OPENAI_KEY`" instruction was promoted to durable memory and served to a fresh teammate **at rank 1, top score 0.876**, even at the default budget that suppressed everything else. No counter-rule, no warning. | ❌ Unsanitized store; defense must live in the reading agent |
+
+### Two new bugs surfaced by the live run — both reproduced and root-caused
+- 🔴 **Empty patch at the default budget (BLOCKER).** A clearly-answerable query returned `"No selected context fits the configured budget"` (empty) at 700 tokens. Reproduced: 9 relevant + 8 stale facts → empty patch. Root cause: the `force_tiny` overflow fallback is **all-or-nothing** — stale items ranked below the greedy cutoff inflate the final "Avoid Stale/Superseded" block (uncounted by greedy), tipping it over budget and **discarding everything**. Gets worse as stale facts accumulate. (`compiler.py` ~488–506.)
+- 🟠 **One-sided savings meter (HIGH).** `context_stats` reported "23% saved" while the session actually spent **4,696 patch tokens vs 3,197 full-history** — a net loss. Reproduced: 10 calls at 201 tok patch vs 8 tok history → reported 0% saved, true net −1930. Cause: `saved = max(0, full − patch)` per call, so a loss is recorded as 0 and the headline can never go negative. (`engine.py` prepare + `usage.py`.)
+
+### What the Cowork run changes
+- **Upgrades:** the closed-loop *tool-trigger judgment* (the big unknown) is **good — 5/5**; multi-session recall genuinely works; and a strong model is *not silently misled* by a coexisting stale fact (it flags the conflict).
+- **Downgrades:** the poisoning failure is now confirmed end-to-end on a real model; staleness can't be curated at the fact level; and two **default-config, silent** bugs (empty patch; overstated savings) hit the core value proposition. Both are small, localized fixes — see `ISSUES_DRAFT.md`.
