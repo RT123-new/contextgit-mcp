@@ -1,0 +1,2140 @@
+{
+  "run_dir": "/Users/regtroka/Downloads/contextgit-mcp/bench/codex/results/20260614_234438",
+  "started_at": "20260614_234443",
+  "isolation_before": {
+    "global_events_bytes": 6525,
+    "global_store_bytes": 26025,
+    "target_contextgit_events_bytes": 9694,
+    "target_contextgit_store_bytes": 14758,
+    "codex_config_sha256": "92df6f0408802613fb7654fb3dc49a7abf519b33364d47721581a473e89aa928"
+  },
+  "environment_probe": {
+    "test": "environment_and_codex_config_probe",
+    "contextgit_version": "0.1.0",
+    "sys_executable": "/Users/regtroka/.local/share/uv/tools/contextgit-mcp/bin/python",
+    "token_counter": "tiktoken_o200k_base",
+    "target_project": "/Users/regtroka/Downloads/branchingcontextclean-main",
+    "target_project_exists": true,
+    "codex_config_path": "/Users/regtroka/.codex/config.toml",
+    "contextgit_block_present": true,
+    "contextgit_block": "[mcp_servers.contextgit]\ncommand = \"/Users/regtroka/Downloads/branchingcontextclean-main/contextgit/.venv/bin/python3.13\"\nargs = [\"-m\", \"contextgit\", \"serve\"]",
+    "configured_command": "/Users/regtroka/Downloads/branchingcontextclean-main/contextgit/.venv/bin/python3.13",
+    "configured_args_text": "\"-m\", \"contextgit\", \"serve\"",
+    "configured_uses_released_interpreter": true,
+    "configured_has_store_pin": false,
+    "installer_stdout": "'contextgit' is already configured in /Users/regtroka/.codex/config.toml; nothing changed.",
+    "installer_stderr": "",
+    "installer_returncode": 0,
+    "installer_refused_existing_block": true,
+    "print_snippet_returncode": 0,
+    "print_snippet_contains_isolated_store": true,
+    "print_snippet_first_lines": [
+      "# Claude Desktop  (claude_desktop_config.json)",
+      "#   /Users/regtroka/Library/Application Support/Claude/claude_desktop_config.json",
+      "{",
+      "  \"mcpServers\": {",
+      "    \"contextgit\": {",
+      "      \"command\": \"/Users/regtroka/.local/share/uv/tools/contextgit-mcp/bin/python\",",
+      "      \"args\": [",
+      "        \"-m\",",
+      "        \"contextgit\",",
+      "        \"serve\",",
+      "        \"--store\",",
+      "        \"/Users/regtroka/Downloads/contextgit-mcp/bench/codex/results/20260614_234438/stores/codex_install_probe\",",
+      "        \"--budget\",",
+      "        \"700\"",
+      "      ]",
+      "    }",
+      "  }",
+      "}"
+    ],
+    "finding": "Codex config is already occupied, so `contextgit install codex --store ...` is a no-op and cannot repoint to an isolated store.",
+    "proposed_solution": "Add `contextgit install codex --force` or `--update-existing`, and warn when an existing block points at a non-release interpreter or lacks --store."
+  },
+  "mcp_protocol": {
+    "test": "stdio_mcp_protocol_probe",
+    "initialize_ok": true,
+    "tool_count": 12,
+    "tool_names": [
+      "prepare_context",
+      "commit_turn",
+      "remember",
+      "mark_stale",
+      "search_context",
+      "context_log",
+      "show_context",
+      "full_context",
+      "explain_selection",
+      "merge_log",
+      "resolve_pending",
+      "context_stats"
+    ],
+    "has_12_expected_tools": true,
+    "remember_is_error": false,
+    "prepare_is_error": false,
+    "selected_refs": [
+      "wiki:Codex Protocol Probe",
+      "event:remember_00001_user_43e90752"
+    ],
+    "provider_fact_in_patch": true,
+    "stats_store_dir": "/Users/regtroka/Downloads/contextgit-mcp/bench/codex/results/20260614_234438/stores/mcp_protocol",
+    "uses_isolated_store": true,
+    "proposed_solution": "Keep stdio protocol tests in CI; they catch server/tool-schema drift that in-process tests miss."
+  },
+  "retrieval_qrels": {
+    "test": "branchingcontextclean_real_project_qrels",
+    "target_project": "/Users/regtroka/Downloads/branchingcontextclean-main",
+    "files_indexed": 79,
+    "chunks_indexed": 320,
+    "events_in_store": 640,
+    "budget": 700,
+    "graded_queries": 20,
+    "recall_at_1": 0.0,
+    "recall_at_5": 0.0,
+    "recall_at_10": 0.0,
+    "mrr": 0.0,
+    "mean_ndcg_at_10": 0.0,
+    "force_tiny_count": 20,
+    "force_tiny_rate": 1.0,
+    "mean_query_gold_overlap_hits5": 0.0,
+    "mean_query_gold_overlap_misses5": 0.656,
+    "rows": [
+      {
+        "id": "q01",
+        "q": "Which command initializes demo datasets and benchmark fixtures in the lab?",
+        "graded": true,
+        "gold_ref_count": 1,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.571,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q02",
+        "q": "Which command runs the deterministic smoke experiment configuration?",
+        "graded": true,
+        "gold_ref_count": 2,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.5,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q03",
+        "q": "What provider is used by default for deterministic smoke artifacts?",
+        "graded": true,
+        "gold_ref_count": 21,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.833,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q04",
+        "q": "What does the deferred merge pending gate decide?",
+        "graded": true,
+        "gold_ref_count": 1,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.8,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q05",
+        "q": "Which metric tracks outdated assertions appearing in an answer?",
+        "graded": true,
+        "gold_ref_count": 14,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.667,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q06",
+        "q": "What command runs the longitudinal archive-growth diagnostic?",
+        "graded": true,
+        "gold_ref_count": 1,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.6,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q07",
+        "q": "Where does contextgit add the Codex MCP server configuration?",
+        "graded": true,
+        "gold_ref_count": 2,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.5,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q08",
+        "q": "Which contextgit storage file holds the append-only raw conversation journal?",
+        "graded": true,
+        "gold_ref_count": 5,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.625,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q09",
+        "q": "What tokenizer extra is recommended for exact token counting?",
+        "graded": true,
+        "gold_ref_count": 9,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.5,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q10",
+        "q": "What does a real-provider run have to do if the provider call fails?",
+        "graded": true,
+        "gold_ref_count": 1,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 1.0,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q11",
+        "q": "What evidence block should generated benchmark reports include?",
+        "graded": true,
+        "gold_ref_count": 3,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.833,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q12",
+        "q": "What must real-provider reporting separate before accuracy?",
+        "graded": true,
+        "gold_ref_count": 3,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.833,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q13",
+        "q": "What is the weaker lexical baseline called?",
+        "graded": true,
+        "gold_ref_count": 17,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.5,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q14",
+        "q": "What stronger BM25 baseline includes raw events plus active wiki pages?",
+        "graded": true,
+        "gold_ref_count": 20,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.9,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q15",
+        "q": "What are the three main contextgit memory tools exposed to clients?",
+        "graded": true,
+        "gold_ref_count": 11,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.429,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q16",
+        "q": "What command wires contextgit into Codex?",
+        "graded": true,
+        "gold_ref_count": 2,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.8,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q17",
+        "q": "Which project file contains go-to-market/product strategy for contextgit?",
+        "graded": true,
+        "gold_ref_count": 7,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.5,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q18",
+        "q": "What is the publication warning about deterministic artifacts?",
+        "graded": true,
+        "gold_ref_count": 1,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.4,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q19",
+        "q": "What setting is required for RealAPIProvider in strict real-provider runs?",
+        "graded": true,
+        "gold_ref_count": 2,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.667,
+        "patch_tokens": 20,
+        "force_tiny": true
+      },
+      {
+        "id": "q20",
+        "q": "What contextgit command compiles a context branch for a prompt?",
+        "graded": true,
+        "gold_ref_count": 7,
+        "rank": null,
+        "found_at_1": false,
+        "found_at_5": false,
+        "found_at_10": false,
+        "ndcg_at_10": 0.0,
+        "selected_top10": [],
+        "query_gold_overlap": 0.667,
+        "patch_tokens": 20,
+        "force_tiny": true
+      }
+    ],
+    "expanded_budget_3000": {
+      "budget": 3000,
+      "graded_queries": 20,
+      "recall_at_1": 0.0,
+      "recall_at_5": 0.05,
+      "recall_at_10": 0.05,
+      "mrr": 0.021,
+      "mean_ndcg_at_10": 0.011,
+      "force_tiny_count": 0,
+      "force_tiny_rate": 0.0,
+      "mean_query_gold_overlap_hits5": 0.5,
+      "mean_query_gold_overlap_misses5": 0.664,
+      "rows": [
+        {
+          "id": "q01",
+          "q": "Which command initializes demo datasets and benchmark fixtures in the lab?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00121_user_028a7693",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00221_user_4b62e647",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00203_user_c2e776e9",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00421_user_8a33306b"
+          ],
+          "query_gold_overlap": 0.571,
+          "patch_tokens": 1240,
+          "force_tiny": false
+        },
+        {
+          "id": "q02",
+          "q": "Which command runs the deterministic smoke experiment configuration?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00203_user_c2e776e9",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00423_user_d3e1bb85",
+            "event:corpus_00121_user_028a7693",
+            "event:corpus_00193_user_d1819a3e",
+            "wiki:Claude Memory",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00127_user_ab34f0d0"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 1235,
+          "force_tiny": false
+        },
+        {
+          "id": "q03",
+          "q": "What provider is used by default for deterministic smoke artifacts?",
+          "graded": true,
+          "gold_ref_count": 21,
+          "rank": 12,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00059_user_f7d61aef",
+            "event:corpus_00421_user_8a33306b",
+            "wiki:Claude Memory",
+            "event:corpus_00259_user_bcd40ed3",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00479_user_45ecaacd",
+            "event:corpus_00547_user_355e88b1",
+            "event:corpus_00141_user_32cc1530"
+          ],
+          "query_gold_overlap": 0.833,
+          "patch_tokens": 1211,
+          "force_tiny": false
+        },
+        {
+          "id": "q04",
+          "q": "What does the deferred merge pending gate decide?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00445_user_bc71fd8a",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00221_user_4b62e647",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00233_user_fbc6d6e0"
+          ],
+          "query_gold_overlap": 0.8,
+          "patch_tokens": 1232,
+          "force_tiny": false
+        },
+        {
+          "id": "q05",
+          "q": "Which metric tracks outdated assertions appearing in an answer?",
+          "graded": true,
+          "gold_ref_count": 14,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00421_user_8a33306b",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00417_user_2115a41f",
+            "event:corpus_00443_user_ceaaac2c",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00445_user_bc71fd8a",
+            "event:corpus_00547_user_355e88b1",
+            "wiki:Claude Memory",
+            "event:corpus_00259_user_bcd40ed3"
+          ],
+          "query_gold_overlap": 0.667,
+          "patch_tokens": 1189,
+          "force_tiny": false
+        },
+        {
+          "id": "q06",
+          "q": "What command runs the longitudinal archive-growth diagnostic?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00479_user_45ecaacd",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00481_user_9838073c",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00445_user_bc71fd8a"
+          ],
+          "query_gold_overlap": 0.6,
+          "patch_tokens": 1259,
+          "force_tiny": false
+        },
+        {
+          "id": "q07",
+          "q": "Where does contextgit add the Codex MCP server configuration?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00059_user_f7d61aef",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00129_user_b05b9318"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 1227,
+          "force_tiny": false
+        },
+        {
+          "id": "q08",
+          "q": "Which contextgit storage file holds the append-only raw conversation journal?",
+          "graded": true,
+          "gold_ref_count": 5,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00445_user_bc71fd8a",
+            "event:corpus_00027_user_eae46573"
+          ],
+          "query_gold_overlap": 0.625,
+          "patch_tokens": 1217,
+          "force_tiny": false
+        },
+        {
+          "id": "q09",
+          "q": "What tokenizer extra is recommended for exact token counting?",
+          "graded": true,
+          "gold_ref_count": 9,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00479_user_45ecaacd",
+            "event:corpus_00195_user_8db9a4b4",
+            "wiki:Claude Memory",
+            "event:corpus_00481_user_9838073c",
+            "event:corpus_00417_user_2115a41f",
+            "event:corpus_00583_user_e9647c66",
+            "event:corpus_00301_user_2152b595",
+            "event:corpus_00607_user_110db543"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 1234,
+          "force_tiny": false
+        },
+        {
+          "id": "q10",
+          "q": "What does a real-provider run have to do if the provider call fails?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00233_user_fbc6d6e0",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00421_user_8a33306b",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00547_user_355e88b1",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00203_user_c2e776e9"
+          ],
+          "query_gold_overlap": 1.0,
+          "patch_tokens": 1241,
+          "force_tiny": false
+        },
+        {
+          "id": "q11",
+          "q": "What evidence block should generated benchmark reports include?",
+          "graded": true,
+          "gold_ref_count": 3,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00267_user_2274576d",
+            "event:corpus_00259_user_bcd40ed3",
+            "event:corpus_00353_user_83808508",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00361_user_53688c7f",
+            "event:corpus_00417_user_2115a41f",
+            "event:corpus_00135_user_081e04c3",
+            "event:corpus_00437_user_1951eb5f"
+          ],
+          "query_gold_overlap": 0.833,
+          "patch_tokens": 1220,
+          "force_tiny": false
+        },
+        {
+          "id": "q12",
+          "q": "What must real-provider reporting separate before accuracy?",
+          "graded": true,
+          "gold_ref_count": 3,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00265_user_fb57ab78",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00221_user_4b62e647",
+            "event:corpus_00481_user_9838073c",
+            "event:corpus_00259_user_bcd40ed3",
+            "event:corpus_00273_user_c8571169"
+          ],
+          "query_gold_overlap": 0.833,
+          "patch_tokens": 1226,
+          "force_tiny": false
+        },
+        {
+          "id": "q13",
+          "q": "What is the weaker lexical baseline called?",
+          "graded": true,
+          "gold_ref_count": 17,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00479_user_45ecaacd",
+            "event:corpus_00443_user_ceaaac2c",
+            "event:corpus_00445_user_bc71fd8a",
+            "event:corpus_00481_user_9838073c",
+            "event:corpus_00575_user_117b355f",
+            "event:corpus_00583_user_e9647c66",
+            "event:corpus_00437_user_1951eb5f"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 1243,
+          "force_tiny": false
+        },
+        {
+          "id": "q14",
+          "q": "What stronger BM25 baseline includes raw events plus active wiki pages?",
+          "graded": true,
+          "gold_ref_count": 20,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00223_user_e8eb1a62",
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00547_user_355e88b1",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00445_user_bc71fd8a",
+            "event:corpus_00443_user_ceaaac2c"
+          ],
+          "query_gold_overlap": 0.9,
+          "patch_tokens": 1241,
+          "force_tiny": false
+        },
+        {
+          "id": "q15",
+          "q": "What are the three main contextgit memory tools exposed to clients?",
+          "graded": true,
+          "gold_ref_count": 11,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00547_user_355e88b1",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00221_user_4b62e647"
+          ],
+          "query_gold_overlap": 0.429,
+          "patch_tokens": 1229,
+          "force_tiny": false
+        },
+        {
+          "id": "q16",
+          "q": "What command wires contextgit into Codex?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00129_user_b05b9318",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00417_user_2115a41f",
+            "event:corpus_00437_user_1951eb5f",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00253_user_a2fa337c"
+          ],
+          "query_gold_overlap": 0.8,
+          "patch_tokens": 1213,
+          "force_tiny": false
+        },
+        {
+          "id": "q17",
+          "q": "Which project file contains go-to-market/product strategy for contextgit?",
+          "graded": true,
+          "gold_ref_count": 7,
+          "rank": 3,
+          "found_at_1": false,
+          "found_at_5": true,
+          "found_at_10": true,
+          "ndcg_at_10": 0.2202,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00547_user_355e88b1",
+            "event:corpus_00421_user_8a33306b",
+            "event:corpus_00423_user_d3e1bb85",
+            "event:corpus_00001_user_f2d87c9c",
+            "event:corpus_00437_user_1951eb5f"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 1239,
+          "force_tiny": false
+        },
+        {
+          "id": "q18",
+          "q": "What is the publication warning about deterministic artifacts?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00353_user_83808508",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00583_user_e9647c66",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00059_user_f7d61aef",
+            "event:corpus_00301_user_2152b595",
+            "event:corpus_00479_user_45ecaacd",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00481_user_9838073c"
+          ],
+          "query_gold_overlap": 0.4,
+          "patch_tokens": 1285,
+          "force_tiny": false
+        },
+        {
+          "id": "q19",
+          "q": "What setting is required for RealAPIProvider in strict real-provider runs?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00479_user_45ecaacd",
+            "event:corpus_00233_user_fbc6d6e0",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00547_user_355e88b1",
+            "event:corpus_00267_user_2274576d",
+            "event:corpus_00265_user_fb57ab78",
+            "event:corpus_00141_user_32cc1530"
+          ],
+          "query_gold_overlap": 0.667,
+          "patch_tokens": 1211,
+          "force_tiny": false
+        },
+        {
+          "id": "q20",
+          "q": "What contextgit command compiles a context branch for a prompt?",
+          "graded": true,
+          "gold_ref_count": 7,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:corpus_00207_user_741885ac",
+            "event:corpus_00141_user_32cc1530",
+            "event:corpus_00421_user_8a33306b",
+            "event:corpus_00249_user_c0c9c958",
+            "event:corpus_00263_user_063976f8",
+            "event:corpus_00027_user_eae46573",
+            "event:corpus_00253_user_a2fa337c",
+            "event:corpus_00195_user_8db9a4b4",
+            "event:corpus_00417_user_2115a41f"
+          ],
+          "query_gold_overlap": 0.667,
+          "patch_tokens": 1212,
+          "force_tiny": false
+        }
+      ]
+    },
+    "subset_80_chunks_budget_700": {
+      "budget": 700,
+      "graded_queries": 20,
+      "recall_at_1": 0.0,
+      "recall_at_5": 0.25,
+      "recall_at_10": 0.35,
+      "mrr": 0.121,
+      "mean_ndcg_at_10": 0.102,
+      "force_tiny_count": 0,
+      "force_tiny_rate": 0.0,
+      "mean_query_gold_overlap_hits5": 0.544,
+      "mean_query_gold_overlap_misses5": 0.694,
+      "rows": [
+        {
+          "id": "q01",
+          "q": "Which command initializes demo datasets and benchmark fixtures in the lab?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:subset_00141_user_c5489128",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00129_user_85ae8aa5",
+            "wiki:Claude Memory",
+            "event:subset_00027_user_4908aae3",
+            "event:subset_00135_user_48030740",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00059_user_78476482"
+          ],
+          "query_gold_overlap": 0.571,
+          "patch_tokens": 693,
+          "force_tiny": false
+        },
+        {
+          "id": "q02",
+          "q": "Which command runs the deterministic smoke experiment configuration?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:subset_00141_user_c5489128",
+            "wiki:Claude Memory",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00105_user_d00d48e5",
+            "event:subset_00135_user_48030740",
+            "event:subset_00081_user_3000267c"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 696,
+          "force_tiny": false
+        },
+        {
+          "id": "q03",
+          "q": "What provider is used by default for deterministic smoke artifacts?",
+          "graded": true,
+          "gold_ref_count": 3,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00147_user_efef7a18",
+            "event:subset_00059_user_78476482",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00129_user_85ae8aa5"
+          ],
+          "query_gold_overlap": 0.833,
+          "patch_tokens": 690,
+          "force_tiny": false
+        },
+        {
+          "id": "q04",
+          "q": "What does the deferred merge pending gate decide?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:subset_00129_user_85ae8aa5",
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00135_user_48030740",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00039_user_a123b609"
+          ],
+          "query_gold_overlap": 0.8,
+          "patch_tokens": 679,
+          "force_tiny": false
+        },
+        {
+          "id": "q05",
+          "q": "Which metric tracks outdated assertions appearing in an answer?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00135_user_48030740",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00039_user_a123b609",
+            "event:subset_00049_user_fd7adf8d",
+            "event:subset_00033_user_c0f7428b"
+          ],
+          "query_gold_overlap": 0.667,
+          "patch_tokens": 686,
+          "force_tiny": false
+        },
+        {
+          "id": "q06",
+          "q": "What command runs the longitudinal archive-growth diagnostic?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "event:subset_00141_user_c5489128",
+            "wiki:Claude Memory",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00027_user_4908aae3",
+            "event:subset_00135_user_48030740",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00033_user_c0f7428b"
+          ],
+          "query_gold_overlap": 0.6,
+          "patch_tokens": 698,
+          "force_tiny": false
+        },
+        {
+          "id": "q07",
+          "q": "Where does contextgit add the Codex MCP server configuration?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00027_user_4908aae3",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00059_user_78476482",
+            "event:subset_00121_user_1632a7e7"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 690,
+          "force_tiny": false
+        },
+        {
+          "id": "q08",
+          "q": "Which contextgit storage file holds the append-only raw conversation journal?",
+          "graded": true,
+          "gold_ref_count": 5,
+          "rank": 2,
+          "found_at_1": false,
+          "found_at_5": true,
+          "found_at_10": true,
+          "ndcg_at_10": 0.3836,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00039_user_a123b609",
+            "event:subset_00049_user_fd7adf8d",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00135_user_48030740"
+          ],
+          "query_gold_overlap": 0.625,
+          "patch_tokens": 679,
+          "force_tiny": false
+        },
+        {
+          "id": "q09",
+          "q": "What tokenizer extra is recommended for exact token counting?",
+          "graded": true,
+          "gold_ref_count": 7,
+          "rank": 2,
+          "found_at_1": false,
+          "found_at_5": true,
+          "found_at_10": true,
+          "ndcg_at_10": 0.5356,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00039_user_a123b609",
+            "event:subset_00049_user_fd7adf8d",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00141_user_c5489128"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 681,
+          "force_tiny": false
+        },
+        {
+          "id": "q10",
+          "q": "What does a real-provider run have to do if the provider call fails?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00147_user_efef7a18",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00059_user_78476482",
+            "event:subset_00135_user_48030740",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00127_user_584e80d5"
+          ],
+          "query_gold_overlap": 1.0,
+          "patch_tokens": 693,
+          "force_tiny": false
+        },
+        {
+          "id": "q11",
+          "q": "What evidence block should generated benchmark reports include?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": 6,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": true,
+          "ndcg_at_10": 0.2184,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00135_user_48030740",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00013_user_a605d1ca",
+            "event:subset_00059_user_78476482",
+            "event:subset_00033_user_c0f7428b"
+          ],
+          "query_gold_overlap": 0.833,
+          "patch_tokens": 679,
+          "force_tiny": false
+        },
+        {
+          "id": "q12",
+          "q": "What must real-provider reporting separate before accuracy?",
+          "graded": true,
+          "gold_ref_count": 3,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00059_user_78476482",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00135_user_48030740",
+            "event:subset_00147_user_efef7a18",
+            "event:subset_00027_user_4908aae3"
+          ],
+          "query_gold_overlap": 0.833,
+          "patch_tokens": 694,
+          "force_tiny": false
+        },
+        {
+          "id": "q13",
+          "q": "What is the weaker lexical baseline called?",
+          "graded": true,
+          "gold_ref_count": 7,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00095_user_0e8261c1",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00147_user_efef7a18",
+            "event:subset_00043_user_7439fb42"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 698,
+          "force_tiny": false
+        },
+        {
+          "id": "q14",
+          "q": "What stronger BM25 baseline includes raw events plus active wiki pages?",
+          "graded": true,
+          "gold_ref_count": 13,
+          "rank": 6,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": true,
+          "ndcg_at_10": 0.1478,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00135_user_48030740",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00005_user_65ae3e70",
+            "event:subset_00121_user_1632a7e7",
+            "event:subset_00107_user_409b9224"
+          ],
+          "query_gold_overlap": 0.9,
+          "patch_tokens": 698,
+          "force_tiny": false
+        },
+        {
+          "id": "q15",
+          "q": "What are the three main contextgit memory tools exposed to clients?",
+          "graded": true,
+          "gold_ref_count": 8,
+          "rank": 4,
+          "found_at_1": false,
+          "found_at_5": true,
+          "found_at_10": true,
+          "ndcg_at_10": 0.2068,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00039_user_a123b609",
+            "event:subset_00049_user_fd7adf8d",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00027_user_4908aae3"
+          ],
+          "query_gold_overlap": 0.429,
+          "patch_tokens": 682,
+          "force_tiny": false
+        },
+        {
+          "id": "q16",
+          "q": "What command wires contextgit into Codex?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00027_user_4908aae3",
+            "event:subset_00039_user_a123b609",
+            "event:subset_00049_user_fd7adf8d"
+          ],
+          "query_gold_overlap": 0.8,
+          "patch_tokens": 682,
+          "force_tiny": false
+        },
+        {
+          "id": "q17",
+          "q": "Which project file contains go-to-market/product strategy for contextgit?",
+          "graded": true,
+          "gold_ref_count": 7,
+          "rank": 3,
+          "found_at_1": false,
+          "found_at_5": true,
+          "found_at_10": true,
+          "ndcg_at_10": 0.2354,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00027_user_4908aae3",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00001_user_2a46aae9",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00121_user_1632a7e7"
+          ],
+          "query_gold_overlap": 0.5,
+          "patch_tokens": 698,
+          "force_tiny": false
+        },
+        {
+          "id": "q18",
+          "q": "What is the publication warning about deterministic artifacts?",
+          "graded": true,
+          "gold_ref_count": 1,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00147_user_efef7a18",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00149_user_15428f98",
+            "event:subset_00059_user_78476482",
+            "event:subset_00129_user_85ae8aa5"
+          ],
+          "query_gold_overlap": 0.4,
+          "patch_tokens": 693,
+          "force_tiny": false
+        },
+        {
+          "id": "q19",
+          "q": "What setting is required for RealAPIProvider in strict real-provider runs?",
+          "graded": true,
+          "gold_ref_count": 2,
+          "rank": null,
+          "found_at_1": false,
+          "found_at_5": false,
+          "found_at_10": false,
+          "ndcg_at_10": 0.0,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00127_user_584e80d5",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00135_user_48030740",
+            "event:subset_00039_user_a123b609"
+          ],
+          "query_gold_overlap": 0.667,
+          "patch_tokens": 679,
+          "force_tiny": false
+        },
+        {
+          "id": "q20",
+          "q": "What contextgit command compiles a context branch for a prompt?",
+          "graded": true,
+          "gold_ref_count": 7,
+          "rank": 2,
+          "found_at_1": false,
+          "found_at_5": true,
+          "found_at_10": true,
+          "ndcg_at_10": 0.3109,
+          "selected_top10": [
+            "wiki:Claude Memory",
+            "event:subset_00033_user_c0f7428b",
+            "event:subset_00043_user_7439fb42",
+            "event:subset_00141_user_c5489128",
+            "event:subset_00129_user_85ae8aa5",
+            "event:subset_00027_user_4908aae3",
+            "event:subset_00039_user_a123b609",
+            "event:subset_00049_user_fd7adf8d"
+          ],
+          "query_gold_overlap": 0.667,
+          "patch_tokens": 682,
+          "force_tiny": false
+        }
+      ]
+    },
+    "finding": "Natural-qrel retrieval on the larger project is measured with binary qrels and nDCG@10.",
+    "proposed_solution_if_negative": "Add semantic retrieval or field-weighted identifiers, and add a relevance gate so lexical misses do not get hidden by filler."
+  },
+  "multihop": {
+    "test": "multi_hop_synthesis_completeness",
+    "probes": 4,
+    "mean_selected_completeness": 0.0,
+    "mean_patch_visible_completeness": 0.0,
+    "rows": [
+      {
+        "id": "mh01",
+        "q": "How should a strict real-provider evaluation be configured and audited?",
+        "required_groups": [
+          [
+            "OPENAI_API_KEY"
+          ],
+          [
+            "RealAPIProvider(allow_fallback=False)"
+          ],
+          [
+            "strict_no_fallback"
+          ],
+          [
+            "metadata.json"
+          ]
+        ],
+        "selected_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "patch_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "selected_completeness": 0.0,
+        "patch_visible_completeness": 0.0,
+        "selected_top10": [],
+        "patch_tokens": 20
+      },
+      {
+        "id": "mh02",
+        "q": "What makes branch-and-merge different from full-context and BM25 baselines?",
+        "required_groups": [
+          [
+            "Raw Event Log"
+          ],
+          [
+            "Durable Wiki Memory"
+          ],
+          [
+            "Working Branch Builder"
+          ],
+          [
+            "Lexical Raw-Event BM25",
+            "naive_rag"
+          ]
+        ],
+        "selected_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "patch_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "selected_completeness": 0.0,
+        "patch_visible_completeness": 0.0,
+        "selected_top10": [],
+        "patch_tokens": 20
+      },
+      {
+        "id": "mh03",
+        "q": "What should benchmark reports separate when provider calls can fail?",
+        "required_groups": [
+          [
+            "provider/API errors"
+          ],
+          [
+            "successful-call accuracy"
+          ],
+          [
+            "pessimistic attempted accuracy"
+          ],
+          [
+            "Evidence Classification"
+          ]
+        ],
+        "selected_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "patch_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "selected_completeness": 0.0,
+        "patch_visible_completeness": 0.0,
+        "selected_top10": [],
+        "patch_tokens": 20
+      },
+      {
+        "id": "mh04",
+        "q": "How does a user wire contextgit into Codex with an isolated store?",
+        "required_groups": [
+          [
+            "contextgit install codex"
+          ],
+          [
+            "~/.codex/config.toml"
+          ],
+          [
+            "--store"
+          ],
+          [
+            "Restart Codex"
+          ]
+        ],
+        "selected_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "patch_group_hits": [
+          false,
+          false,
+          false,
+          false
+        ],
+        "selected_completeness": 0.0,
+        "patch_visible_completeness": 0.0,
+        "selected_top10": [],
+        "patch_tokens": 20
+      }
+    ],
+    "finding": "Compares whether all required facts are retrieved at all vs. visible after the 180-char summaries and budget.",
+    "proposed_solution_if_negative": "Represent compound/multi-hop facts as structured bullets with non-truncating summaries or explicit 'more facts omitted' markers."
+  },
+  "long_session_drift": {
+    "test": "long_session_drift_220_turns",
+    "targets": 5,
+    "noise_turns": 220,
+    "total_events": 448,
+    "by_checkpoint": {
+      "0": {
+        "found_at_5_rate": 1.0,
+        "anchor_visible_rate": 1.0
+      },
+      "50": {
+        "found_at_5_rate": 1.0,
+        "anchor_visible_rate": 1.0
+      },
+      "100": {
+        "found_at_5_rate": 0.6,
+        "anchor_visible_rate": 0.8
+      },
+      "220": {
+        "found_at_5_rate": 0.0,
+        "anchor_visible_rate": 0.0
+      }
+    },
+    "rows": [
+      {
+        "after_noise_turns": 0,
+        "kind": "raw_event",
+        "query": "Which provider does the early raw lab fact name?",
+        "expected_ref": "event:drift_00001_user_ef7b35e5",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00001_user_ef7b35e5",
+          "wiki:Strict Provider Memory",
+          "event:drift_00005_user_315f0f58",
+          "event:drift_00003_user_af432678",
+          "wiki:Project Store Memory"
+        ]
+      },
+      {
+        "after_noise_turns": 0,
+        "kind": "raw_event",
+        "query": "Which config path does the early raw Codex fact mention?",
+        "expected_ref": "event:drift_00003_user_af432678",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00003_user_af432678",
+          "event:drift_00001_user_ef7b35e5",
+          "event:drift_00005_user_315f0f58",
+          "wiki:Strict Provider Memory",
+          "wiki:Project Store Memory"
+        ]
+      },
+      {
+        "after_noise_turns": 0,
+        "kind": "raw_event",
+        "query": "What evidence label does the early raw evidence fact use?",
+        "expected_ref": "event:drift_00005_user_315f0f58",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00005_user_315f0f58",
+          "event:drift_00003_user_af432678",
+          "event:drift_00001_user_ef7b35e5",
+          "wiki:Strict Provider Memory",
+          "wiki:Project Store Memory"
+        ]
+      },
+      {
+        "after_noise_turns": 0,
+        "kind": "wiki",
+        "query": "What does the durable strict-provider fact require?",
+        "expected_ref": "wiki:Strict Provider Memory",
+        "rank": 2,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:remember_00007_user_9971e79d",
+          "wiki:Strict Provider Memory",
+          "wiki:Project Store Memory",
+          "event:remember_00008_user_f8efedcf",
+          "event:drift_00001_user_ef7b35e5"
+        ]
+      },
+      {
+        "after_noise_turns": 0,
+        "kind": "wiki",
+        "query": "Where does project-scoped contextgit memory live?",
+        "expected_ref": "wiki:Project Store Memory",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "wiki:Project Store Memory",
+          "event:remember_00008_user_f8efedcf",
+          "wiki:Strict Provider Memory",
+          "event:remember_00007_user_9971e79d",
+          "event:drift_00005_user_315f0f58"
+        ]
+      },
+      {
+        "after_noise_turns": 50,
+        "kind": "raw_event",
+        "query": "Which provider does the early raw lab fact name?",
+        "expected_ref": "event:drift_00001_user_ef7b35e5",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00001_user_ef7b35e5",
+          "event:drift_00103_user_9cc33fe9",
+          "event:drift_00067_user_963257e4",
+          "event:drift_00005_user_315f0f58",
+          "event:drift_00003_user_af432678"
+        ]
+      },
+      {
+        "after_noise_turns": 50,
+        "kind": "raw_event",
+        "query": "Which config path does the early raw Codex fact mention?",
+        "expected_ref": "event:drift_00003_user_af432678",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00003_user_af432678",
+          "event:drift_00067_user_963257e4",
+          "event:drift_00103_user_9cc33fe9",
+          "event:drift_00051_user_0cd3c19f",
+          "event:drift_00041_user_a5166141"
+        ]
+      },
+      {
+        "after_noise_turns": 50,
+        "kind": "raw_event",
+        "query": "What evidence label does the early raw evidence fact use?",
+        "expected_ref": "event:drift_00005_user_315f0f58",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00005_user_315f0f58",
+          "event:drift_00057_user_b2e97059",
+          "event:drift_00047_user_1ab3afbf",
+          "event:drift_00103_user_9cc33fe9",
+          "event:drift_00067_user_963257e4"
+        ]
+      },
+      {
+        "after_noise_turns": 50,
+        "kind": "wiki",
+        "query": "What does the durable strict-provider fact require?",
+        "expected_ref": "wiki:Strict Provider Memory",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "wiki:Strict Provider Memory",
+          "event:remember_00007_user_9971e79d",
+          "event:drift_00051_user_0cd3c19f",
+          "event:drift_00041_user_a5166141",
+          "event:drift_00103_user_9cc33fe9"
+        ]
+      },
+      {
+        "after_noise_turns": 50,
+        "kind": "wiki",
+        "query": "Where does project-scoped contextgit memory live?",
+        "expected_ref": "wiki:Project Store Memory",
+        "rank": 1,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "wiki:Project Store Memory",
+          "event:remember_00008_user_f8efedcf",
+          "event:drift_00057_user_b2e97059",
+          "event:drift_00051_user_0cd3c19f",
+          "wiki:Claude Memory"
+        ]
+      },
+      {
+        "after_noise_turns": 100,
+        "kind": "raw_event",
+        "query": "Which provider does the early raw lab fact name?",
+        "expected_ref": "event:drift_00001_user_ef7b35e5",
+        "rank": 2,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00203_user_ede1b78c",
+          "event:drift_00001_user_ef7b35e5",
+          "event:drift_00201_user_7f1d45a5",
+          "event:drift_00137_user_a42b4ad5",
+          "event:drift_00149_user_1b18f063"
+        ]
+      },
+      {
+        "after_noise_turns": 100,
+        "kind": "raw_event",
+        "query": "Which config path does the early raw Codex fact mention?",
+        "expected_ref": "event:drift_00003_user_af432678",
+        "rank": 2,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00203_user_ede1b78c",
+          "event:drift_00003_user_af432678",
+          "event:drift_00201_user_7f1d45a5",
+          "event:drift_00149_user_1b18f063",
+          "event:drift_00137_user_a42b4ad5"
+        ]
+      },
+      {
+        "after_noise_turns": 100,
+        "kind": "raw_event",
+        "query": "What evidence label does the early raw evidence fact use?",
+        "expected_ref": "event:drift_00005_user_315f0f58",
+        "rank": 2,
+        "found_at_5": true,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00203_user_ede1b78c",
+          "event:drift_00005_user_315f0f58",
+          "event:drift_00201_user_7f1d45a5",
+          "event:drift_00047_user_1ab3afbf",
+          "event:drift_00057_user_b2e97059"
+        ]
+      },
+      {
+        "after_noise_turns": 100,
+        "kind": "wiki",
+        "query": "What does the durable strict-provider fact require?",
+        "expected_ref": "wiki:Strict Provider Memory",
+        "rank": null,
+        "found_at_5": false,
+        "anchor_visible_in_patch": false,
+        "selected_top5": [
+          "event:drift_00203_user_ede1b78c",
+          "event:drift_00201_user_7f1d45a5",
+          "event:drift_00041_user_a5166141",
+          "event:drift_00051_user_0cd3c19f",
+          "event:drift_00149_user_1b18f063"
+        ]
+      },
+      {
+        "after_noise_turns": 100,
+        "kind": "wiki",
+        "query": "Where does project-scoped contextgit memory live?",
+        "expected_ref": "wiki:Project Store Memory",
+        "rank": 8,
+        "found_at_5": false,
+        "anchor_visible_in_patch": true,
+        "selected_top5": [
+          "event:drift_00203_user_ede1b78c",
+          "event:drift_00201_user_7f1d45a5",
+          "event:drift_00041_user_a5166141",
+          "event:drift_00051_user_0cd3c19f",
+          "event:drift_00047_user_1ab3afbf"
+        ]
+      },
+      {
+        "after_noise_turns": 220,
+        "kind": "raw_event",
+        "query": "Which provider does the early raw lab fact name?",
+        "expected_ref": "event:drift_00001_user_ef7b35e5",
+        "rank": null,
+        "found_at_5": false,
+        "anchor_visible_in_patch": false,
+        "selected_top5": []
+      },
+      {
+        "after_noise_turns": 220,
+        "kind": "raw_event",
+        "query": "Which config path does the early raw Codex fact mention?",
+        "expected_ref": "event:drift_00003_user_af432678",
+        "rank": null,
+        "found_at_5": false,
+        "anchor_visible_in_patch": false,
+        "selected_top5": []
+      },
+      {
+        "after_noise_turns": 220,
+        "kind": "raw_event",
+        "query": "What evidence label does the early raw evidence fact use?",
+        "expected_ref": "event:drift_00005_user_315f0f58",
+        "rank": null,
+        "found_at_5": false,
+        "anchor_visible_in_patch": false,
+        "selected_top5": []
+      },
+      {
+        "after_noise_turns": 220,
+        "kind": "wiki",
+        "query": "What does the durable strict-provider fact require?",
+        "expected_ref": "wiki:Strict Provider Memory",
+        "rank": null,
+        "found_at_5": false,
+        "anchor_visible_in_patch": false,
+        "selected_top5": []
+      },
+      {
+        "after_noise_turns": 220,
+        "kind": "wiki",
+        "query": "Where does project-scoped contextgit memory live?",
+        "expected_ref": "wiki:Project Store Memory",
+        "rank": null,
+        "found_at_5": false,
+        "anchor_visible_in_patch": false,
+        "selected_top5": []
+      }
+    ],
+    "finding": "Measures whether early raw and durable facts remain retrievable as recency decays and the store grows.",
+    "proposed_solution_if_negative": "Add durable fact promotion, rehearsal/recurrence boosts, or per-project archive indexes that do not rely on recency."
+  },
+  "auto_merge": {
+    "test": "commit_turn_auto_merge_precision_recall",
+    "tp": 6,
+    "fp": 1,
+    "fn": 0,
+    "tn": 5,
+    "precision": 0.857,
+    "recall": 1.0,
+    "rows": [
+      {
+        "case": 1,
+        "prompt": "Remember that Codex-side tests must use isolated contextgit stores.",
+        "expected_durable": true,
+        "auto_merged": true,
+        "claim": "Codex-side tests must use isolated contextgit stores.",
+        "classification": "TP"
+      },
+      {
+        "case": 2,
+        "prompt": "From now on, strict real-provider runs use strict_no_fallback true.",
+        "expected_durable": true,
+        "auto_merged": true,
+        "claim": ", strict real-provider runs use strict_no_fallback true.",
+        "classification": "TP"
+      },
+      {
+        "case": 3,
+        "prompt": "Decision: use project-scoped stores for contextgit memory tests.",
+        "expected_durable": true,
+        "auto_merged": true,
+        "claim": "use project-scoped stores for contextgit memory tests.",
+        "classification": "TP"
+      },
+      {
+        "case": 4,
+        "prompt": "Correction: the schema count is 10, not 12.",
+        "expected_durable": true,
+        "auto_merged": true,
+        "claim": "the schema count is 10, not 12.",
+        "classification": "TP"
+      },
+      {
+        "case": 5,
+        "prompt": "Final: archive contextgit stores before they exceed about 1000 events.",
+        "expected_durable": true,
+        "auto_merged": true,
+        "claim": "Final: archive contextgit stores before they exceed about 1000 events.",
+        "classification": "TP"
+      },
+      {
+        "case": 6,
+        "prompt": "Going forward, every benchmark report needs evidence classification.",
+        "expected_durable": true,
+        "auto_merged": true,
+        "claim": ", every benchmark report needs evidence classification.",
+        "classification": "TP"
+      },
+      {
+        "case": 7,
+        "prompt": "Can you summarize the benchmark metrics for me?",
+        "expected_durable": false,
+        "auto_merged": false,
+        "claim": null,
+        "classification": "TN"
+      },
+      {
+        "case": 8,
+        "prompt": "Please write a regex that validates an email address.",
+        "expected_durable": false,
+        "auto_merged": false,
+        "claim": null,
+        "classification": "TN"
+      },
+      {
+        "case": 9,
+        "prompt": "What is better, branch_merge instead of full_context for this case?",
+        "expected_durable": false,
+        "auto_merged": true,
+        "claim": "What is better, branch_merge instead of full_context for this case?",
+        "classification": "FP"
+      },
+      {
+        "case": 10,
+        "prompt": "This temporary mock sample prompt is only a unit-test fixture.",
+        "expected_durable": false,
+        "auto_merged": false,
+        "claim": null,
+        "classification": "TN"
+      },
+      {
+        "case": 11,
+        "prompt": "Does the README mention a context branch builder?",
+        "expected_durable": false,
+        "auto_merged": false,
+        "claim": null,
+        "classification": "TN"
+      },
+      {
+        "case": 12,
+        "prompt": "Maybe later we can consider a different persistence backend.",
+        "expected_durable": false,
+        "auto_merged": false,
+        "claim": null,
+        "classification": "TN"
+      }
+    ],
+    "finding": "Durable-marker detection is high recall but can false-merge non-durable questions containing 'instead of'.",
+    "proposed_solution_if_negative": "Require imperative/save intent, confirmation, or pending-review mode for marker-based auto-merges; do not promote question-shaped text."
+  },
+  "determinism": {
+    "test": "determinism_same_store_same_prompt",
+    "runs": 6,
+    "unique_hashes": [
+      "afc6d5ade31006ffb99e0287675531e2db6f8f8ff1213e75db39ee7c7dc855e3"
+    ],
+    "byte_identical": true,
+    "patch_token_count": 700,
+    "proposed_solution_if_negative": "Remove runtime-dependent fields from rendering, or make timestamps/usage writes explicitly outside patch generation."
+  },
+  "empty_patch": {
+    "test": "independent_empty_patch_reproduction",
+    "reproduced": true,
+    "trigger": {
+      "relevant_count": 11,
+      "repeat": 4,
+      "patch_tokens": 20,
+      "selected_count": 0,
+      "empty_force_tiny": true,
+      "selected_refs": [],
+      "context": "Context Merge Patch:\n- No selected context fits the configured budget.\nProvenance: (none)"
+    },
+    "attempts_examined": 61,
+    "finding": "Default-budget compile can return force_tiny with zero selected context despite relevant in-budget candidates.",
+    "proposed_solution": "On final overflow, iteratively drop the lowest-scoring selected item or stale/provenance lines until the patch fits; include avoid-stale cost in greedy trials."
+  },
+  "savings_meter": {
+    "test": "independent_savings_meter_reproduction",
+    "per_call": [
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      },
+      {
+        "patch_tokens": 117,
+        "full_history_tokens": 2,
+        "reported_saved_tokens": 0,
+        "true_net_tokens": -115
+      }
+    ],
+    "usage_summary": {
+      "compilations": 10,
+      "patch_tokens_total": 1170,
+      "full_history_tokens_total": 20,
+      "saved_tokens_total": 0,
+      "savings_pct": 0.0,
+      "avg_patch_tokens": 117.0,
+      "by_day": {
+        "2026-06-14": {
+          "compilations": 10,
+          "patch_tokens": 1170,
+          "saved_tokens": 0
+        }
+      }
+    },
+    "patch_total": 1170,
+    "full_total": 20,
+    "recorded_saved_total": 0,
+    "true_net_tokens": -1150,
+    "reproduced_one_sided_loss_clamp": true,
+    "finding": "Loss-making prepare_context calls are recorded as zero saved instead of negative saved.",
+    "proposed_solution": "Record `net_saved_tokens = full_history_tokens - patch_tokens` without clamping, and show both gross wins and net total."
+  },
+  "gpt_harm_feasibility": {
+    "test": "cross_model_gpt_harm_feasibility",
+    "ran_model_calls": false,
+    "openai_api_key_in_environment": false,
+    "reason": "No programmatic GPT A/B was run from this harness. This Codex session has a GPT reasoning model, but not a repeatable model-call API surface exposed to the script without a separately approved API key/run.",
+    "proposed_solution": "Add an optional `--run-openai` lane that uses a user-approved OPENAI_API_KEY, retrieval-gates stale patches with explain_selection, pads prompts, and runs K>=5 per arm."
+  },
+  "isolation_after": {
+    "global_events_bytes": 6525,
+    "global_store_bytes": 26025,
+    "target_contextgit_events_bytes": 9694,
+    "target_contextgit_store_bytes": 14758,
+    "codex_config_sha256": "92df6f0408802613fb7654fb3dc49a7abf519b33364d47721581a473e89aa928",
+    "stores_removed": true
+  },
+  "isolation_ok": true,
+  "completed_at": "20260614_234833"
+}

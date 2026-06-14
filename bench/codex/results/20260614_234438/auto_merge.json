@@ -1,0 +1,109 @@
+{
+  "test": "commit_turn_auto_merge_precision_recall",
+  "tp": 6,
+  "fp": 1,
+  "fn": 0,
+  "tn": 5,
+  "precision": 0.857,
+  "recall": 1.0,
+  "rows": [
+    {
+      "case": 1,
+      "prompt": "Remember that Codex-side tests must use isolated contextgit stores.",
+      "expected_durable": true,
+      "auto_merged": true,
+      "claim": "Codex-side tests must use isolated contextgit stores.",
+      "classification": "TP"
+    },
+    {
+      "case": 2,
+      "prompt": "From now on, strict real-provider runs use strict_no_fallback true.",
+      "expected_durable": true,
+      "auto_merged": true,
+      "claim": ", strict real-provider runs use strict_no_fallback true.",
+      "classification": "TP"
+    },
+    {
+      "case": 3,
+      "prompt": "Decision: use project-scoped stores for contextgit memory tests.",
+      "expected_durable": true,
+      "auto_merged": true,
+      "claim": "use project-scoped stores for contextgit memory tests.",
+      "classification": "TP"
+    },
+    {
+      "case": 4,
+      "prompt": "Correction: the schema count is 10, not 12.",
+      "expected_durable": true,
+      "auto_merged": true,
+      "claim": "the schema count is 10, not 12.",
+      "classification": "TP"
+    },
+    {
+      "case": 5,
+      "prompt": "Final: archive contextgit stores before they exceed about 1000 events.",
+      "expected_durable": true,
+      "auto_merged": true,
+      "claim": "Final: archive contextgit stores before they exceed about 1000 events.",
+      "classification": "TP"
+    },
+    {
+      "case": 6,
+      "prompt": "Going forward, every benchmark report needs evidence classification.",
+      "expected_durable": true,
+      "auto_merged": true,
+      "claim": ", every benchmark report needs evidence classification.",
+      "classification": "TP"
+    },
+    {
+      "case": 7,
+      "prompt": "Can you summarize the benchmark metrics for me?",
+      "expected_durable": false,
+      "auto_merged": false,
+      "claim": null,
+      "classification": "TN"
+    },
+    {
+      "case": 8,
+      "prompt": "Please write a regex that validates an email address.",
+      "expected_durable": false,
+      "auto_merged": false,
+      "claim": null,
+      "classification": "TN"
+    },
+    {
+      "case": 9,
+      "prompt": "What is better, branch_merge instead of full_context for this case?",
+      "expected_durable": false,
+      "auto_merged": true,
+      "claim": "What is better, branch_merge instead of full_context for this case?",
+      "classification": "FP"
+    },
+    {
+      "case": 10,
+      "prompt": "This temporary mock sample prompt is only a unit-test fixture.",
+      "expected_durable": false,
+      "auto_merged": false,
+      "claim": null,
+      "classification": "TN"
+    },
+    {
+      "case": 11,
+      "prompt": "Does the README mention a context branch builder?",
+      "expected_durable": false,
+      "auto_merged": false,
+      "claim": null,
+      "classification": "TN"
+    },
+    {
+      "case": 12,
+      "prompt": "Maybe later we can consider a different persistence backend.",
+      "expected_durable": false,
+      "auto_merged": false,
+      "claim": null,
+      "classification": "TN"
+    }
+  ],
+  "finding": "Durable-marker detection is high recall but can false-merge non-durable questions containing 'instead of'.",
+  "proposed_solution_if_negative": "Require imperative/save intent, confirmation, or pending-review mode for marker-based auto-merges; do not promote question-shaped text."
+}

@@ -1,0 +1,87 @@
+{
+  "test": "independent_savings_meter_reproduction",
+  "per_call": [
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    },
+    {
+      "patch_tokens": 117,
+      "full_history_tokens": 2,
+      "reported_saved_tokens": 0,
+      "true_net_tokens": -115
+    }
+  ],
+  "usage_summary": {
+    "compilations": 10,
+    "patch_tokens_total": 1170,
+    "full_history_tokens_total": 20,
+    "saved_tokens_total": 0,
+    "savings_pct": 0.0,
+    "avg_patch_tokens": 117.0,
+    "by_day": {
+      "2026-06-14": {
+        "compilations": 10,
+        "patch_tokens": 1170,
+        "saved_tokens": 0
+      }
+    }
+  },
+  "patch_total": 1170,
+  "full_total": 20,
+  "recorded_saved_total": 0,
+  "true_net_tokens": -1150,
+  "reproduced_one_sided_loss_clamp": true,
+  "finding": "Loss-making prepare_context calls are recorded as zero saved instead of negative saved.",
+  "proposed_solution": "Record `net_saved_tokens = full_history_tokens - patch_tokens` without clamping, and show both gross wins and net total."
+}

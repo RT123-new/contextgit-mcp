@@ -1,0 +1,16 @@
+{
+  "test": "independent_empty_patch_reproduction",
+  "reproduced": true,
+  "trigger": {
+    "relevant_count": 11,
+    "repeat": 4,
+    "patch_tokens": 20,
+    "selected_count": 0,
+    "empty_force_tiny": true,
+    "selected_refs": [],
+    "context": "Context Merge Patch:\n- No selected context fits the configured budget.\nProvenance: (none)"
+  },
+  "attempts_examined": 61,
+  "finding": "Default-budget compile can return force_tiny with zero selected context despite relevant in-budget candidates.",
+  "proposed_solution": "On final overflow, iteratively drop the lowest-scoring selected item or stale/provenance lines until the patch fits; include avoid-stale cost in greedy trials."
+}
