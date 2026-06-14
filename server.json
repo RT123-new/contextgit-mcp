@@ -1,0 +1,36 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/2025-09-29/server.schema.json",
+  "name": "io.github.contextgit/contextgit",
+  "description": "Git for your AI's context: local-first, deterministic, versioned memory with token budgeting, merge audit, and a token-savings meter.",
+  "status": "active",
+  "version": "0.1.0",
+  "packages": [
+    {
+      "registryType": "pypi",
+      "identifier": "contextgit-mcp",
+      "version": "0.1.0",
+      "transport": {
+        "type": "stdio"
+      },
+      "runtimeHint": "uvx",
+      "runtimeArguments": [],
+      "packageArguments": [
+        {
+          "type": "positional",
+          "value": "serve"
+        }
+      ],
+      "environmentVariables": [
+        {
+          "name": "CONTEXTGIT_DIR",
+          "description": "Path to the context store directory (default: nearest .contextgit/, else ~/.contextgit/store)",
+          "isRequired": false
+        }
+      ]
+    }
+  ],
+  "repository": {
+    "url": "https://github.com/contextgit/contextgit",
+    "source": "github"
+  }
+}

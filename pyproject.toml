@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "contextgit-mcp"
+version = "0.1.0"
+description = "Git for your AI's context - a local-first, deterministic memory engine for Claude, Codex, and Cursor, served over MCP."
+readme = "README.md"
+license = { text = "Apache-2.0" }
+authors = [{ name = "contextgit contributors" }]
+requires-python = ">=3.10"
+keywords = ["mcp", "memory", "context", "llm", "claude", "codex", "agent"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries",
+]
+dependencies = [
+    "pydantic>=2.0.0",
+]
+
+[project.optional-dependencies]
+tokens = ["tiktoken>=0.5"]
+dev = ["pytest>=7.0"]
+
+[project.urls]
+Homepage = "https://github.com/contextgit/contextgit"
+Documentation = "https://github.com/contextgit/contextgit#readme"
+
+[project.scripts]
+contextgit = "contextgit.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
