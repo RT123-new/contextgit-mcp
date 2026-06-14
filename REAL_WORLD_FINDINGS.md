@@ -77,7 +77,24 @@ Fed the **real** hard-negative patches (stale ranked #1, current #2, both unflag
 - **trigger** (v2 defineJob vs v4 task) → answered **"v4 task/schemaTask; defineJob deprecated"** — **correct**.
 - **Interpretation:** a strong model **recovered** even with the stale fact ranked first, by using the also-present current fact + its priors. contextgit does **no disambiguation itself** — the safety is entirely the model's. That protection **vanishes when only the stale fact survives retrieval**, which is exactly what happens in:
 - **mockfallback** → **neither** provider fact was retrieved at all, because the word **"mock"** is in contextgit's hardcoded `_NOISE_MARKERS`, so legitimate "mock provider" facts are penalized as noise and excluded. 🔴 **A real false-negative boundary:** common software words (`mock`, `sample`, `temporary`, `placeholder`, `test value`) silently suppress legitimate facts.
-- *Caveat:* 2 cases, 1 run each, one model tier. The definitive harm rate needs the tightened multi-run protocol in `COWORK_TEST_PROMPTS.md` (RL-9′).
+- *Caveat:* 2 cases, 1 run each, one model tier. **The definitive multi-run protocol was then run (RL-9' below) and it overturns this optimistic read.**
+
+## RL-9' — Definitive multi-run harm test (61 blind graded calls) -- memory can ACTIVELY mislead a real model
+Tightened protocol: 4 real corrections x {clean, hard-negative, closed-book} x 5 blind runs; every hard-neg patch retrieval-gated (stale fact confirmed present); mechanical grading. (`bench/results/realworld_20260614_214032/rl9_definitive.json`.)
+
+| Real correction | Stale rank | Hard-neg (memory on) | Closed-book (no memory) |
+|---|---|---|---|
+| **tables** 12->10 (non-inferable) | stale #1, current #2 | **5/5 answered "12 tables... profiles + run_steps" -- WRONG** | abstains / "don't know" |
+| **guardrails** none->3/5/25/50 (non-inferable) | stale #1 | 1/5 stale, 1 mixed, 3 correct | abstains |
+| **reconcile** always->conditional (non-inferable) | current #1 | 0/5 -- all correct | can't answer |
+| **trigger** v2->v4 (inferable control) | stale #1 | 0/5 -- all correct (v4 + "deprecated") | correct (prior) |
+
+- **Total harm: 6/20 hard-negative runs (30%); worst case 5/5 (100%).**
+- **Sharpest result:** for `tables`, the closed-book model safely **abstains**, but with the stale-poisoned memory it confidently answers **"12 tables" every single time** -- memory turned a safe "I don't know" into a confident wrong answer.
+- **When it harms:** the stale fact ranks >= the current one AND they are directly contradictory atomic values with no "deprecated/old" cue. **When it doesn't:** the current fact ranks first (`reconcile`) or the model has a strong prior / sees a "deprecated" cue (`trigger`).
+- This **overturns the earlier single-run read** ("the model recovered"): recovery is NOT reliable -- it depends on rank order, contradiction type, and priors, none of which contextgit controls (it does no disambiguation).
+- *Grading caveat:* the mechanical grader's `both`/`clean` labels are partly substring artifacts (a correct "no profiles table" contains the stale marker "profiles table"); hand-reading confirms the `tables` hard-neg answers are genuinely wrong and the `clean`/`trigger` answers genuinely correct.
+
 
 ## Boundary probes
 - **`min_score` gate holds:** even at a 100k-token budget the patch is capped at **12 items** (no flooding with sub-0.05 junk).

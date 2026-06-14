@@ -1,0 +1,94 @@
+[
+  {
+    "id": "reconcile",
+    "q": "What happens when you resume a queued research run that already has a Trigger.dev handle?",
+    "current": [
+      "reconcil",
+      "not re-dispatch",
+      "not redispatch",
+      "already has",
+      "existing handle",
+      "handle-less"
+    ],
+    "stale": [
+      "always re-dispatch",
+      "always redispatch",
+      "re-dispatches it",
+      "redispatches it"
+    ],
+    "inferable": false,
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: already(2), handle(2), handle_less(2), handleless(2), its(2)\nSelected Context:\n- [wiki:Reconcile Memory] wiki; score=0.702; Reconcile Memory - On resume, a queued research run that already has a Trigger.dev handle in its metadata is reconciled, not re-dispatched; only handle-less queued runs are re-s...\n- [event:remember_00001_user_5f42e484] event; score=0.695; On resume, a queued research run that already has a Trigger.dev handle in its metadata is reconciled, not re-dispatched; only handle-less queued runs are re-scheduled.\nProvenance: wiki:Reconcile Memory, event:remember_00001_user_5f42e484",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), queued(2), research(2), run(2), trigger_dev(2)\nSelected Context:\n- [event:h_00003_user_dbc1ff3b] event; score=0.675; On resume, a queued research run that already has a Trigger.dev handle in its metadata is reconciled, not re-dispatched; only handle-less queued runs are re-scheduled.\n- [event:h_00001_user_dbabfa52] event; score=0.555; Resuming a queued research run always re-dispatches it to Trigger.dev.\n- [event:h_00004_assistant_e1cbd082] event; score=0.377; ok\n- [event:h_00002_assistant_cdb4896b] event; score=0.368; ok\nProvenance: event:h_00003_user_dbc1ff3b, event:h_00001_user_dbabfa52, event:h_00004_assistant_e1cbd082, event:h_00002_assistant_cdb4896b",
+    "retrieval_gate_both_present": true,
+    "hardneg_has_stale": true,
+    "hardneg_has_current": true
+  },
+  {
+    "id": "guardrails",
+    "q": "Are there limits on how many research runs can be launched, and what are they?",
+    "current": [
+      "3 active",
+      "25",
+      "50",
+      "5 active",
+      "capped",
+      "per project per day"
+    ],
+    "stale": [
+      "no limit",
+      "no limits",
+      "unlimited",
+      "there are no"
+    ],
+    "inferable": false,
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: active(2), capped(2), day(2), launch(2), per(2)\nSelected Context:\n- [wiki:Guardrails Memory] wiki; score=0.705; Guardrails Memory - Run launch is capped at 3 active runs per project, 5 active per user, 25 runs per project per day, and 50 runs per user per day.\n- [event:remember_00001_user_52d7c4df] event; score=0.695; Run launch is capped at 3 active runs per project, 5 active per user, 25 runs per project per day, and 50 runs per user per day.\nProvenance: wiki:Guardrails Memory, event:remember_00001_user_52d7c4df",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), runs(2)\nSelected Context:\n- [event:h_00001_user_2a7d7d53] event; score=0.671; There are no limits on how many research runs can be launched.\n- [event:h_00003_user_db8214af] event; score=0.410; Run launch is capped at 3 active runs per project, 5 active per user, 25 runs per project per day, and 50 runs per user per day.\n- [event:h_00004_assistant_8cfbd553] event; score=0.377; ok\n- [event:h_00002_assistant_2ad9d530] event; score=0.368; ok\nProvenance: event:h_00001_user_2a7d7d53, event:h_00003_user_db8214af, event:h_00004_assistant_8cfbd553, event:h_00002_assistant_2ad9d530",
+    "retrieval_gate_both_present": true,
+    "hardneg_has_stale": true,
+    "hardneg_has_current": true
+  },
+  {
+    "id": "tables",
+    "q": "How many tables does the Supabase schema have, and do profiles/run_steps tables exist?",
+    "current": [
+      "10",
+      "ten",
+      "no profiles",
+      "no run_steps",
+      "neither"
+    ],
+    "stale": [
+      "12",
+      "twelve",
+      "profiles table",
+      "run_steps table"
+    ],
+    "inferable": false,
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: exactly(2), profiles(2), run_steps(2), schema(2), supabase(2)\nSelected Context:\n- [wiki:Tables Memory] wiki; score=0.715; Tables Memory - The Supabase schema has exactly 10 tables; there is no profiles table and no run_steps table.\n- [event:remember_00001_user_195a9fe6] event; score=0.674; The Supabase schema has exactly 10 tables; there is no profiles table and no run_steps table.\nProvenance: wiki:Tables Memory, event:remember_00001_user_195a9fe6",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), profiles(2), run_steps(2), schema(2), supabase(2)\nSelected Context:\n- [event:h_00001_user_f9328046] event; score=0.670; The Supabase schema has 12 tables, including a profiles table and a run_steps table.\n- [event:h_00003_user_2c7d2cec] event; score=0.655; The Supabase schema has exactly 10 tables; there is no profiles table and no run_steps table.\n- [event:h_00004_assistant_165efbd3] event; score=0.377; ok\n- [event:h_00002_assistant_040de99f] event; score=0.368; ok\nProvenance: event:h_00001_user_f9328046, event:h_00003_user_2c7d2cec, event:h_00004_assistant_165efbd3, event:h_00002_assistant_040de99f",
+    "retrieval_gate_both_present": true,
+    "hardneg_has_stale": true,
+    "hardneg_has_current": true
+  },
+  {
+    "id": "trigger",
+    "q": "Which Trigger.dev API should I use for a new background task?",
+    "current": [
+      "v4",
+      "schematask",
+      "schema task",
+      "task("
+    ],
+    "stale": [
+      "v2",
+      "definejob",
+      "define job"
+    ],
+    "inferable": true,
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: api(2), app(2), background(2), background_jobs_use_trigger(2), breaks(2)\nSelected Context:\n- [wiki:Trigger Memory] wiki; score=0.700; Trigger Memory - Background jobs use Trigger.dev v4 via the task and schemaTask API; client.defineJob is deprecated and breaks the app.\n- [event:remember_00001_user_47b841c4] event; score=0.697; Background jobs use Trigger.dev v4 via the task and schemaTask API; client.defineJob is deprecated and breaks the app.\nProvenance: wiki:Trigger Memory, event:remember_00001_user_47b841c4",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), api(2), background(2), client_definejob(2), clientdefinejob(2)\nSelected Context:\n- [event:h_00001_user_3d6897f8] event; score=0.671; Background jobs use the Trigger.dev v2 client.defineJob API.\n- [event:h_00003_user_e8dc4f8f] event; score=0.646; Background jobs use Trigger.dev v4 via the task and schemaTask API; client.defineJob is deprecated and breaks the app.\n- [event:h_00004_assistant_a4998620] event; score=0.377; ok\n- [event:h_00002_assistant_7b105f9d] event; score=0.368; ok\nProvenance: event:h_00001_user_3d6897f8, event:h_00003_user_e8dc4f8f, event:h_00004_assistant_a4998620, event:h_00002_assistant_7b105f9d",
+    "retrieval_gate_both_present": true,
+    "hardneg_has_stale": true,
+    "hardneg_has_current": true
+  }
+]
