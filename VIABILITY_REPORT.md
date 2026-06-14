@@ -29,6 +29,10 @@ All three are *cheap to fix upstream* (guard JSON line reads; cache/incrementali
      - **Without the patch (34 input tokens):** generic, no project knowledge — *"I don't have context on your Atlas service… commonly teams use PostgreSQL or MySQL…"* (could even suggest PostgreSQL — the thing the team migrated **off**).
      - **With the patch (697 input tokens):** correct and grounded — *"Use MySQL 8; the team migrated Atlas off PostgreSQL because its per-tenant connection ceiling capped you at 100 rps."*
      - Net: the right answer for **+663 tokens**.
+   - **Confirmed with a real model (D12b).** Two *blind* Claude calls (independent subagents, no knowledge of this conversation, **0 tool uses**), same query and model, differing only by the patch:
+     - **Without patch:** *"I don't have any durable project context about Atlas… a safe default… a managed **Postgres** instance."* — it recommends PostgreSQL, the very database the team migrated **off**.
+     - **With patch:** *"Use **MySQL 8**. There's a recorded decision for Atlas… PostgreSQL's per-tenant connection ceiling was capping you at ~100 rps…"* — correct, with the right rationale.
+     - The patch flipped a **wrong** default into the **correct** project answer. (Run via authenticated-session subagents — the only auth path in this environment; ~42k tokens total incl. agent scaffolding, a few cents, not the sub-cent of a bare 2-call SDK run.)
 
 2. **No fabrication.** Of 60 patch claims checked across prompts, **60/60 trace verbatim to stored text — fabrication rate 0.0** (D9). The compiler is mechanical (BM25 + frequency/recency/correction scoring); patch text is truncated stored content, never generated. A memory layer that *invents* is worse than none; this one does not.
 
@@ -86,6 +90,6 @@ All three are *cheap to fix upstream* (guard JSON line reads; cache/incrementali
 
 ## Open questions (only Reg can decide)
 1. **Primary surface?** If it's Claude Desktop, the current global-store wiring is fine for light use; if you bounce between Desktop/Code/Cowork, switch to **per-project stores** to dodge the concurrency issue.
-2. **Real-model confirmation?** The integration test was a free instrumented (mock) run that clearly shows the patch flips a wrong/generic answer into the correct one. A real Anthropic-SDK A/B would cost **well under 1¢** (two short calls). Want me to run it for a hard confirmation?
+2. **Real-model confirmation — DONE (2026-06-14, with your go-ahead).** Two blind Claude calls confirmed the patch flips a wrong default (Postgres) into the correct project answer (MySQL 8); see strength #1 / `bench/results/20260614_185021/d12b_realmodel.json`. No standalone API key exists in this environment, so it ran via authenticated-session subagents (a few cents). No open question remains here.
 3. **Store-size discipline.** Are you comfortable archiving/rotating context periodically (or scoping per project) to stay under the latency knee? If you want one big lifelong store, the compile path needs optimizing first.
 4. **Report upstream?** The torn-line and concurrency issues are small, well-localized fixes. Want these filed as issues on your `RT123-new/contextgit-mcp` fork (not the upstream `contextgit/contextgit`)?

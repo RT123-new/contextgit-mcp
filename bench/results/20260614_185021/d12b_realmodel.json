@@ -1,0 +1,12 @@
+{
+  "dimension": "D12b real_model_AB",
+  "mechanism": "two blind Claude subagents (claude-sonnet via authenticated session), tool_uses=0, no knowledge of this conversation",
+  "model": "claude-sonnet-4-6 (session default for subagents)",
+  "query": "I'm starting a new Atlas feature. Which database should I use, and why?",
+  "without_patch_answer": "I don't have any durable project context about Atlas - no architecture notes, prior decisions, or data-layer conventions are available to me here. So I can't point you to \"the\" database without guessing. [asks clarifying questions] If you want a safe default for a new feature with no special constraints: a managed Postgres instance - mature, relational, transactional, and easy to evolve. But please confirm against your team's existing stack before committing.",
+  "with_patch_answer": "Use MySQL 8. There's a recorded decision for Atlas: you're migrating off PostgreSQL to MySQL 8 because PostgreSQL's per-tenant connection ceiling was capping you at ~100 rps. Building the new feature on MySQL 8 keeps it consistent with that migration direction and avoids the connection/rate-limit ceiling that drove the move.",
+  "outcome": "PASS - patch flips the answer from a WRONG default (Postgres, the DB they migrated OFF) to the CORRECT project decision (MySQL 8) with the right rationale.",
+  "tool_uses": 0,
+  "approx_tokens_used_total": "~42000 (both arms incl. subagent scaffolding; the bare message stacks were 697 + 34 input tokens)",
+  "cost_note": "Run via authenticated session subagents (the only auth path here; no standalone API key). Marginal cost a few cents on the session plan, not the <1c of a bare 2-call SDK run."
+}
