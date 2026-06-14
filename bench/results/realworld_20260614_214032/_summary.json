@@ -1,0 +1,43 @@
+{
+  "run_dir": "/Users/regtroka/Downloads/contextgit-mcp/bench/results/realworld_20260614_214032",
+  "token_counter": "tiktoken_o200k_base",
+  "version": "0.1.0",
+  "tests": {
+    "rl1": {
+      "ok": true,
+      "elapsed_s": 15.3
+    },
+    "rl3": {
+      "ok": true,
+      "elapsed_s": 12.8
+    },
+    "rl3b": {
+      "ok": true,
+      "elapsed_s": 3.7
+    },
+    "rl5": {
+      "ok": true,
+      "elapsed_s": 1.9
+    },
+    "rl6": {
+      "ok": true,
+      "elapsed_s": 10.0
+    },
+    "rl7": {
+      "ok": true,
+      "elapsed_s": 0.3
+    },
+    "rl8": {
+      "ok": true,
+      "elapsed_s": 0.0
+    },
+    "rl11": {
+      "ok": true,
+      "elapsed_s": 0.3
+    },
+    "rlb": {
+      "ok": true,
+      "elapsed_s": 0.2
+    }
+  }
+}

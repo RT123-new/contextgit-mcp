@@ -1,0 +1,43 @@
+{
+  "test": "RL-7 self-poisoning (wrong assistant claim vs true remember() fact)",
+  "cases": [
+    {
+      "repeats": 1,
+      "poison_newer": false,
+      "true_rank": 2,
+      "poison_rank": 3,
+      "true_source_confidence": 1.0,
+      "poison_source_confidence": 0.575,
+      "poison_outranks_truth": false
+    },
+    {
+      "repeats": 3,
+      "poison_newer": false,
+      "true_rank": 4,
+      "poison_rank": 5,
+      "true_source_confidence": 1.0,
+      "poison_source_confidence": 0.575,
+      "poison_outranks_truth": false
+    },
+    {
+      "repeats": 1,
+      "poison_newer": true,
+      "true_rank": 2,
+      "poison_rank": 3,
+      "true_source_confidence": 1.0,
+      "poison_source_confidence": 0.575,
+      "poison_outranks_truth": false
+    },
+    {
+      "repeats": 3,
+      "poison_newer": true,
+      "true_rank": 4,
+      "poison_rank": 5,
+      "true_source_confidence": 1.0,
+      "poison_source_confidence": 0.575,
+      "poison_outranks_truth": false
+    }
+  ],
+  "note": "Confidence read from explain_selection score_components (the rendered patch shows only source_type, never speaker, so a user vs assistant claim is indistinguishable in the patch itself).",
+  "_elapsed_s": 0.3
+}

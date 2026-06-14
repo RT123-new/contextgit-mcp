@@ -1,0 +1,195 @@
+{
+  "test": "RL-1 natural-language retrieval (real prose)",
+  "n_paragraphs": 213,
+  "probes_total": 12,
+  "probes_graded": 12,
+  "recall_at_5": 0.583,
+  "MRR": 0.524,
+  "mean_query_gold_overlap_all": 0.494,
+  "mean_overlap_hits": 0.557,
+  "mean_overlap_misses": 0.407,
+  "rows": [
+    {
+      "q": "What status value does a finished research run use?",
+      "graded": true,
+      "gold_paras": 4,
+      "rank": 2,
+      "found_at5": true,
+      "query_gold_overlap": 0.6,
+      "top5": [
+        "event:rl_corpus_00345_user_24e64358",
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00423_user_e1a2c155",
+        "event:rl_corpus_00129_user_2c173c03",
+        "event:rl_corpus_00377_user_0744b742"
+      ]
+    },
+    {
+      "q": "Which Trigger.dev SDK API should I use for tasks?",
+      "graded": true,
+      "gold_paras": 1,
+      "rank": null,
+      "found_at5": false,
+      "query_gold_overlap": 0.0,
+      "top5": [
+        "event:rl_corpus_00103_user_26db2047",
+        "event:rl_corpus_00425_user_2b53c29f",
+        "event:rl_corpus_00195_user_581927a0",
+        "event:rl_corpus_00377_user_0744b742",
+        "event:rl_corpus_00361_user_fa7385a3"
+      ]
+    },
+    {
+      "q": "What happens in production when Trigger.dev is not configured?",
+      "graded": true,
+      "gold_paras": 6,
+      "rank": 8,
+      "found_at5": false,
+      "query_gold_overlap": 0.5,
+      "top5": [
+        "event:rl_corpus_00097_user_5d10fd85",
+        "event:rl_corpus_00089_user_8db24bff",
+        "event:rl_corpus_00003_user_12123514",
+        "event:rl_corpus_00345_user_24e64358",
+        "event:rl_corpus_00361_user_fa7385a3"
+      ]
+    },
+    {
+      "q": "Does the app fall back to the mock provider in production?",
+      "graded": true,
+      "gold_paras": 3,
+      "rank": null,
+      "found_at5": false,
+      "query_gold_overlap": 0.833,
+      "top5": [
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00129_user_2c173c03",
+        "event:rl_corpus_00051_user_974e0aba",
+        "event:rl_corpus_00357_user_e7d56fc1"
+      ]
+    },
+    {
+      "q": "How do I turn on the Perplexity research provider?",
+      "graded": true,
+      "gold_paras": 21,
+      "rank": 2,
+      "found_at5": true,
+      "query_gold_overlap": 0.75,
+      "top5": [
+        "event:rl_corpus_00411_user_7c32d782",
+        "event:rl_corpus_00401_user_9bb93301",
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00377_user_0744b742",
+        "event:rl_corpus_00177_user_56e0d8a2"
+      ]
+    },
+    {
+      "q": "What are the limits on how many research runs can be launched?",
+      "graded": true,
+      "gold_paras": 6,
+      "rank": null,
+      "found_at5": false,
+      "query_gold_overlap": 0.2,
+      "top5": [
+        "event:rl_corpus_00385_user_6452553c",
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00411_user_7c32d782",
+        "event:rl_corpus_00407_user_037ebc06"
+      ]
+    },
+    {
+      "q": "Which secrets must never be exposed to the browser?",
+      "graded": true,
+      "gold_paras": 8,
+      "rank": 6,
+      "found_at5": false,
+      "query_gold_overlap": 0.5,
+      "top5": [
+        "event:rl_corpus_00371_user_af600a5b",
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00407_user_037ebc06",
+        "event:rl_corpus_00055_user_db47802d",
+        "event:rl_corpus_00129_user_2c173c03"
+      ]
+    },
+    {
+      "q": "How is row-level security set up on the database?",
+      "graded": true,
+      "gold_paras": 7,
+      "rank": 1,
+      "found_at5": true,
+      "query_gold_overlap": 0.2,
+      "top5": [
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00353_user_b8bb9ce9",
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00019_user_550db668",
+        "event:rl_corpus_00005_user_c72ffa2b"
+      ]
+    },
+    {
+      "q": "What did the set_updated_at migration harden?",
+      "graded": true,
+      "gold_paras": 2,
+      "rank": 1,
+      "found_at5": true,
+      "query_gold_overlap": 0.25,
+      "top5": [
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00353_user_b8bb9ce9",
+        "event:rl_corpus_00005_user_c72ffa2b",
+        "event:rl_corpus_00013_user_972c052c"
+      ]
+    },
+    {
+      "q": "Where are run timeline steps and logs stored?",
+      "graded": true,
+      "gold_paras": 20,
+      "rank": 1,
+      "found_at5": true,
+      "query_gold_overlap": 0.8,
+      "top5": [
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00029_user_5e4fc821",
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00345_user_24e64358",
+        "event:rl_corpus_00129_user_2c173c03"
+      ]
+    },
+    {
+      "q": "How many tables are in the live database schema?",
+      "graded": true,
+      "gold_paras": 6,
+      "rank": 1,
+      "found_at5": true,
+      "query_gold_overlap": 0.8,
+      "top5": [
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00011_user_4f7477ed",
+        "event:rl_corpus_00363_user_49288130",
+        "event:rl_corpus_00005_user_c72ffa2b",
+        "event:rl_corpus_00007_user_f99ba67c"
+      ]
+    },
+    {
+      "q": "What is the follow-up research loop limit during beta?",
+      "graded": true,
+      "gold_paras": 19,
+      "rank": 1,
+      "found_at5": true,
+      "query_gold_overlap": 0.5,
+      "top5": [
+        "event:rl_corpus_00385_user_6452553c",
+        "event:rl_corpus_00395_user_2ad4463b",
+        "event:rl_corpus_00361_user_fa7385a3",
+        "event:rl_corpus_00405_user_67c797ea",
+        "event:rl_corpus_00425_user_2b53c29f"
+      ]
+    }
+  ],
+  "note": "Probes are natural questions; grading via answer-anchor paragraph ref. Compare overlap on hits vs misses to see BM25 lexical dependence.",
+  "_elapsed_s": 15.3
+}

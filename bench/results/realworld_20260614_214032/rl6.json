@@ -1,0 +1,60 @@
+{
+  "test": "RL-6 abstention vs positive control",
+  "absent_entity_queries": [
+    {
+      "q": "What is our Stripe webhook signing secret policy?",
+      "n_selected": 8,
+      "patch_tokens": 700,
+      "top_score": 0.751932
+    },
+    {
+      "q": "How is the Kafka consumer group configured?",
+      "n_selected": 8,
+      "patch_tokens": 700,
+      "top_score": 0.618309
+    },
+    {
+      "q": "What GraphQL schema stitching approach do we use?",
+      "n_selected": 9,
+      "patch_tokens": 700,
+      "top_score": 0.6466
+    },
+    {
+      "q": "Describe the Kubernetes ingress and the Istio mesh setup.",
+      "n_selected": 8,
+      "patch_tokens": 668,
+      "top_score": 0.735898
+    },
+    {
+      "q": "What is the Redis eviction policy for the session cache?",
+      "n_selected": 8,
+      "patch_tokens": 687,
+      "top_score": 0.61453
+    }
+  ],
+  "present_entity_queries": [
+    {
+      "q": "What status value does a finished run use?",
+      "n_selected": 8,
+      "patch_tokens": 680,
+      "top_score": 0.652489
+    },
+    {
+      "q": "How are the research run guardrails limited?",
+      "n_selected": 8,
+      "patch_tokens": 677,
+      "top_score": 0.558072
+    },
+    {
+      "q": "Which Trigger.dev API version do we use?",
+      "n_selected": 8,
+      "patch_tokens": 696,
+      "top_score": 0.576351
+    }
+  ],
+  "abstention_rate_on_absent": 0.0,
+  "mean_tokens_spent_on_absent": 691.0,
+  "control_recall_ok": true,
+  "note": "If abstention~0 while present-queries retrieve, the boundary 'always fills budget, never abstains' is confirmed (not a degenerate empty store).",
+  "_elapsed_s": 10.0
+}

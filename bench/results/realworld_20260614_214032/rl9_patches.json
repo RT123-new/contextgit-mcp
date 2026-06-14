@@ -1,0 +1,56 @@
+[
+  {
+    "id": "tables",
+    "q": "How many tables does the live Supabase schema have, and do profiles/run_steps tables exist?",
+    "current_markers": [
+      "10",
+      "ten"
+    ],
+    "stale_markers": [
+      "12",
+      "twelve"
+    ],
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: exactly(2), live(2), profiles(2), run_steps(2), schema(2)\nSelected Context:\n- [wiki:Tables Memory] wiki; score=0.714; Tables Memory - The live Supabase schema has exactly 10 tables; there is no profiles table and no run_steps table.\n- [event:remember_00001_user_66fb6c07] event; score=0.678; The live Supabase schema has exactly 10 tables; there is no profiles table and no run_steps table.\nProvenance: wiki:Tables Memory, event:remember_00001_user_66fb6c07",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), live(2), profiles(2), run_steps(2), schema(2)\nSelected Context:\n- [event:h_00001_user_abf86139] event; score=0.669; The live Supabase schema has 12 tables, including a profiles table and a run_steps table.\n- [event:h_00003_user_5f4feb78] event; score=0.656; The live Supabase schema has exactly 10 tables; there is no profiles table and no run_steps table.\n- [event:h_00004_assistant_75e0a374] event; score=0.377; ok\n- [event:h_00002_assistant_02230009] event; score=0.368; ok\nProvenance: event:h_00001_user_abf86139, event:h_00003_user_5f4feb78, event:h_00004_assistant_75e0a374, event:h_00002_assistant_02230009",
+    "hardneg_has_stale_value": true,
+    "hardneg_has_current_value": true,
+    "hardneg_both_present": true
+  },
+  {
+    "id": "trigger",
+    "q": "Which Trigger.dev API should I use for a new background task?",
+    "current_markers": [
+      "v4",
+      "schematask",
+      "task("
+    ],
+    "stale_markers": [
+      "definejob",
+      "v2"
+    ],
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: api(2), app(2), background(2), background_jobs_use_trigger(2), breaks(2)\nSelected Context:\n- [wiki:Trigger Memory] wiki; score=0.700; Trigger Memory - Background jobs use Trigger.dev v4 via the task and schemaTask API; client.defineJob is deprecated and breaks the app.\n- [event:remember_00001_user_aac6fc8d] event; score=0.697; Background jobs use Trigger.dev v4 via the task and schemaTask API; client.defineJob is deprecated and breaks the app.\nProvenance: wiki:Trigger Memory, event:remember_00001_user_aac6fc8d",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), api(2), background(2), client_definejob(2), clientdefinejob(2)\nSelected Context:\n- [event:h_00001_user_8aeb914c] event; score=0.671; Background jobs use the Trigger.dev v2 client.defineJob API.\n- [event:h_00003_user_7c7af6db] event; score=0.646; Background jobs use Trigger.dev v4 via the task and schemaTask API; client.defineJob is deprecated and breaks the app.\n- [event:h_00004_assistant_b0528f17] event; score=0.377; ok\n- [event:h_00002_assistant_756e62a9] event; score=0.368; ok\nProvenance: event:h_00001_user_8aeb914c, event:h_00003_user_7c7af6db, event:h_00004_assistant_b0528f17, event:h_00002_assistant_756e62a9",
+    "hardneg_has_stale_value": true,
+    "hardneg_has_current_value": true,
+    "hardneg_both_present": true
+  },
+  {
+    "id": "mockfallback",
+    "q": "If no real research provider is configured, does production fall back to the mock provider?",
+    "current_markers": [
+      "refus",
+      "throw",
+      "error",
+      "allow_mock_provider"
+    ],
+    "stale_markers": [
+      "silently fall",
+      "falls back"
+    ],
+    "clean_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: allow_mock_provider(2), allow_mock_providertrue(2), app(2), back(2), config(2)\nSelected Context:\n- (none)\nProvenance: (none)",
+    "hardneg_patch": "Context Merge Patch:\n- conversation_id: v\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), app(2), back(2), mock(2), production(2)\nSelected Context:\n- [event:h_00004_assistant_3bb644c0] event; score=0.377; ok\n- [event:h_00002_assistant_34db4729] event; score=0.368; ok\nProvenance: event:h_00004_assistant_3bb644c0, event:h_00002_assistant_34db4729",
+    "hardneg_has_stale_value": false,
+    "hardneg_has_current_value": false,
+    "hardneg_both_present": false
+  }
+]

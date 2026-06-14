@@ -1,0 +1,212 @@
+{
+  "decisions": [
+    "Live Supabase is the single source of truth for the schema; the repo's baseline migration was reconstructed by inspecting the live database and must stay aligned to it (README, SETUP.md, commit 'Align repo with live Supabase database').",
+    "The live database has exactly 10 public tables. There is no `profiles` table (identity comes from Supabase Auth `auth.users`) and no `run_steps` table (the execution timeline and logs live in `research_runs.metadata.steps` JSONB).",
+    "Run status uses the value `complete` (not `completed`), and there is no `partial` status (types/index.ts, commit 'Align repo with live Supabase database').",
+    "Long-running deep research must never run inside a web request: the web app writes a queued `research_runs` row and hands off to the Trigger.dev `research-run` task; the run detail page reads status from Supabase by polling, never from an in-memory process (README, commit 'Integrate Trigger.dev background jobs').",
+    "Use Trigger.dev v4 via `@trigger.dev/sdk` with the `task`/`schemaTask` API; NEVER use the v2 deprecated `client.defineJob` pattern, which breaks the application (CLAUDE.md / AGENTS.md).",
+    "In production the app must fail fast with a clear config error if Trigger.dev is not configured; the in-process simulated runner (server/actions/run-executor.ts) is a development-only fallback when `TRIGGER_SECRET_KEY` is unset (README execution-modes table).",
+    "Production defaults to real research providers and refuses to fall back to the mock provider unless `ALLOW_MOCK_PROVIDER=true` is explicitly set; provider selection is explicit via the `RESEARCH_PROVIDERS` env var (lib/providers/index.ts).",
+    "Service-role key (`SUPABASE_SERVICE_ROLE_KEY`) and provider API keys (`OPENAI_API_KEY`, `PERPLEXITY_API_KEY`) are server-only and must never reach the browser or be prefixed with `NEXT_PUBLIC_`; the Trigger.dev worker uses the service-role key because it runs outside an authenticated request and always writes the correct user_id.",
+    "RLS is enabled on all 10 tables with four per-command policies each (`auth.uid() = user_id`), every table has a `set_updated_at` BEFORE UPDATE trigger, and IDs use `gen_random_uuid()` from pgcrypto.",
+    "Provider failures and task errors are always caught and persisted (to `provider_runs.error_message` / `research_runs.error_message`), never silently ignored; if one of several configured providers fails the run continues and only fails when no provider produces output (README, commit 'Preserve provider artifacts when analysis fails').",
+    "Launch is gated by count-based guardrails enforced in an atomic DB function: max 3 active (queued/running/paused) runs per project, 5 per user, 25 runs/project/day, and 50 runs/user/day (migrations 20260602140000 and 20260602200618).",
+    "Follow-up research loops are bounded: a parent run may spawn child runs for open questions but loops are capped at 3 per project during private beta (migration 20260601090000).",
+    "Deep research mode is admin-gated via the `ADMIN_EMAILS` env var; non-admin follow-up loops are downgraded to `standard` (SETUP.md).",
+    "The harden migration pins `public.set_updated_at` with a fixed search_path to clear the Supabase security advisor (commit 'Integrate Trigger.dev background jobs', migration 20260530010000).",
+    "Keep the stack as Supabase + Vercel + Trigger.dev; per the viability assessment the work needed is product (verification, billing, export), not infrastructure replacement.",
+    "Strategic positioning: demote the autonomous research loop to a swappable commodity backend and sell the verification/audit/persistence layer ('research you can defend'); until a real citation-verification pass is benchmarked, claim 'auditable/reviewable', never 'more accurate' (VIABILITY_ASSESSMENT.md)."
+  ],
+  "corrections": [
+    {
+      "old": "Schema has 12 tables including a `profiles` table and a `run_steps` table.",
+      "new": "Schema has exactly 10 public tables; no `profiles` (identity is `auth.users`) and no `run_steps` (timeline/logs live in `research_runs.metadata.steps`).",
+      "evidence": "Commit 2026-05-30 'Align repo with live Supabase database (10-table schema)'; README.md schema section ('earlier drafts incorrectly described a 12-table schema — that has been corrected')."
+    },
+    {
+      "old": "Run status value is `completed` (and a `partial` status exists).",
+      "new": "Run status uses `complete` (not `completed`) and there is no `partial` status.",
+      "evidence": "Commit 'Align repo with live Supabase database'; types/index.ts; README key-facts list."
+    },
+    {
+      "old": "Background jobs run via the v2 `client.defineJob` Trigger.dev API.",
+      "new": "Trigger.dev v4 with `@trigger.dev/sdk` (`task`/`schemaTask`); `client.defineJob` is deprecated and 'BREAKS APPLICATION'.",
+      "evidence": "CLAUDE.md 'NEVER Use (v2 deprecated)' section; trigger.config.ts uses defineConfig with project ref proj_pjaribdquznpuxwkpuyq."
+    },
+    {
+      "old": "No real research provider; only a deterministic offline mock provider scaffold.",
+      "new": "Added an OpenAI provider, then a Perplexity Sonar provider; registry now supports openai, perplexity, and mock selected via RESEARCH_PROVIDERS.",
+      "evidence": "Commits 2026-05-31 'Implement OpenAI research provider' and 2026-06-01 'Add Perplexity research provider support'; lib/providers/index.ts registers Mock/OpenAI/Perplexity."
+    },
+    {
+      "old": "Production silently falls back to the mock provider when no real provider is configured.",
+      "new": "Production throws ('No configured real research providers...') unless ALLOW_MOCK_PROVIDER=true is explicitly set.",
+      "evidence": "lib/providers/index.ts getResearchProviders(); VIABILITY_ASSESSMENT.md 'Corrections to earlier findings'."
+    },
+    {
+      "old": "Runs cannot be paused or resumed; statuses are queued/running/complete/failed/cancelled.",
+      "new": "Added an explicit `paused` status and pause/resume/stop controls; the status CHECK now allows queued/running/paused/complete/failed/cancelled.",
+      "evidence": "Commit 2026-06-02 'Add pause and resume controls for research runs'; migration 20260602200618_add_paused_run_status.sql."
+    },
+    {
+      "old": "Resuming a queued run always re-dispatches it to Trigger.dev.",
+      "new": "If a queued run already has a Trigger.dev handle in its metadata it is reconciled (not re-dispatched); only queued runs without an existing handle are re-scheduled, to avoid duplicate trigger handles.",
+      "evidence": "Commit 2026-06-02 'Avoid resuming queued runs with existing trigger handles'; server/actions/run-actions.ts resumeResearchRun (triggerHandleId / reconcileQueuedTriggerRun)."
+    },
+    {
+      "old": "The Perplexity `/v1/sonar` endpoint is a bug and should be `/chat/completions`.",
+      "new": "`POST https://api.perplexity.ai/v1/sonar` is the documented canonical endpoint; the legacy `/chat/completions` is an older alias. No code change needed.",
+      "evidence": "VIABILITY_ASSESSMENT.md 'Corrections to earlier findings'; lib/providers/perplexity-provider.ts DEFAULT_PERPLEXITY_ENDPOINT = 'https://api.perplexity.ai/v1/sonar'."
+    },
+    {
+      "old": "set_updated_at function uses the default mutable search_path.",
+      "new": "set_updated_at is hardened with a pinned search_path to clear the Supabase security advisor (applied live and recorded as a migration).",
+      "evidence": "Commit 'Integrate Trigger.dev background jobs and harden Supabase'; migration 20260530010000_harden_set_updated_at_search_path.sql."
+    },
+    {
+      "old": "Run launch had no atomicity or count guardrails.",
+      "new": "Launch is gated by an atomic DB function enforcing 3 active/project, 5/user, 25 runs/project/day, 50 runs/user/day.",
+      "evidence": "Migrations 20260602140000_atomic_research_run_launch.sql and 20260601090000_private_beta_guardrails.sql; commit 'Harden research loop auth, RLS, and run execution flows'."
+    },
+    {
+      "old": "Supabase clients fell back to a placeholder anon key when env vars were missing.",
+      "new": "Clients are typed with Database and fail clearly on missing env (placeholder anon-key fallbacks removed).",
+      "evidence": "Commit 'Align repo with live Supabase database' body (lib/supabase/{client,server,middleware} 'fail clearly on missing env; removed placeholder anon-key fallbacks')."
+    }
+  ],
+  "entities": [
+    "ResearchLoop",
+    "Supabase",
+    "Trigger.dev v4",
+    "proj_pjaribdquznpuxwkpuyq",
+    "Next.js (App Router)",
+    "Vercel",
+    "OpenAI (gpt-4.1, Responses API)",
+    "Perplexity Sonar (sonar-deep-research)",
+    "research_runs.metadata.steps",
+    "provider_runs",
+    "researchloop-files (private storage bucket)",
+    "tickets (unrelated public bucket)",
+    "ALLOW_MOCK_PROVIDER",
+    "RESEARCH_PROVIDERS",
+    "ADMIN_EMAILS",
+    "SUPABASE_SERVICE_ROLE_KEY",
+    "research-run task",
+    "research-loop task",
+    "run-executor.ts (simulated runner)",
+    "set_updated_at trigger",
+    "Row Level Security (RLS)",
+    "Tailwind CSS v4",
+    "Radix UI",
+    "@trigger.dev/sdk",
+    "evidence_strength / confidence_score / source_ids",
+    "provider_support_json"
+  ],
+  "qa_pairs": [
+    {
+      "question": "How many tables does the live Supabase database have, and which two tables that earlier drafts described do NOT exist?",
+      "expected_fact": "Exactly 10 public tables; there is no `profiles` table and no `run_steps` table (earlier 12-table drafts were corrected).",
+      "source": "README.md (Database schema section); commit 2026-05-30 'Align repo with live Supabase database (10-table schema)'"
+    },
+    {
+      "question": "Where are the run execution timeline and logs stored, given there is no run_steps table?",
+      "expected_fact": "In `research_runs.metadata` JSONB, under `metadata.steps`.",
+      "source": "README.md schema key-facts; SETUP.md Notes"
+    },
+    {
+      "question": "What run status value does the app use for a finished run?",
+      "expected_fact": "`complete` (not `completed`); there is also no `partial` status.",
+      "source": "README.md key-facts; types/index.ts; commit 'Align repo with live Supabase database'"
+    },
+    {
+      "question": "Which Trigger.dev API must we use and which is forbidden?",
+      "expected_fact": "Use Trigger.dev v4 via `@trigger.dev/sdk` (`task`/`schemaTask`); never use the v2 deprecated `client.defineJob`, which breaks the application.",
+      "source": "CLAUDE.md 'Trigger.dev Basic Tasks (v4)' and 'NEVER Use (v2 deprecated)'"
+    },
+    {
+      "question": "What is the Trigger.dev project ref for this repo?",
+      "expected_fact": "proj_pjaribdquznpuxwkpuyq, set in trigger.config.ts.",
+      "source": "trigger.config.ts; README.md Background research jobs"
+    },
+    {
+      "question": "What happens in production if Trigger.dev is not configured?",
+      "expected_fact": "Runs fail fast with a clear configuration error; the app never runs workers in-process in production. The in-process simulated runner is dev-only (when TRIGGER_SECRET_KEY is unset).",
+      "source": "README.md execution-modes table; server/actions/run-executor.ts"
+    },
+    {
+      "question": "Does production fall back to the mock provider if no real provider is configured?",
+      "expected_fact": "No. getResearchProviders() throws unless ALLOW_MOCK_PROVIDER=true is explicitly set; production defaults to openai,perplexity.",
+      "source": "lib/providers/index.ts; VIABILITY_ASSESSMENT.md corrections"
+    },
+    {
+      "question": "How do you enable the Perplexity research provider and what model does it default to?",
+      "expected_fact": "Set RESEARCH_PROVIDERS=openai,perplexity and PERPLEXITY_API_KEY (server-only); default model is sonar-deep-research. If the key is missing the provider is skipped safely.",
+      "source": "README.md / SETUP.md Research providers; lib/providers/perplexity-provider.ts (DEFAULT_PERPLEXITY_MODEL)"
+    },
+    {
+      "question": "Is the Perplexity `/v1/sonar` endpoint a bug that should be `/chat/completions`?",
+      "expected_fact": "No. POST https://api.perplexity.ai/v1/sonar is the documented canonical endpoint; /chat/completions is a legacy alias. No code change needed.",
+      "source": "VIABILITY_ASSESSMENT.md corrections; lib/providers/perplexity-provider.ts DEFAULT_PERPLEXITY_ENDPOINT"
+    },
+    {
+      "question": "How does the Perplexity provider produce structured output?",
+      "expected_fact": "It calls the Sonar API to get a markdown report, then optionally uses OpenAI to normalize that markdown into the same structured ResearchLoop provider output shape (with a fallback if normalization fails).",
+      "source": "README.md Research providers; lib/providers/perplexity-provider.ts (normalizeWithOpenAI); commit 'Handle Perplexity normalization failures and add cost accounting'"
+    },
+    {
+      "question": "What are the count-based launch guardrails for research runs?",
+      "expected_fact": "Max 3 active (queued/running/paused) runs per project, 5 per user, 25 runs/project/day, and 50 runs/user/day, enforced atomically in a DB function.",
+      "source": "supabase/migrations/20260602140000_atomic_research_run_launch.sql and 20260602200618_add_paused_run_status.sql"
+    },
+    {
+      "question": "What is the follow-up research loop limit?",
+      "expected_fact": "Loops are bounded to a maximum of 3 per project during private beta (and limited to one child run per loop).",
+      "source": "supabase/migrations/20260601090000_private_beta_guardrails.sql"
+    },
+    {
+      "question": "What was added in the paused-run-status change and why?",
+      "expected_fact": "An explicit `paused` status plus pause/resume/stop controls; the status CHECK constraint was expanded to queued/running/paused/complete/failed/cancelled.",
+      "source": "commit 2026-06-02 'Add pause and resume controls for research runs'; migration 20260602200618_add_paused_run_status.sql"
+    },
+    {
+      "question": "Why must resuming a queued run avoid re-dispatching it to Trigger.dev?",
+      "expected_fact": "If the queued run already has a Trigger.dev handle in its metadata, it is reconciled instead of re-dispatched, to avoid creating duplicate trigger handles; only handle-less queued runs are re-scheduled.",
+      "source": "commit 2026-06-02 'Avoid resuming queued runs with existing trigger handles'; server/actions/run-actions.ts resumeResearchRun"
+    },
+    {
+      "question": "Which keys are server-only and must never reach the browser?",
+      "expected_fact": "SUPABASE_SERVICE_ROLE_KEY (bypasses RLS), OPENAI_API_KEY, and PERPLEXITY_API_KEY; never prefix them with NEXT_PUBLIC_. The Trigger.dev worker uses the service-role key and always writes the correct user_id.",
+      "source": "SETUP.md Step 1; README.md Deploy/Production checklist"
+    },
+    {
+      "question": "How is RLS configured across the schema?",
+      "expected_fact": "RLS is enabled on all 10 tables with four per-command policies each (auth.uid() = user_id); every table has a set_updated_at BEFORE UPDATE trigger and IDs use gen_random_uuid() (pgcrypto).",
+      "source": "README.md schema key-facts; supabase/migrations/20260530000000_init.sql"
+    },
+    {
+      "question": "What did the set_updated_at hardening migration fix?",
+      "expected_fact": "It pinned public.set_updated_at with a fixed search_path to clear the Supabase security advisor warning.",
+      "source": "supabase/migrations/20260530010000_harden_set_updated_at_search_path.sql; commit 'Integrate Trigger.dev background jobs and harden Supabase'"
+    },
+    {
+      "question": "How is deep research mode restricted?",
+      "expected_fact": "Deep mode is admin-gated via the ADMIN_EMAILS env var; non-admin follow-up loops are downgraded to standard.",
+      "source": "SETUP.md Step 1; README.md Local setup"
+    },
+    {
+      "question": "What is the storage bucket setup, and what is the `tickets` bucket?",
+      "expected_fact": "One private bucket `researchloop-files` (folder convention {user_id}/{project_id}/filename) with owner-folder policies; `tickets` is an unrelated public bucket not part of ResearchLoop and should be reviewed/removed.",
+      "source": "README.md Storage section + Production checklist"
+    },
+    {
+      "question": "What is the headline verdict and strategy of the viability assessment?",
+      "expected_fact": "Conditional yes: the autonomous research loop is a commodity (APIs sell it for ~$0.41–$5), so demote the loop to a swappable backend and sell the verification/audit/persistence layer ('research you can defend'); claim 'auditable', not 'more accurate', until citation verification is built and benchmarked.",
+      "source": "VIABILITY_ASSESSMENT.md sections 1 and 4"
+    },
+    {
+      "question": "What are the local dev validation commands before running the app?",
+      "expected_fact": "npm install; npm run lint; npm run typecheck; npm run test; npm run dev (and npm run trigger:dev for the real worker). App runs at http://localhost:3000 and redirects to /login.",
+      "source": "README.md Local setup; SETUP.md Step 3"
+    }
+  ]
+}

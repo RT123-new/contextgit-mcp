@@ -1,0 +1,29 @@
+{
+  "test": "RL-9 does-memory-hurt (blind real-model A/B on REAL coexisting corrections)",
+  "mechanism": "blind Claude subagents (claude-sonnet via session), 0 tools, no knowledge of this conversation, 1 run/arm",
+  "cases": [
+    {
+      "id": "tables",
+      "patch_ranks": "stale '12 tables' #1, current '10 tables' #2 (both unflagged)",
+      "hardneg_answer": "The live Supabase schema has 10 tables, and neither the profiles table nor the run_steps table exists.",
+      "hardneg_verdict": "CORRECT (chose current despite stale ranked first)",
+      "clean_answer": "exactly 10 tables; neither profiles nor run_steps exists.",
+      "clean_verdict": "CORRECT"
+    },
+    {
+      "id": "trigger",
+      "patch_ranks": "stale 'v2 client.defineJob' #1, current 'v4 task/schemaTask' #2 (both unflagged)",
+      "hardneg_answer": "Use Trigger.dev v4 with task/schemaTask; client.defineJob (v2) is deprecated and breaks the app.",
+      "hardneg_verdict": "CORRECT",
+      "clean_answer": "Use v4 task/schemaTask; avoid client.defineJob.",
+      "clean_verdict": "CORRECT"
+    },
+    {
+      "id": "mockfallback",
+      "patch_ranks": "NEITHER fact retrieved",
+      "hardneg_verdict": "N/A - both 'mock provider' facts were excluded as NOISE ('mock' is in contextgit's _NOISE_MARKERS), so the model would get no relevant memory at all"
+    }
+  ],
+  "finding": "With a strong model, a coexisting stale fact (ranked #1, unflagged) did NOT flip the answer in 2/2 testable cases - the model recovered using the also-present current fact + priors. contextgit does no disambiguation itself; safety here is entirely the model's. Boundary: this protection vanishes when only the stale fact survives retrieval (noise filter, ranking, or budget drop - e.g. the mockfallback case where 'mock' facts were noise-filtered out entirely).",
+  "caveat": "2 cases, 1 run each, one model tier. The tightened RL-9' Cowork protocol (5 runs/arm, temp 0, equal-token padding, harder/counterintuitive facts, retrieval-gate) is required for a definitive harm rate."
+}

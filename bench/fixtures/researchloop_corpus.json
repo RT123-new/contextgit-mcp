@@ -1,0 +1,1062 @@
+{
+  "project": "/Users/regtroka/Downloads/ResearchLoop",
+  "docs": {
+    "README.md": {
+      "chars": 15510
+    },
+    "CLAUDE.md": {
+      "chars": 35259
+    },
+    "AGENTS.md": {
+      "chars": 325
+    },
+    "SETUP.md": {
+      "chars": 6773
+    },
+    "VIABILITY_ASSESSMENT.md": {
+      "chars": 17906
+    }
+  },
+  "git_log": [
+    {
+      "sha": "d5378bdb",
+      "date": "2026-06-03",
+      "subject": "Merge pull request #11 from RT123-new/codex/fix-expired-triggerdev-runs",
+      "body": "triggerdev"
+    },
+    {
+      "sha": "c418430f",
+      "date": "2026-06-03",
+      "subject": "triggerdev fix",
+      "body": ""
+    },
+    {
+      "sha": "a1013a3d",
+      "date": "2026-06-02",
+      "subject": "Merge pull request #10 from RT123-new/codex/redesign-mobile-uiux",
+      "body": "redesign"
+    },
+    {
+      "sha": "f2174440",
+      "date": "2026-06-03",
+      "subject": "Resolve PR 10 merge conflicts",
+      "body": ""
+    },
+    {
+      "sha": "9b3f7fbc",
+      "date": "2026-06-03",
+      "subject": "ui redesign",
+      "body": ""
+    },
+    {
+      "sha": "0c610854",
+      "date": "2026-06-02",
+      "subject": "Merge pull request #9 from RT123-new/codex/Bugs-features",
+      "body": "Harden research loop auth, RLS, and run execution flows"
+    },
+    {
+      "sha": "1323c886",
+      "date": "2026-06-02",
+      "subject": "Avoid resuming queued runs with existing trigger handles",
+      "body": ""
+    },
+    {
+      "sha": "fb73f2fe",
+      "date": "2026-06-02",
+      "subject": "Add pause and resume controls for research runs",
+      "body": ""
+    },
+    {
+      "sha": "242306dc",
+      "date": "2026-06-02",
+      "subject": "Merge pull request #8 from RT123-new/codex/vercel",
+      "body": ""
+    },
+    {
+      "sha": "0065f20c",
+      "date": "2026-06-02",
+      "subject": "Security hardening",
+      "body": ""
+    },
+    {
+      "sha": "391fb0ca",
+      "date": "2026-06-02",
+      "subject": "Security + vercel",
+      "body": ""
+    },
+    {
+      "sha": "c468cd55",
+      "date": "2026-06-01",
+      "subject": "Fix Vercel deploy for Next proxy",
+      "body": ""
+    },
+    {
+      "sha": "beaa87d1",
+      "date": "2026-06-01",
+      "subject": "Merge pull request #7 from RT123-new/codex/add-claim-extraction",
+      "body": ""
+    },
+    {
+      "sha": "f6b364c8",
+      "date": "2026-06-01",
+      "subject": "Phase1-18 audit",
+      "body": ""
+    },
+    {
+      "sha": "8a735cbf",
+      "date": "2026-06-01",
+      "subject": "Merge pull request #6 from RT123-new/codex/add-claim-extraction",
+      "body": "Add claim extraction, contradiction auditing, and master report generation"
+    },
+    {
+      "sha": "60fa08e0",
+      "date": "2026-06-01",
+      "subject": "Merge main into claim extraction branch",
+      "body": ""
+    },
+    {
+      "sha": "b043a7ac",
+      "date": "2026-06-01",
+      "subject": "Preserve provider artifacts when analysis fails",
+      "body": ""
+    },
+    {
+      "sha": "9b0d8025",
+      "date": "2026-06-01",
+      "subject": "Add claim extraction, contradiction detection, and review UI",
+      "body": ""
+    },
+    {
+      "sha": "a1249d92",
+      "date": "2026-05-31",
+      "subject": "Merge pull request #5 from RT123-new/claude/add-claude-agent-gitignore-update",
+      "body": ""
+    },
+    {
+      "sha": "97fe7803",
+      "date": "2026-06-01",
+      "subject": "Handle Perplexity normalization failures and add cost accounting",
+      "body": ""
+    },
+    {
+      "sha": "a4e89bbd",
+      "date": "2026-06-01",
+      "subject": "Add Perplexity research provider support",
+      "body": ""
+    },
+    {
+      "sha": "0901b107",
+      "date": "2026-05-30",
+      "subject": "Merge pull request #4 from RT123-new/claude/add-claude-agent-gitignore-update",
+      "body": ""
+    },
+    {
+      "sha": "0c3c7264",
+      "date": "2026-05-31",
+      "subject": "Implement OpenAI research provider",
+      "body": ""
+    },
+    {
+      "sha": "b84c6a6f",
+      "date": "2026-05-30",
+      "subject": "Merge pull request #3 from RT123-new/claude/add-claude-agent-gitignore-update",
+      "body": ""
+    },
+    {
+      "sha": "5bba03a0",
+      "date": "2026-05-30",
+      "subject": "Add Trigger.dev Claude agent and protect local Claude settings",
+      "body": "- Add .claude/agents/trigger-dev-task-writer.md: project-level Claude Code agent definition for Trigger.dev background tasks; keeps it in version control so all contributors have it. - Update .gitignore to exclude .claude/settings.local.json (machine-specific Claude Code settings that should never be committed). Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>"
+    },
+    {
+      "sha": "437b3868",
+      "date": "2026-05-30",
+      "subject": "Merge pull request #2 from RT123-new/claude/researchloop-audit-supabase-trigger-G0CoM",
+      "body": ""
+    },
+    {
+      "sha": "d51ce838",
+      "date": "2026-05-30",
+      "subject": "Integrate Trigger.dev background jobs and harden Supabase",
+      "body": "Move long-running deep-research work out of web requests into Trigger.dev tasks, wired to project proj_pjaribdquznpuxwkpuyq. The web app now writes a queued run and hands it off to the research-run task, which calls the configured research provider(s) and persists every artifact back to Supabase (provider_runs, sources, claims, contradictions, open_questions, reports, research_loops) and updates run status. The UI continues to read status from Supabase. - Add @trigger.dev/sdk + @trigger.dev/buil"
+    },
+    {
+      "sha": "ba8ad463",
+      "date": "2026-05-30",
+      "subject": "Merge pull request #1 from RT123-new/claude/researchloop-supabase-align-52yMD",
+      "body": ""
+    },
+    {
+      "sha": "095af89c",
+      "date": "2026-05-30",
+      "subject": "Align repo with live Supabase database (10-table schema)",
+      "body": "The repo previously described a 12-table schema (profiles + run_steps) that does not match the live Supabase project. Inspected the live database via Supabase MCP (source of truth) and aligned the repo to its actual 10-table schema. - types/supabase.ts: generated Database type from the live schema - types/index.ts: domain types derived from Database; RunStatus uses 'complete' (not 'completed'); timeline steps modeled in research_runs.metadata - supabase/migrations: replace stale 12-table draft w"
+    },
+    {
+      "sha": "44d28b6a",
+      "date": "2026-05-30",
+      "subject": "first",
+      "body": ""
+    },
+    {
+      "sha": "57382e60",
+      "date": "2026-05-30",
+      "subject": "Initial commit",
+      "body": ""
+    }
+  ],
+  "doc_paragraphs": [
+    {
+      "source": "README.md",
+      "text": "ResearchLoop is a SaaS MVP for executing and monitoring autonomous AI research loops. It collects sources, extracts factual claims, cross-examines statements for contradictions, surfaces open questions, and compiles synthesized research reports — all isolated per user via Supabase Row Level Security."
+    },
+    {
+      "source": "README.md",
+      "text": "- **Framework**: Next.js (App Router, React Server Components) - **Language**: TypeScript - **Styling**: Tailwind CSS v4 - **UI Primitives**: Radix UI + Lucide icons (custom dark theme) - **Database & Auth**: Supabase (PostgreSQL, cookie-based SSR sessions, RLS) - **Background jobs**: [Trigger.dev](https://trigger.dev) v4 (project ref `proj_pjaribdquznpuxwkpuyq`). Long-running deep research runs in Trigger.dev tasks, not in web requests. A development-only simulated runner is the local fallback when Trigger.dev is not configured (see [Background research jobs](#background-research-jobs))."
+    },
+    {
+      "source": "README.md",
+      "text": "The repo is aligned to the **live** Supabase project (the source of truth). The baseline migration in [`supabase/migrations`](./supabase/migrations) was reconstructed by inspecting the live database."
+    },
+    {
+      "source": "README.md",
+      "text": "**The live database has exactly 10 public tables.** There is **no `profiles` table** and **no `run_steps` table** (earlier drafts of this repo incorrectly described a 12-table schema — that has been corrected)."
+    },
+    {
+      "source": "README.md",
+      "text": "| # | Table | Purpose | | --- | -------------------- | ------------------------------------------------------------------------------------------------------------------------- | | 1 | `projects` | Workspace containers grouping research activity. | | 2 | `research_questions` | The question/objective driving a loop (`question`, `depth`, `modes`, …). | | 3 | `research_runs` | A run instance. Status: `queued`/`running`/`complete`/`failed`/`cancelled`. Holds `cost_estimate` and a `metadata` JSONB. | | 4 | `provider_runs` | LLM adapter call metadata (`provider`, `model`, `token_usage_json`, `cost_estimate`). | | 5 | `sources` | Collected sources (`title`, `url`, `publisher`, `published_date`, `credibility_score`). | | 6 | `claims` | Extracted factual statements (`claim_text`, `evidence_strength`, `confidence_score`, `source_ids`). | | 7 | `contradictions` | Conflicts between claims (`claim_a`, `claim_b`, `severity`, `status`). | | 8 | `open_questions` | Knowledge gaps (`question`, `priority`, `should_trigger_loop`). | | 9 | `reports` | Final synthesized markdown packets (`title`, `report_type`, `markdown_content`). | | 10 | `research_loops` | Links a parent run + open question to a foll"
+    },
+    {
+      "source": "README.md",
+      "text": "- **`profiles` exists?** No. User identity comes from Supabase Auth (`auth.users`); each table carries a `user_id` referencing `auth.users(id)`. - **`run_steps` exists?** No. The execution **timeline and logs are stored in `research_runs.metadata`** (JSONB) under `metadata.steps`. This keeps the repo aligned with the live database with no extra table. - **RLS**: enabled on all 10 tables, with four per-command policies each (`auth.uid() = user_id`). - **Triggers**: every table has a `set_updated_at` `BEFORE UPDATE` trigger. - **IDs**: `gen_random_uuid()` (pgcrypto). - **Status values** use `complete` (not `completed`) and there is no `partial`."
+    },
+    {
+      "source": "README.md",
+      "text": "None. The baseline migration matches the live database; there are no pending additive migrations awaiting approval. (If a future feature needs a dedicated `run_steps` table, add it as a clearly-marked, separate, not-yet-applied migration rather than editing the baseline.)"
+    },
+    {
+      "source": "README.md",
+      "text": "- One **private** bucket: `researchloop-files`, folder convention `{user_id}/{project_id}/filename`, with SELECT/INSERT/UPDATE/DELETE policies restricting access to the authenticated user's own first folder segment. - The app does not currently upload files; the bucket is provisioned for future use. - ⚠️ The live project also contains an unrelated **public** bucket named `tickets`. It is **not** part of ResearchLoop — review and remove it if it is not needed (see the production checklist)."
+    },
+    {
+      "source": "README.md",
+      "text": "``` ResearchLoop/ ├── app/ # Next.js App Router views & layouts │ ├── (auth)/ # /login │ └── (dashboard)/ # /dashboard, /projects/* ├── components/ # UI modules (dashboard, project, run, ui) ├── lib/ │ ├── supabase/ # Browser, server, service-role, middleware clients │ └── providers/ # Research provider interface + mock + adapter scaffold ├── server/actions/ # Server actions (project CRUD, runs, simulated runner) ├── trigger/ # Trigger.dev tasks (research-run, research-loop) ├── trigger.config.ts # Trigger.dev config (project ref + task dir) ├── supabase/migrations/ # Baseline SQL migration + advisor hardening (match live DB) ├── types/ │ ├── supabase.ts # Generated Database type (from the live schema) │ └── index.ts # Domain types derived from Database └── middleware.ts # Auth route guarding ```"
+    },
+    {
+      "source": "README.md",
+      "text": "To inspect/verify the live database from an MCP-enabled assistant, configure the Supabase MCP server (read-only is recommended for inspection):"
+    },
+    {
+      "source": "README.md",
+      "text": "```jsonc // .mcp.json / client MCP config { \"mcpServers\": { \"supabase\": { \"command\": \"npx\", \"args\": [ \"-y\", \"@supabase/mcp-server-supabase@latest\", \"--read-only\", \"--project-ref=<your-project-ref>\", ], \"env\": { \"SUPABASE_ACCESS_TOKEN\": \"<personal-access-token>\" }, }, }, } ```"
+    },
+    {
+      "source": "README.md",
+      "text": "1. **Configure `.env.local`** — copy `.env.example` to `.env.local` and fill in: ```bash cp .env.example .env.local ``` Set `NEXT_PUBLIC_SUPABASE_URL` and `NEXT_PUBLIC_SUPABASE_ANON_KEY` (frontend- safe, from Supabase Dashboard > Project Settings > API). For the in-process simulated runner you can leave `SUPABASE_SERVICE_ROLE_KEY` and `TRIGGER_SECRET_KEY` empty. To run the **real Trigger.dev** task locally, set both and run `npm run trigger:dev` (see [Background research jobs](#background-research-jobs)). To run real OpenAI-backed research, also set: ```bash RESEARCH_PROVIDERS=openai OPENAI_API_KEY=... OPENAI_RESEARCH_MODEL=gpt-4.1 ``` `OPENAI_API_KEY` is server-only. Keep it in `.env.local` locally and add the same provider env vars to the Trigger.dev dashboard environment for real worker runs. To add Perplexity Sonar research, set: ```bash RESEARCH_PROVIDERS=openai,perplexity PERPLEXITY_API_KEY=... PERPLEXITY_RESEARCH_MODEL=sonar-deep-research ``` `PERPLEXITY_API_KEY` is server-only too. Add it locally and in the Trigger.dev dashboard environment. Perplexity is optional; if its key is missing, the registry skips it safely. `sonar-deep-research` can be expensive, so start with qui"
+    },
+    {
+      "source": "README.md",
+      "text": "The committed `types/supabase.ts` is generated from the live schema. To regenerate after a schema change (requires the Supabase CLI and a linked project via `supabase link --project-ref <ref>`):"
+    },
+    {
+      "source": "README.md",
+      "text": "```bash npm run gen:types # equivalently: # supabase gen types typescript --linked --schema public > types/supabase.ts ```"
+    },
+    {
+      "source": "README.md",
+      "text": "1. **Auth** (`/login`): sign up (or sign in). If using Supabase Cloud, either confirm the email or disable email confirmations to log in immediately. On success you land on `/dashboard`. 2. **Project CRUD**: create a project from the dashboard, edit it under _Workspace Settings_, and optionally delete it. 3. **Research question + queued run**: in a project's _Launch Loop_ tab, enter a question and submit. This inserts a `research_questions` row and a queued `research_runs` row, then redirects to the run detail page. 4. **Run detail / timeline / logs**: the run page polls and renders the timeline stepper, console logs (from `research_runs.metadata.steps`), and the structured output tabs (report, sources, claims, contradictions, open questions)."
+    },
+    {
+      "source": "README.md",
+      "text": "1. The user creates a project/question and launches a run. 2. The `triggerResearchRun` server action inserts a `research_questions` row and a `queued` `research_runs` row in Supabase. 3. It triggers the Trigger.dev **`research-run`** task (`trigger/research-run.ts`), passing the run/user/project/question ids. 4. The task calls the configured research provider(s), then writes results back to Supabase: `provider_runs`, `sources`, `claims`, `contradictions`, `open_questions`, `reports`, and (for open questions flagged to loop) a queued `research_loops` row. It updates `research_runs.status` (`running` → `complete`/`failed`) and stores the step timeline in `research_runs.metadata.steps`. 5. The run detail page reads status/results from Supabase (polling) — it never depends on an in-memory process."
+    },
+    {
+      "source": "README.md",
+      "text": "Repeatable loops are handled by the **`research-loop`** task (`trigger/research-loop.ts`): it spawns a child run for an open question and hands it to `research-run`."
+    },
+    {
+      "source": "README.md",
+      "text": "| Environment | `TRIGGER_SECRET_KEY` set? | Behaviour | | ----------- | ----------------------------- | -------------------------------------------------------------------------------------------------------------------------------------- | | Local dev | no | Falls back to the in-process **simulated runner** (`server/actions/run-executor.ts`) so you can develop without a Trigger.dev account. | | Local dev | yes (+ `npm run trigger:dev`) | Real Trigger.dev `research-run` task executes. | | Production | yes | Real Trigger.dev task executes. | | Production | no | Runs fail fast with a clear configuration error — the app never runs workers in-process in production. |"
+    },
+    {
+      "source": "README.md",
+      "text": "Failures from providers and tasks are always caught and persisted to `provider_runs.error_message` / `research_runs.error_message` — never silently ignored."
+    },
+    {
+      "source": "README.md",
+      "text": "Providers implement the `ResearchProvider` interface in `lib/providers/`. The development/test default is a deterministic, offline **mock** provider (clearly-labelled placeholder output — no fake external data). Production defaults to real providers and will not fall back to mock output unless `ALLOW_MOCK_PROVIDER=true` is explicitly set. Select providers with the `RESEARCH_PROVIDERS` env var (comma-separated, e.g. `openai`, `openai,perplexity`, or `perplexity,mock` in allowed non-production runs). The OpenAI adapter lives in `lib/providers/openai-provider.ts` and uses the Responses API with web search and strict structured-output validation. The Perplexity adapter lives in `lib/providers/perplexity-provider.ts` and calls the Sonar API, then optionally uses OpenAI to normalize Perplexity's markdown report into the same structured provider output shape."
+    },
+    {
+      "source": "README.md",
+      "text": "For OpenAI-backed runs, set these in local `.env.local` and in the Trigger.dev dashboard environment:"
+    },
+    {
+      "source": "README.md",
+      "text": "```bash RESEARCH_PROVIDERS=openai OPENAI_API_KEY=... OPENAI_RESEARCH_MODEL=gpt-4.1 ```"
+    },
+    {
+      "source": "README.md",
+      "text": "For Perplexity-backed runs, set these in local `.env.local` and in the Trigger.dev dashboard environment:"
+    },
+    {
+      "source": "README.md",
+      "text": "```bash RESEARCH_PROVIDERS=openai,perplexity PERPLEXITY_API_KEY=... PERPLEXITY_RESEARCH_MODEL=sonar-deep-research ```"
+    },
+    {
+      "source": "README.md",
+      "text": "Perplexity is optional. Unconfigured providers are skipped safely. In production, at least one real configured provider is required unless `ALLOW_MOCK_PROVIDER=true` is explicitly set for a non-customer test environment. `sonar-deep-research` can be expensive and slower than lightweight runs, so validate setup with quick or standard test runs before using deep runs."
+    },
+    {
+      "source": "README.md",
+      "text": "If multiple providers are configured and one fails, the task persists that failure to `provider_runs`, records it in `research_runs.metadata`, and continues to the next provider. The whole run fails only when no provider produces output."
+    },
+    {
+      "source": "README.md",
+      "text": "```bash # 1. Set TRIGGER_SECRET_KEY (dev key), SUPABASE_SERVICE_ROLE_KEY, and any # provider vars such as OPENAI_API_KEY or PERPLEXITY_API_KEY in .env.local # 2. In one terminal: npm run dev # 3. In another terminal, start the Trigger.dev dev worker: npm run trigger:dev # = npx trigger.dev@latest dev ```"
+    },
+    {
+      "source": "README.md",
+      "text": "The first `trigger dev`/`deploy` opens a browser to log in to Trigger.dev and links this project (`proj_pjaribdquznpuxwkpuyq`, already set in `trigger.config.ts`)."
+    },
+    {
+      "source": "README.md",
+      "text": "Set the worker's environment variables (`SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`, `RESEARCH_PROVIDERS`, and any provider keys such as `OPENAI_API_KEY` or `PERPLEXITY_API_KEY`) in the **Trigger.dev dashboard** for the matching environment. The worker uses the service-role key because it runs outside an authenticated request; it always writes the correct `user_id`."
+    },
+    {
+      "source": "README.md",
+      "text": "- [ ] Configure production SMTP for auth emails. - [ ] Set `NEXT_PUBLIC_SITE_URL` in Vercel production and set the Supabase **Site URL** to the same production domain. - [ ] Add production **redirect URLs** in Supabase Auth settings. - [ ] Set `TRIGGER_SECRET_KEY`, `SUPABASE_URL`, and `SUPABASE_SERVICE_ROLE_KEY` in the **Trigger.dev dashboard** environment, then `npm run trigger:deploy`. - [ ] Configure real research provider(s) via `RESEARCH_PROVIDERS`; OpenAI uses `OPENAI_API_KEY` and `OPENAI_RESEARCH_MODEL`, and Perplexity uses `PERPLEXITY_API_KEY` and `PERPLEXITY_RESEARCH_MODEL`. - [ ] **Review/remove the unused public `tickets` storage bucket** if it is not part of this product. - [ ] Verify `SUPABASE_SERVICE_ROLE_KEY` is server-only and never shipped to the browser (the app does not use it client-side)."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const processData = task({ id: \"process-data\", retry: { maxAttempts: 10, factor: 1.8, minTimeoutInMs: 500, maxTimeoutInMs: 30_000, randomize: false, }, run: async (payload: { userId: string; data: any[] }) => { // Task logic - runs for long time, no timeouts console.log(`Processing ${payload.data.length} items for user ${payload.userId}`); return { processed: payload.data.length }; }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const validatedTask = schemaTask({ id: \"validated-task\", schema: z.object({ name: z.string(), age: z.number(), email: z.string().email(), }), run: async (payload) => { // Payload is automatically validated and typed return { message: `Hello ${payload.name}, age ${payload.age}` }; }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts import { tasks } from \"@trigger.dev/sdk\"; import type { processData } from \"./trigger/tasks\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Single trigger const handle = await tasks.trigger<typeof processData>(\"process-data\", { userId: \"123\", data: [{ id: 1 }, { id: 2 }], });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Batch trigger (up to 1,000 items, 3MB per payload) const batchHandle = await tasks.batchTrigger<typeof processData>(\"process-data\", [ { payload: { userId: \"123\", data: [{ id: 1 }] } }, { payload: { userId: \"456\", data: [{ id: 2 }] } }, ]); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // Multiple rapid triggers with same key = single execution await myTask.trigger( { userId: \"123\" }, { debounce: { key: \"user-123-update\", // Unique key for debounce group delay: \"5s\", // Wait before executing }, } );"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Trailing mode: use payload from LAST trigger await myTask.trigger( { data: \"latest-value\" }, { debounce: { key: \"trailing-example\", delay: \"10s\", mode: \"trailing\", // Default is \"leading\" (first payload) }, } ); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "**Debounce modes:** - `leading` (default): Uses payload from first trigger, subsequent triggers only reschedule - `trailing`: Uses payload from most recent trigger"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts export const parentTask = task({ id: \"parent-task\", run: async (payload) => { // Trigger and continue const handle = await childTask.trigger({ data: \"value\" });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Trigger and wait - returns Result object, NOT task output const result = await childTask.triggerAndWait({ data: \"value\" }); if (result.ok) { console.log(\"Task output:\", result.output); // Actual task return value } else { console.error(\"Task failed:\", result.error); }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Quick unwrap (throws on error) const output = await childTask.triggerAndWait({ data: \"value\" }).unwrap();"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Batch trigger and wait const results = await childTask.batchTriggerAndWait([ { payload: { data: \"item1\" } }, { payload: { data: \"item2\" } }, ]);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "for (const run of results) { if (run.ok) { console.log(\"Success:\", run.output); } else { console.log(\"Failed:\", run.error); } } }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const childTask = task({ id: \"child-task\", run: async (payload: { data: string }) => { return { processed: payload.data }; }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "> Never wrap triggerAndWait or batchTriggerAndWait calls in a Promise.all or Promise.allSettled as this is not supported in Trigger.dev tasks."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const taskWithWaits = task({ id: \"task-with-waits\", run: async (payload) => { console.log(\"Starting task\");"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Wait for specific duration await wait.for({ seconds: 30 }); await wait.for({ minutes: 5 }); await wait.for({ hours: 1 }); await wait.for({ days: 1 });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Wait for token (from external system) await wait.forToken({ token: \"user-approval-token\", timeoutInSeconds: 3600, // 1 hour timeout });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "> Never wrap wait calls in a Promise.all or Promise.allSettled as this is not supported in Trigger.dev tasks."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **Result vs Output**: `triggerAndWait()` returns a `Result` object with `ok`, `output`, `error` properties - NOT the direct task output - **Type safety**: Use `import type` for task references when triggering from backend - **Waits > 5 seconds**: Automatically checkpointed, don't count toward compute usage - **Debounce + idempotency**: Idempotency keys take precedence over debounce settings"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // BREAKS APPLICATION client.defineJob({ id: \"job-id\", run: async (payload, io) => { /* ... */ }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "Use SDK (`@trigger.dev/sdk`), check `result.ok` before accessing `result.output`"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const processUser = task({ id: \"process-user\", run: async (payload: { userId: string; orgId: string }, { ctx }) => { // Add tags during execution await tags.add(`user_${payload.userId}`); await tags.add(`org_${payload.orgId}`);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Trigger with tags await processUser.trigger( { userId: \"123\", orgId: \"abc\" }, { tags: [\"priority\", \"user_123\", \"org_abc\"] } // Max 10 tags per run );"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Subscribe to tagged runs for await (const run of runs.subscribeToRunsWithTag(\"user_123\")) { console.log(`User task ${run.id}: ${run.status}`); } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- Use prefixes: `user_123`, `org_abc`, `video:456` - Max 10 tags per run, 1-64 characters each - Tags don't propagate to child tasks automatically"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **Maximum batch size**: 1,000 items (increased from 500) - **Payload per item**: 3MB each (increased from 1MB combined) - Payloads > 512KB automatically offload to object storage"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "| Tier | Bucket Size | Refill Rate | |------|-------------|-------------| | Free | 1,200 runs | 100 runs/10 sec | | Hobby | 5,000 runs | 500 runs/5 sec | | Pro | 5,000 runs | 500 runs/5 sec |"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "| Tier | Concurrent Batches | |------|-------------------| | Free | 1 | | Hobby | 10 | | Pro | 10 |"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Basic batch trigger (up to 1,000 items) const runs = await myTask.batchTrigger([ { payload: { userId: \"user-1\" } }, { payload: { userId: \"user-2\" } }, { payload: { userId: \"user-3\" } }, ]);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Batch trigger with wait const results = await myTask.batchTriggerAndWait([ { payload: { userId: \"user-1\" } }, { payload: { userId: \"user-2\" } }, ]);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "for (const result of results) { if (result.ok) { console.log(\"Result:\", result.output); } }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// With per-item options const batchHandle = await myTask.batchTrigger([ { payload: { userId: \"123\" }, options: { idempotencyKey: \"user-123-batch\", tags: [\"priority\"], }, }, { payload: { userId: \"456\" }, options: { idempotencyKey: \"user-456-batch\", }, }, ]); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "Consolidate multiple triggers into a single execution by debouncing task runs with a unique key and delay window."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **User activity updates**: Batch rapid user actions into a single run - **Webhook deduplication**: Handle webhook bursts without redundant processing - **Search indexing**: Combine document updates instead of processing individually - **Notification batching**: Group notifications to prevent user spam"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts await myTask.trigger( { userId: \"123\" }, { debounce: { key: \"user-123-update\", // Unique identifier for debounce group delay: \"5s\", // Wait duration (\"5s\", \"1m\", or milliseconds) }, } ); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "**Leading Mode** (default): Uses payload/options from the first trigger; subsequent triggers only reschedule execution time."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // First trigger sets the payload await myTask.trigger({ action: \"first\" }, { debounce: { key: \"my-key\", delay: \"10s\" } });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Second trigger only reschedules - payload remains \"first\" await myTask.trigger({ action: \"second\" }, { debounce: { key: \"my-key\", delay: \"10s\" } }); // Task executes with { action: \"first\" } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts await myTask.trigger( { data: \"latest-value\" }, { debounce: { key: \"trailing-example\", delay: \"10s\", mode: \"trailing\", }, } ); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "In trailing mode, these options update with each trigger: - `payload` — task input data - `metadata` — run metadata - `tags` — run tags (replaces existing) - `maxAttempts` — retry attempts - `maxDuration` — maximum compute time - `machine` — machine preset"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- Idempotency keys take precedence over debounce settings - Compatible with `triggerAndWait()` — parent runs block correctly on debounced execution - Debounce key is scoped to the task"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Shared queue for related tasks const emailQueue = queue({ name: \"email-processing\", concurrencyLimit: 5, // Max 5 emails processing simultaneously });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Task-level concurrency export const oneAtATime = task({ id: \"sequential-task\", queue: { concurrencyLimit: 1 }, // Process one at a time run: async (payload) => { // Critical section - only one instance runs }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Per-user concurrency export const processUserData = task({ id: \"process-user-data\", run: async (payload: { userId: string }) => { // Override queue with user-specific concurrency await childTask.trigger(payload, { queue: { name: `user-${payload.userId}`, concurrencyLimit: 2, }, }); }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const emailTask = task({ id: \"send-email\", queue: emailQueue, // Use shared queue run: async (payload: { to: string }) => { // Send email logic }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const resilientTask = task({ id: \"resilient-task\", retry: { maxAttempts: 10, factor: 1.8, // Exponential backoff multiplier minTimeoutInMs: 500, maxTimeoutInMs: 30_000, randomize: false, }, catchError: async ({ error, ctx }) => { // Custom error handling if (error.code === \"FATAL_ERROR\") { throw new AbortTaskRunError(\"Cannot retry this error\"); }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Allow retry by returning nothing return { retryAt: new Date(Date.now() + 60000) }; // Retry in 1 minute }, run: async (payload) => { // Retry specific operations const result = await retry.onThrow( async () => { return await unstableApiCall(payload); }, { maxAttempts: 3 } );"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Conditional HTTP retries const response = await retry.fetch(\"https://api.example.com\", { retry: { maxAttempts: 5, condition: (response, error) => { return response?.status === 429 || response?.status >= 500; }, }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts export const heavyTask = task({ id: \"heavy-computation\", machine: { preset: \"large-2x\" }, // 8 vCPU, 16 GB RAM maxDuration: 1800, // 30 minutes timeout run: async (payload, { ctx }) => { // Resource-intensive computation if (ctx.machine.preset === \"large-2x\") { // Use all available cores return await parallelProcessing(payload); }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Override machine when triggering await heavyTask.trigger(payload, { machine: { preset: \"medium-1x\" }, // Override for this run }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- `micro`: 0.25 vCPU, 0.25 GB RAM - `small-1x`: 0.5 vCPU, 0.5 GB RAM (default) - `small-2x`: 1 vCPU, 1 GB RAM - `medium-1x`: 1 vCPU, 2 GB RAM - `medium-2x`: 2 vCPU, 4 GB RAM - `large-1x`: 4 vCPU, 8 GB RAM - `large-2x`: 8 vCPU, 16 GB RAM"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const paymentTask = task({ id: \"process-payment\", retry: { maxAttempts: 3, }, run: async (payload: { orderId: string; amount: number }) => { // Automatically scoped to this task run, so if the task is retried, the idempotency key will be the same const idempotencyKey = await idempotencyKeys.create(`payment-${payload.orderId}`);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Ensure payment is processed only once await chargeCustomer.trigger(payload, { idempotencyKey, idempotencyKeyTTL: \"24h\", // Key expires in 24 hours }); }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "function createPayloadHash(payload: any): string { const hash = createHash(\"sha256\"); hash.update(JSON.stringify(payload)); return hash.digest(\"hex\"); }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const deduplicatedTask = task({ id: \"deduplicated-task\", run: async (payload) => { const payloadHash = createPayloadHash(payload); const idempotencyKey = await idempotencyKeys.create(payloadHash);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const batchProcessor = task({ id: \"batch-processor\", run: async (payload: { items: any[] }, { ctx }) => { const totalItems = payload.items.length;"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Initialize progress metadata metadata .set(\"progress\", 0) .set(\"totalItems\", totalItems) .set(\"processedItems\", 0) .set(\"status\", \"starting\");"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Update progress const progress = ((i + 1) / totalItems) * 100; metadata .set(\"progress\", progress) .increment(\"processedItems\", 1) .append(\"logs\", `Processed item ${i + 1}/${totalItems}`) .set(\"currentItem\", item.id); }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Update parent metadata from child task export const childTask = task({ id: \"child-task\", run: async (payload, { ctx }) => { // Update parent task metadata metadata.parent.set(\"childStatus\", \"processing\"); metadata.root.increment(\"childrenCompleted\", 1);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const tracedTask = task({ id: \"traced-task\", run: async (payload, { ctx }) => { logger.info(\"Task started\", { userId: payload.userId });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Custom trace with attributes const user = await logger.trace( \"fetch-user\", async (span) => { span.setAttribute(\"user.id\", payload.userId); span.setAttribute(\"operation\", \"database-fetch\");"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "const userData = await database.findUser(payload.userId); span.setAttribute(\"user.found\", !!userData);"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "try { const result = await processUser(user); logger.info(\"Processing completed\", { result }); return result; } catch (error) { logger.error(\"Processing failed\", { error: error.message, userId: payload.userId, }); throw error; } }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // Hidden task - not exported, only used internally const internalProcessor = task({ id: \"internal-processor\", run: async (payload: { data: string }) => { return { processed: payload.data.toUpperCase() }; }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Public task that uses hidden task export const publicWorkflow = task({ id: \"public-workflow\", run: async (payload: { input: string }) => { // Use hidden task internally const result = await internalProcessor.triggerAndWait({ data: payload.input, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **Concurrency**: Use queues to prevent overwhelming external services - **Retries**: Configure exponential backoff for transient failures - **Idempotency**: Always use for payment/critical operations - **Metadata**: Track progress for long-running tasks - **Machines**: Match machine size to computational requirements - **Tags**: Use consistent naming patterns for filtering - **Debouncing**: Use for user activity, webhooks, and notification batching - **Batch triggering**: Use for bulk operations up to 1,000 items - **Error Handling**: Distinguish between retryable and fatal errors"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "Design tasks to be stateless, idempotent, and resilient to failures. Use metadata for state tracking and queues for resource management."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export default defineConfig({ project: \"<project-ref>\", // Required: Your project reference dirs: [\"./trigger\"], // Task directories runtime: \"node\", // \"node\", \"node-22\", or \"bun\" logLevel: \"info\", // \"debug\", \"info\", \"warn\", \"error\""
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Default retry settings retries: { enabledInDev: false, default: { maxAttempts: 3, minTimeoutInMs: 1000, maxTimeoutInMs: 10000, factor: 2, randomize: true, }, },"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Build configuration build: { autoDetectExternal: true, keepNames: true, minify: false, extensions: [], // Build extensions go here },"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Global lifecycle hooks onStartAttempt: async ({ payload, ctx }) => { console.log(\"Global task start\"); }, onSuccess: async ({ payload, output, ctx }) => { console.log(\"Global task success\"); }, onFailure: async ({ payload, error, ctx }) => { console.log(\"Global task failure\"); }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ prismaExtension({ schema: \"prisma/schema.prisma\", version: \"5.19.0\", // Optional: specify version migrate: true, // Run migrations during build directUrlEnvVarName: \"DIRECT_DATABASE_URL\", typedSql: true, // Enable TypedSQL support }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts import { emitDecoratorMetadata } from \"@trigger.dev/build/extensions/typescript\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ pythonExtension({ scripts: [\"./python/**/*.py\"], // Copy Python files requirementsFile: \"./requirements.txt\", // Install packages devPythonBinaryPath: \".venv/bin/python\", // Dev mode binary }), ];"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Usage in tasks const result = await python.runInline(`print(\"Hello, world!\")`); const output = await python.runScript(\"./python/script.py\", [\"arg1\"]); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ playwright({ browsers: [\"chromium\", \"firefox\", \"webkit\"], // Default: [\"chromium\"] headless: true, // Default: true }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Environment variable needed: // PUPPETEER_EXECUTABLE_PATH: \"/usr/bin/google-chrome-stable\" ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ lightpanda({ version: \"latest\", // or \"nightly\" disableTelemetry: false, }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ ffmpeg({ version: \"7\" }), // Static build, or omit for Debian version ];"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Automatically sets FFMPEG_PATH and FFPROBE_PATH // Add fluent-ffmpeg to external packages if using ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts import { audioWaveform } from \"@trigger.dev/build/extensions/audioWaveform\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ aptGet({ packages: [\"ffmpeg\", \"imagemagick\", \"curl=7.68.0-1\"], // Can specify versions }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ additionalPackages({ packages: [\"wrangler\"], // CLI tools and specific versions }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ additionalFiles({ files: [\"wrangler.toml\", \"./assets/**\", \"./fonts/**\"], // Glob patterns supported }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ syncEnvVars(async (ctx) => { // ctx contains: environment, projectRef, env return [ { name: \"SECRET_KEY\", value: await getSecret(ctx.environment) }, { name: \"API_URL\", value: ctx.environment === \"prod\" ? \"api.prod.com\" : \"api.dev.com\" }, ]; }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts import { esbuildPlugin } from \"@trigger.dev/build/extensions\"; import { sentryEsbuildPlugin } from \"@sentry/esbuild-plugin\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "extensions: [ esbuildPlugin( sentryEsbuildPlugin({ org: process.env.SENTRY_ORG, project: process.env.SENTRY_PROJECT, authToken: process.env.SENTRY_AUTH_TOKEN, }), { placement: \"last\", target: \"deploy\" } // Optional config ), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "externalsForTarget: (target) => { return [\"some-native-module\"]; // Add external dependencies },"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "onBuildStart: async (context) => { console.log(`Build starting for ${context.target}`); // Register esbuild plugins, modify build context },"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "onBuildComplete: async (context, manifest) => { console.log(\"Build complete, adding layers\"); // Add build layers, modify deployment context.addLayer({ id: \"my-layer\", files: [{ source: \"./custom-file\", destination: \"/app/custom\" }], commands: [\"chmod +x /app/custom\"], }); }, };"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export default defineConfig({ project: \"my-project\", build: { extensions: [customExtension], }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts import { PrismaInstrumentation } from \"@prisma/instrumentation\"; import { OpenAIInstrumentation } from \"@langfuse/openai\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export default defineConfig({ // ... other config telemetry: { instrumentations: [new PrismaInstrumentation(), new OpenAIInstrumentation()], exporters: [customExporter], // Optional custom exporters }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts export default defineConfig({ // ... other config defaultMachine: \"large-1x\", // Default machine for all tasks maxDuration: 300, // Default max duration (seconds) enableConsoleLogging: true, // Console logging in development }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts extensions: [ prismaExtension({ schema: \"prisma/schema.prisma\", migrate: true }), additionalFiles({ files: [\"./public/**\", \"./assets/**\"] }), syncEnvVars(async (ctx) => [...envVars]), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts extensions: [ pythonExtension({ scripts: [\"./ai/**/*.py\"], requirementsFile: \"./requirements.txt\", }), ffmpeg({ version: \"7\" }), additionalPackages({ packages: [\"wrangler\"] }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts extensions: [ playwright({ browsers: [\"chromium\"] }), puppeteer(), additionalFiles({ files: [\"./selectors.json\", \"./proxies.txt\"] }), ]; ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **Use specific versions**: Pin extension versions for reproducible builds - **External packages**: Add modules with native addons to the `build.external` array - **Environment sync**: Use `syncEnvVars` for dynamic secrets - **File paths**: Use glob patterns for flexible file inclusion - **Debug builds**: Use `--log-level debug --dry-run` for troubleshooting"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "Extensions only affect deployment, not local development. Use `external` array for packages that shouldn't be bundled."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "export const task = schedules.task({ id: \"first-scheduled-task\", run: async (payload) => { payload.timestamp; // Date (scheduled time, UTC) payload.lastTimestamp; // Date | undefined payload.timezone; // IANA, e.g. \"America/New_York\" (default \"UTC\") payload.scheduleId; // string payload.externalId; // string | undefined payload.upcoming; // Date[]"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "payload.timestamp.toLocaleString(\"en-US\", { timeZone: payload.timezone }); }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts schedules.task({ id: \"every-2h\", cron: \"0 */2 * * *\", // UTC run: async () => {}, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "schedules.task({ id: \"tokyo-5am\", cron: { pattern: \"0 5 * * *\", timezone: \"Asia/Tokyo\", environments: [\"PRODUCTION\", \"STAGING\"] }, run: async () => {}, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts await schedules.create({ task: task.id, cron: \"0 0 * * *\", timezone: \"America/New_York\", // DST-aware externalId: \"user_123\", deduplicationKey: \"user_123-daily\", // updates if reused }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // /trigger/reminder.ts export const reminderTask = schedules.task({ id: \"todo-reminder\", run: async (p) => { if (!p.externalId) throw new Error(\"externalId is required\"); const user = await db.getUser(p.externalId); await sendReminderEmail(user); }, }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // app/reminders/route.ts export async function POST(req: Request) { const data = await req.json(); return Response.json( await schedules.create({ task: reminderTask.id, cron: \"0 8 * * *\", timezone: data.timezone, externalId: data.userId, deduplicationKey: `${data.userId}-reminder`, }) ); } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "``` * * * * * | | | | └ day of week (0–7 or 1L–7L; 0/7=Sun; L=last) | | | └── month (1–12) | | └──── day of month (1–31 or L) | └────── hour (0–23) └──────── minute (0–59) ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **Dev:** only when the dev CLI is running. - **Staging/Production:** only for tasks in the **latest deployment**."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts await schedules.retrieve(id); await schedules.list(); await schedules.update(id, { cron: \"0 0 1 * *\", externalId: \"ext\", deduplicationKey: \"key\" }); await schedules.deactivate(id); await schedules.activate(id); await schedules.del(id); await schedules.timezones(); // list of IANA timezones ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "Create/attach schedules visually (Task, Cron pattern, Timezone, Optional: External ID, Dedup key, Environments). Test scheduled tasks from the **Test** page."
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- Subscribe to run status changes, metadata updates, and streams - Build real-time dashboards and UI updates - Monitor task progress from frontend and backend"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Read-only token for specific runs const publicToken = await auth.createPublicToken({ scopes: { read: { runs: [\"run_123\", \"run_456\"], tasks: [\"my-task-1\", \"my-task-2\"], }, }, expirationTime: \"1h\", // Default: 15 minutes }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```ts // Single-use token for triggering tasks const triggerToken = await auth.createTriggerPublicToken(\"my-task\", { expirationTime: \"30m\", }); ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Trigger and subscribe const handle = await tasks.trigger(\"my-task\", { data: \"value\" });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Subscribe to specific run for await (const run of runs.subscribeToRun<typeof myTask>(handle.id)) { console.log(`Status: ${run.status}, Progress: ${run.metadata?.progress}`); if (run.status === \"COMPLETED\") break; }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Subscribe to runs with tag for await (const run of runs.subscribeToRunsWithTag(\"user-123\")) { console.log(`Tagged run ${run.id}: ${run.status}`); }"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Subscribe to batch for await (const run of runs.subscribeToBatch(batchId)) { console.log(`Batch run ${run.id}: ${run.status}`); } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// 1. Define streams (shared location) export const aiStream = streams.define<string>({ id: \"ai-output\", });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// 2. Pipe from task export const streamingTask = task({ id: \"streaming-task\", run: async (payload) => { const completion = await openai.chat.completions.create({ model: \"gpt-4\", messages: [{ role: \"user\", content: payload.prompt }], stream: true, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "const { waitUntilComplete } = aiStream.pipe(completion); await waitUntilComplete(); }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// 3. Read from backend const stream = await aiStream.read(runId, { timeoutInSeconds: 300, startIndex: 0, // Resume from specific chunk });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "for await (const chunk of stream) { console.log(\"Chunk:\", chunk); // Fully typed } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```tsx \"use client\"; import { useTaskTrigger, useRealtimeTaskTrigger } from \"@trigger.dev/react-hooks\"; import type { myTask } from \"../trigger/tasks\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "function TriggerComponent({ accessToken }: { accessToken: string }) { // Basic trigger const { submit, handle, isLoading } = useTaskTrigger<typeof myTask>(\"my-task\", { accessToken, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Trigger with realtime updates const { submit: realtimeSubmit, run, isLoading: isRealtimeLoading, } = useRealtimeTaskTrigger<typeof myTask>(\"my-task\", { accessToken });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "return ( <div> <button onClick={() => submit({ data: \"value\" })} disabled={isLoading}> Trigger Task </button>"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "<button onClick={() => realtimeSubmit({ data: \"realtime\" })} disabled={isRealtimeLoading}> Trigger with Realtime </button>"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```tsx \"use client\"; import { useRealtimeRun, useRealtimeRunsWithTag } from \"@trigger.dev/react-hooks\"; import type { myTask } from \"../trigger/tasks\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "function SubscribeComponent({ runId, accessToken }: { runId: string; accessToken: string }) { // Subscribe to specific run const { run, error } = useRealtimeRun<typeof myTask>(runId, { accessToken, onComplete: (run) => { console.log(\"Task completed:\", run.output); }, });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "// Subscribe to tagged runs const { runs } = useRealtimeRunsWithTag(\"user-123\", { accessToken });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "if (error) return <div>Error: {error.message}</div>; if (!run) return <div>Loading...</div>;"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "return ( <div> <div>Status: {run.status}</div> <div>Progress: {run.metadata?.progress || 0}%</div> {run.output && <div>Result: {JSON.stringify(run.output)}</div>}"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "<h3>Tagged Runs:</h3> {runs.map((r) => ( <div key={r.id}> {r.id}: {r.status} </div> ))} </div> ); } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```tsx \"use client\"; import { useRealtimeStream } from \"@trigger.dev/react-hooks\"; import { aiStream } from \"../trigger/streams\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "function StreamComponent({ runId, accessToken }: { runId: string; accessToken: string }) { // Pass defined stream directly for type safety const { parts, error } = useRealtimeStream(aiStream, runId, { accessToken, timeoutInSeconds: 300, throttleInMs: 50, // Control re-render frequency });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "if (error) return <div>Error: {error.message}</div>; if (!parts) return <div>Loading...</div>;"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "function WaitTokenComponent({ tokenId, accessToken }: { tokenId: string; accessToken: string }) { const { complete } = useWaitToken(tokenId, { accessToken });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "return <button onClick={() => complete({ approved: true })}>Approve Task</button>; } ```"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "```tsx \"use client\"; import { useRun } from \"@trigger.dev/react-hooks\"; import type { myTask } from \"../trigger/tasks\";"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "function SWRComponent({ runId, accessToken }: { runId: string; accessToken: string }) { const { run, error, isLoading } = useRun<typeof myTask>(runId, { accessToken, refreshInterval: 0, // Disable polling (recommended) });"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "if (isLoading) return <div>Loading...</div>; if (error) return <div>Error: {error.message}</div>;"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- `id`: Unique run identifier - `status`: `QUEUED`, `EXECUTING`, `COMPLETED`, `FAILED`, `CANCELED`, etc. - `payload`: Task input data (typed) - `output`: Task result (typed, when completed) - `metadata`: Real-time updatable data - `createdAt`, `updatedAt`: Timestamps - `costInCents`: Execution cost"
+    },
+    {
+      "source": "CLAUDE.md",
+      "text": "- **Use Realtime over SWR**: Recommended for most use cases due to rate limits - **Scope tokens properly**: Only grant necessary read/trigger permissions - **Handle errors**: Always check for errors in hooks and subscriptions - **Type safety**: Use task types for proper payload/output typing - **Cleanup subscriptions**: Backend subscriptions auto-complete, frontend hooks auto-cleanup"
+    },
+    {
+      "source": "AGENTS.md",
+      "text": "This version has breaking changes — APIs, conventions, and file structure may all differ from your training data. Read the relevant guide in `node_modules/next/dist/docs/` before writing any code. Heed deprecation notices. <!-- END:nextjs-agent-rules -->"
+    },
+    {
+      "source": "SETUP.md",
+      "text": "Configure your local environment, point the app at a Supabase project, and run the ResearchLoop MVP."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "> The **live Supabase database is the source of truth.** The repo's baseline > migration and generated types already match it (10 tables, no `profiles`, no > `run_steps`). If you stand up your own Supabase project, apply the baseline > migration to reproduce that schema."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "- **Node.js**: 18.x or 20.x+ - **npm**: 9.x+ (or yarn/pnpm/bun) - **Supabase**: a project on [Supabase Cloud](https://supabase.com) **or** the [Supabase CLI](https://supabase.com/docs/guides/cli) (Docker) for a local stack."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "1. Copy the example file: ```bash cp .env.example .env.local ``` 2. Fill in `.env.local` from **Supabase Dashboard > Project Settings > API**: - `NEXT_PUBLIC_SUPABASE_URL` — the project URL (frontend-safe). - `NEXT_PUBLIC_SUPABASE_ANON_KEY` — the `anon` public key (frontend-safe; RLS constrains access). - `NEXT_PUBLIC_SITE_URL` — canonical app URL, for example `https://your-app.vercel.app`. Set this in Vercel production so auth email redirects never fall back to localhost. - `SUPABASE_SERVICE_ROLE_KEY` — server-only; bypasses RLS and must never reach the browser. Required to run the real Trigger.dev worker (leave empty to use the in-process simulated runner locally). - `SUPABASE_URL` — same value as `NEXT_PUBLIC_SUPABASE_URL`; used by the Trigger.dev worker. Optional locally. - `TRIGGER_SECRET_KEY` — Trigger.dev dev/prod secret key. Leave empty locally to use the simulated runner; set it (and run `npm run trigger:dev`) to use the real `research-run` task. - `RESEARCH_PROVIDERS` / provider API keys / provider model vars — optional; select/configure research providers. For OpenAI-backed runs, set: ```bash RESEARCH_PROVIDERS=openai OPENAI_API_KEY=... OPENAI_RESEARCH_MODEL=gpt-4.1 ``` "
+    },
+    {
+      "source": "SETUP.md",
+      "text": "For real Trigger.dev execution, add the same provider env vars (`RESEARCH_PROVIDERS`, `OPENAI_API_KEY`, `OPENAI_RESEARCH_MODEL`, `PERPLEXITY_API_KEY`, `PERPLEXITY_RESEARCH_MODEL`) to the Trigger.dev dashboard environment as well."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "The schema lives in [`supabase/migrations/20260530000000_init.sql`](./supabase/migrations/20260530000000_init.sql). It creates the 10 public tables, RLS policies, indexes, `set_updated_at` triggers, and the private `researchloop-files` storage bucket with owner-folder policies."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "> If you are using the existing live ResearchLoop project, the schema is already > applied — you don't need to run anything."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "1. Open your project's **SQL Editor**. 2. Paste the contents of `supabase/migrations/20260530000000_init.sql`. 3. Run it."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "```bash supabase start supabase db reset # applies migrations in supabase/migrations ```"
+    },
+    {
+      "source": "SETUP.md",
+      "text": "```bash supabase link --project-ref <your-project-ref> npm run gen:types # writes types/supabase.ts from the live schema ```"
+    },
+    {
+      "source": "SETUP.md",
+      "text": "Open [http://localhost:3000](http://localhost:3000). You'll be redirected to `/login`."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "1. **Auth**: open the **Sign Up** tab, create an account (password ≥ 6 chars). With Supabase Cloud, confirm the email or disable \"Confirm email\" in Auth > Providers to log in immediately. You land on `/dashboard`. 2. **Create a project**: **New Project** → name + description → you're taken to `/projects/[projectId]`. 3. **Launch a run**: under **Launch Loop**, enter a research question and submit. This creates a `research_questions` row and a `queued` `research_runs` row, then redirects to `/projects/[projectId]/runs/[runId]`. 4. **Watch execution** (local dev): the simulated runner advances the timeline (Search → Fetch → Synthesize → Report), streams logs (stored in `research_runs.metadata.steps`), and fills the output tabs (report, sources, claims, contradictions, open questions). Status ends at `complete`."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "- **No `profiles` / `run_steps`**: identity is `auth.users`; timeline/logs live in `research_runs.metadata`. - **Background jobs**: long-running research runs in the Trigger.dev `research-run` task (`trigger/research-run.ts`, project ref `proj_pjaribdquznpuxwkpuyq` in `trigger.config.ts`). Locally, run `npm run trigger:dev` alongside `npm run dev` with `TRIGGER_SECRET_KEY` + `SUPABASE_SERVICE_ROLE_KEY` set. For real provider-backed worker runs, also set `RESEARCH_PROVIDERS` and provider keys/models locally and in the Trigger.dev dashboard. For example, OpenAI uses `OPENAI_API_KEY` and `OPENAI_RESEARCH_MODEL=gpt-4.1`; Perplexity uses `PERPLEXITY_API_KEY` and `PERPLEXITY_RESEARCH_MODEL=sonar-deep-research`. Without Trigger.dev vars, an in-process simulated runner is used in development. Deploy with `npm run trigger:deploy`. See the README \"Background research jobs\" section. - **Service role key**: server-only; the app's browser and server clients use only the public anon key under RLS."
+    },
+    {
+      "source": "SETUP.md",
+      "text": "Then open the app, sign in, create or open a project, use the **Launch Loop** tab, enter a research question, and submit it. The run detail page should show a `provider_runs` row for each configured provider, such as `openai` or `perplexity`, and real sources/claims once the Trigger.dev worker completes."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "*Prepared June 12, 2026. Based on a full-codebase audit, live market research (June 2026 pricing verified against vendor docs), a four-lens strategic analysis (bear / bull / pricing-GTM / technical), and an adversarial cross-review of all findings.*"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "**Conditional yes — the codebase has real, salvageable commercial value, but not as the product it currently presents itself as.**"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "- As an \"autonomous deep-research loop,\" ResearchLoop has **no value to sell**. The loop is a commodity: Google sells it as an API for ~$2/task, OpenAI for $0.41–$0.92 (o4-mini), Anthropic Managed Agents runs hosted iterate-grade-revise loops for $0.08/session-hour + tokens, and Google AI Pro gives consumers **20 deep-research runs per day for $19.99/month**. Nobody will pay a solo-developer SaaS to run a loop the platforms sell cheaper, faster, and under trusted brands. - As a **verification, audit, and persistence layer on top of commodity research APIs**, it is on the right side of the market's largest validated gap: the #1 documented pain with every deep-research product is citation hallucination (CJR measured >60% wrong citations across 8 generative search tools; fabricated academic references are up ~10× to 1-in-277), and enterprises pay $10K–$100K/year (AlphaSense, Crayon, Klue) for research they can *trust* — a 100–1000× premium over the $0.50–$3 API cost of generating it. That premium is paid for trust, accountability, and workflow, not generation. - The schema already shipped (May 30 migration) is the right substrate: every claim is a Postgres row with `evidence_strength`"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "**The honest one-line strategy: demote the loop to a swappable commodity backend, and sell \"research you can defend.\"**"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "A critical caveat the adversarial review surfaced: today the trust artifacts (confidence scores, evidence strength, contradictions) are themselves generated by the same model class that hallucinates, with **zero measured accuracy**. Until a real verification pass exists and is benchmarked, the defensible positioning is **\"auditable and reviewable\"** — not \"more accurate.\" Building and measuring actual citation verification is the make-or-break feature."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### What exists and works - Full auth → project → question → background run → results flow on Next.js 16 / Supabase / Vercel / Trigger.dev v4. - 4-stage pipeline in Trigger.dev workers: provider calls (Perplexity `sonar-deep-research`, OpenAI gpt-4.1 + web search) → claim extraction → contradiction detection + open-question generation → master report. Four levels of fallback persistence; failures always recorded, never silent. - Run controls (pause/resume/stop via checkpointed waits), step timeline, execution log, per-run cost estimates preferring provider-reported cost. - Human review workflow on claims (accept / reject / needs research) and on follow-up questions (suggested → approved), with bounded follow-up loops (max 3/project). - Solid security posture: RLS on all 10 tables with per-command policies, atomic run-launch DB function, service-role ownership guards in workers, server-only keys, count-based launch guards (3 active/project, 5/user, 25/project/day, 50/user/day), admin-gated deep mode, production refuses the mock provider. - CI (lint, typecheck, test, build) and ~8 test files on the critical guard paths."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Corrections to earlier findings (verified live) - **The Perplexity endpoint is NOT a bug.** `POST https://api.perplexity.ai/v1/sonar` is the currently documented canonical chat-completions endpoint (verified against docs.perplexity.ai and by live 401-vs-404 HTTP probes; legacy `/chat/completions` is an older alias that still resolves). The code is more current than the reviewers' training data. - **Production does not silently fall back to mock.** `getResearchProviders()` throws in production unless `ALLOW_MOCK_PROVIDER=true` is explicitly set."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Real gaps that remain | Gap | Severity | |---|---| | No live (un-mocked) provider smoke test — tests inject `fetchImpl`, so a broken provider integration is invisible by construction | High | | No production error monitoring (Sentry etc.) on Next.js or the Trigger.dev worker | High | | Launch guards are **count-only**; no dollar budgets. Worst case ~50 runs/day × ~$3 = ~$150/user/day COGS exposure with no billing in place | High | | No billing, export, sharing, notifications, onboarding, teams, API keys, webhooks | Required for launch (in that order — see plan) | | Research **modes are UI decoration**: `ResearchProviderInput` has no `modes` field; prompts never use them; follow-ups hardcode two modes | Medium | | The cross-run claims knowledge base — the strategic asset — is invisible in the run-centric UI | Medium | | `metadata` JSONB cast `as unknown as Json` without schema validation on read | Medium | | No rate limiting on server actions; no run-stuck timeout/heartbeat | Medium |"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### The loop is commoditized | Provider | Offer | Cost | |---|---|---| | Google Gemini Deep Research API (Interactions API, Apr 2026) | full managed research agent | **~$2/task** (standard), ~$5 (Max) | | OpenAI Deep Research API | o4-mini / o3 | $0.41–$0.92 / ~$1.45 typical (to $30 heavy) | | Anthropic Managed Agents (beta Apr 2026) | hosted agent loop + \"Outcomes\" rubric-graded iterate→grade→revise (≤20 iterations), multi-agent coordination | $0.08/session-hr + tokens | | Perplexity Agent API + **Search as Code** | reasoning model writes sandboxed Python search pipelines; claims **85% token reduction** | tool-call pricing (web_search $0.005/call, sandbox $0.03/session) | | Tavily `/research` | managed research endpoint | $0.03–$2.00/request |"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "Perplexity Sonar API (current docs): Search API $5/1K requests; `sonar-deep-research` $2/M in, $8/M out, +$2/M citation, +$3/M reasoning, +$5/1K searches → **$0.41–$1.32 per query** measured."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "**Implications:** (a) Anthropic's Managed Agents and Perplexity's Search-as-Code absorb exactly the orchestration plumbing ResearchLoop built on Trigger.dev — that layer is now a roadmap item for every platform, not a moat; (b) the same products are **falling-cost suppliers** if ResearchLoop keeps only the verification/persistence layer and treats backends as swappable; (c) Anthropic's June 15, 2026 move to dedicated agent credit pools at API rates normalizes usage-based agent pricing — aligning with credit-based pricing here."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Price anchors - Consumer: ChatGPT Plus $20/mo ≈ 10 deep-research sessions; **Google AI Pro $19.99/mo = 20 runs/day**; Perplexity Pro $20/mo ≈ 20/day. Competing on run volume is unwinnable. - Research SaaS: Elicit $12–49/mo, Consensus ~$9–12/mo (academic verticals with content moats). - Enterprise intelligence: AlphaSense $10–20K/seat/yr; Crayon ~$30K/yr median; Klue $30–100K/yr. - **The hole: almost nothing exists at $50–200/mo for professionals whose name goes on the research deliverable.** That is the only reachable wedge for a solo developer."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Validated demand signals 1. **Citation hallucination** — the #1 complaint across all deep-research products, and worsening. Maps 1:1 onto the claims/contradictions/review schema. 2. **Quota opacity** — OpenAI cut Plus quotas and hid the counter; sustained user anger. Transparent per-run cost display (already built) is a real differentiator. 3. **Cost unpredictability in APIs** — Tavily's 4–250-credit spread is widely criticized. Argues for credit pricing with depth tiers, not pure usage-based. 4. Enterprise: 88% of agent pilots fail to reach production; top blockers are evaluation gaps (64%) and governance (57%) — the accept/reject audit trail and execution log are precisely evaluation-and-governance artifacts."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "No credible market-size figure exists for \"deep research tools\" specifically; the segment is too new (AI assistant market overall: ~$3.35B 2025, ~44% CAGR estimates)."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "1. **Citation verification (must be built, days 31–60):** fetch every source URL at extraction time, verify it resolves and supports the claim, stamp `verified / unreachable / mismatched` on the rows, surface a per-report verified-citations score, and publish a measured accuracy benchmark against the >60%-error baseline. This converts the #1 market pain into a quantified marketing weapon. *Risks: paywalls/bot-blocking may cap coverage at ~60–80%; the pass has its own COGS; prompt injection from fetched pages must be mitigated.* 2. **Audit trail + human review** (exists): claim-level accept/reject with reviewer status, execution logs, bounded loops. Sellable to governance-blocked buyers today under \"auditable,\" not \"accurate.\" 3. **Persistent cross-run research memory** (exists in schema, invisible in UI): per-project claims knowledge base that per-task APIs structurally lack ($2 buys markdown; state evaporates). Becomes a switching cost **only if** usage is continuous and claims carry freshness/expiry handling — research usage is episodic, so this is an architecture diagram until the knowledge-base UI and re-verification exist. 4. **Multi-provider corroboration + arbitrage** (scaff"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "- **COGS:** $0.50–$3.00 per full run cycle (provider query $0.41–$1.32 + normalizer + 3–4 small analysis calls; dual-provider and deep mode at the high end). Falling: a Gemini $2-flat backend converts token-metered risk into a fixed unit cost; Search-as-Code-style backends could cut tokens dramatically. - **Never price flat-unlimited.** The 6× COGS spread means one whale (50 deep runs ≈ $150 COGS) destroys a $49 flat tier. Pure usage-based reproduces complaint #3. - **Recommended: hybrid credits.** Free: 3 quick runs one-time (~$1.50 max acquisition cost). **Pro $49/mo = 20 credits** (quick 0.5 / standard 1 / deep 3 credits). **Team $199/mo = 80 credits + 5 seats.** Overage $25/10 credits. Margins: ~63–76% gross at realistic 40–60% utilization; ~39% floor at full utilization and $1.50 avg COGS — but **negative at the $3.00 COGS bound**, so margin discipline depends on measured average COGS ≤ ~$1.50 (single-provider default + depth budget caps achieve this; verify in 30 days from the existing `provider_runs.cost_estimate` data). - **The right anchor isn't Google's $19.99 — it's 4–8 hours of analyst time ($200–800) per defensible memo.** Frame the unit of value as a client-ready, cit"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "The stack stays. Nothing about Supabase/Vercel/Trigger.dev needs replacing at this scale; the work is product, not infra. (Do sanity-check Trigger.dev concurrency, Supabase connection limits, and Vercel function durations before any launch spike.)"
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Phase 0 — Make it observable and bounded (week 1) 1. **Live smoke test** against the real Perplexity + OpenAI APIs (opt-in, nightly/manual, real key) — the mocked-fetch test suite is structurally blind to integration breakage. Confirm in Trigger.dev logs that real Perplexity runs succeed end-to-end. *(The endpoint itself is verified correct — `/v1/sonar` is the documented canonical path; no code change needed.)* 2. **Sentry** on Next.js and the Trigger.dev worker (esbuild plugin extension). 3. **Dollar-budget enforcement:** extend `evaluateResearchRunLaunchGuard` with per-user/per-project daily cost sums from `provider_runs.cost_estimate`; depth-tier budget ceilings (~$0.50 / $1.50 / $5) checked pre-launch and mid-run; daily spend-alert scheduled task; kill-switch env var. 4. **Single-provider production default** (halves COGS); cross-check becomes a premium toggle later. 5. Rate limiting on server actions (Postgres or Upstash-backed); run-stuck timeout."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Phase 1 — Make it a deliverable (days 7–30) 6. **Export**: Markdown + PDF with the claims ledger, per-claim sources, evidence strength, review status, and a citation appendix. For the target buyer, the export *is* the product. 7. **Run-completion emails** (Resend) — runs take 5–30 min; users currently walk away into a void. 8. Onboarding sample project; Zod-validate `metadata` on read. 9. **Recruit 10–20 free design partners** (boutique consultants, mid-market CI practitioners, VC platform analysts). Instrument **claim acceptance rate** as the core metric."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Phase 2 — Make it differentiated (days 31–60) 10. **Citation-verification pass** (the moat feature): fetch each source URL, verify resolution + claim support, stamp results on `sources`/`claims`, show a per-report verified-citations score. Sanitize fetched content against prompt injection. 11. **Wire modes into prompts** (add `modes` to `ResearchProviderInput`; collapse 5 modes → 3, flagship: `competitor_analysis` and `risks_sceptic_review` — the first maps to the Klue/Crayon WTP category, the second pairs uniquely with contradiction detection). 12. **Project-level claims knowledge-base view** (cross-run, filterable by status/strength/freshness) — make the Postgres asset visible. 13. Add a **Gemini Deep Research backend** behind the existing `ResearchProvider` interface (fixed ~$2/task unit cost) with per-run backend selection. 14. Publish a small **public accuracy benchmark** vs raw ChatGPT/Gemini deep research."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Phase 3 — Make it sellable (days 61–90) 15. **Stripe credit billing**: Free 3 quick runs / Pro $49 / Team $199 as above; deep mode = 3 credits, Pro-only (replaces the ADMIN_EMAILS gate). 16. Read-only public share links for reports (cheap virality; full teams only when the $199 tier has buyers). 17. Positioning: **\"Research you can sign your name to\"** — verified citations, claim audit trail, persistent research memory. Two design-partner case studies. 18. Distribution: 10 public citation-audited sample reports as SEO pages; Show HN / Product Hunt; consulting + CI communities (SCIP, r/consulting, Indie Hackers); 2–3 consultant-newsletter slots. **No lifetime deals** (real per-run COGS makes LTDs toxic)."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Decision gates (pre-committed) - **Day 30:** measured avg COGS ≤ $1.50/run? ≥10 design partners with 3+ completed runs each? Claim acceptance >70% validates the trust thesis; <50% means the verification layer needs work before any paid launch. - **Day 90:** ≥100 signups and ≥3% free→paid conversion → continue. 2–3% → pivot to open-core BYO-key at $29/mo or per-deliverable pricing. <2% → stop; the asset becomes a portfolio piece / acquisition conversation (the verification pipeline + schema is a plausible feature-acquisition target for Klue/Crayon-tier vendors). - **Standing kill criteria:** Google/OpenAI ship claim-level structured citations with persistent project memory at the $20 tier; or platform-dependency maintenance consumes >50% of dev time for two consecutive weeks; or own measured citation accuracy is not materially better than the ~60%-error baseline."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "### Handle before charging money (any phase) - **Liability & terms:** AI-research disclaimers in ToS; check Perplexity/OpenAI/Google terms on commercial resale of output; E&O exposure if a consultant resells a wrongly-\"verified\" claim; EU AI Act transparency obligations. - **Confidentiality:** customers' research questions reveal strategy — document provider data-retention/training opt-outs; this is a prerequisite for the compliance-sensitive buyer. - **Data freshness:** claims decay — timestamp, expire, and offer re-verification; a stale \"verified\" claim is a liability. - **Solo-founder vendor risk:** expect it as a sales objection (support SLAs, key-person risk), not just a capacity limit; status page + documented data export mitigate it partially."
+    },
+    {
+      "source": "VIABILITY_ASSESSMENT.md",
+      "text": "| Question | Answer | |---|---| | Does it have value? | Yes — but in the verification/audit/persistence layer, not the loop. The loop is a $0.41–$5 commodity sold by every platform. | | To whom? | Professionals whose name goes on the research: boutique consultants, mid-market competitive-intel teams (priced out of $30K Klue/Crayon), VC/PE analysts. The $50–200/mo hole between consumer subscriptions and enterprise CI. | | Moat/USP? | None today. Buildable: measured citation verification + claim-level audit trail + persistent cross-run research memory + multi-provider corroboration. Until benchmarked, claim \"auditable,\" never \"more accurate.\" | | Demand? | Strong validated pain (citation hallucination, quota opacity), zero validated willingness-to-pay for *this* product. Hence design partners and pre-committed gates before building billing. | | API vs subscription economics? | COGS $0.50–$3/run and falling; viable only with credit-based pricing (~$49/~$199 tiers) or per-deliverable pricing; flat-unlimited is structurally unsafe; never compete on volume against Google's 20-runs/day at $19.99. | | Handle how? | Keep Supabase + Vercel + Trigger.dev. Week 1: observability + dollar caps. "
+    }
+  ]
+}

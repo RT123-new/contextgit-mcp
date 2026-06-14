@@ -1,0 +1,161 @@
+{
+  "test": "RL-3 real temporal corrections (11 genuine ResearchLoop reversals)",
+  "n_corrections": 11,
+  "old_fact_flagged_superseded_count": 0,
+  "old_fact_coexists_unflagged_count": 8,
+  "auto_supersede_rate": 0.0,
+  "silent_coexistence_rate": 0.727,
+  "rows": [
+    {
+      "correction": "Schema has 12 tables including a `profiles` table and a... -> Schema has exactly 10 public tables; no `profiles` (ide...",
+      "evidence": "Commit 2026-05-30 'Align repo with live Supabase database (10-table schema)'; README.md sc",
+      "query_shared_tokens": [
+        "profiles",
+        "run_steps",
+        "schema",
+        "tables"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Run status value is `completed` (and a `partial` status... -> Run status uses `complete` (not `completed`) and there ...",
+      "evidence": "Commit 'Align repo with live Supabase database'; types/index.ts; README key-facts list.",
+      "query_shared_tokens": [
+        "completed",
+        "partial",
+        "run",
+        "status"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Background jobs run via the v2 `client.defineJob` Trigg... -> Trigger.dev v4 with `@trigger.dev/sdk` (`task`/`schemaT...",
+      "evidence": "CLAUDE.md 'NEVER Use (v2 deprecated)' section; trigger.config.ts uses defineConfig with pr",
+      "query_shared_tokens": [
+        "clientdefinejob",
+        "triggerdev"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "No real research provider; only a deterministic offline... -> Added an OpenAI provider, then a Perplexity Sonar provi...",
+      "evidence": "Commits 2026-05-31 'Implement OpenAI research provider' and 2026-06-01 'Add Perplexity res",
+      "query_shared_tokens": [
+        "mock",
+        "provider"
+      ],
+      "old_event_in_selected": false,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": false,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Production silently falls back to the mock provider whe... -> Production throws ('No configured real research provide...",
+      "evidence": "lib/providers/index.ts getResearchProviders(); VIABILITY_ASSESSMENT.md 'Corrections to ear",
+      "query_shared_tokens": [
+        "configured",
+        "production",
+        "real"
+      ],
+      "old_event_in_selected": false,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": false,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Runs cannot be paused or resumed; statuses are queued/r... -> Added an explicit `paused` status and pause/resume/stop...",
+      "evidence": "Commit 2026-06-02 'Add pause and resume controls for research runs'; migration 20260602200",
+      "query_shared_tokens": [
+        "paused"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Resuming a queued run always re-dispatches it to Trigge... -> If a queued run already has a Trigger.dev handle in its...",
+      "evidence": "Commit 2026-06-02 'Avoid resuming queued runs with existing trigger handles'; server/actio",
+      "query_shared_tokens": [
+        "queued",
+        "run",
+        "triggerdev"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "The Perplexity `/v1/sonar` endpoint is a bug and should... -> `POST https://api.perplexity.ai/v1/sonar` is the docume...",
+      "evidence": "VIABILITY_ASSESSMENT.md 'Corrections to earlier findings'; lib/providers/perplexity-provid",
+      "query_shared_tokens": [
+        "chatcompletions",
+        "endpoint"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "set_updated_at function uses the default mutable search... -> set_updated_at is hardened with a pinned search_path to...",
+      "evidence": "Commit 'Integrate Trigger.dev background jobs and harden Supabase'; migration 202605300100",
+      "query_shared_tokens": [
+        "search_path",
+        "set_updated_at"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Run launch had no atomicity or count guardrails.... -> Launch is gated by an atomic DB function enforcing 3 ac...",
+      "evidence": "Migrations 20260602140000_atomic_research_run_launch.sql and 20260601090000_private_beta_g",
+      "query_shared_tokens": [
+        "launch"
+      ],
+      "old_event_in_selected": true,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": true,
+      "avoid_stale_block_present": false
+    },
+    {
+      "correction": "Supabase clients fell back to a placeholder anon key wh... -> Clients are typed with Database and fail clearly on mis...",
+      "evidence": "Commit 'Align repo with live Supabase database' body (lib/supabase/{client,server,middlewa",
+      "query_shared_tokens": [
+        "clients",
+        "env",
+        "missing",
+        "placeholder"
+      ],
+      "old_event_in_selected": false,
+      "old_event_flagged_superseded": false,
+      "old_superseded_by": null,
+      "both_coexist_unflagged": false,
+      "avoid_stale_block_present": false
+    }
+  ],
+  "note": "Supersession read from explain_selection (superseded_by / exclusion_reasons), not ranking. High coexistence = the model sees old+new as equally current unless mark_stale is used.",
+  "_elapsed_s": 12.8
+}
