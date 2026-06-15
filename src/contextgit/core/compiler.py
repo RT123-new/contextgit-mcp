@@ -20,11 +20,10 @@ _STOPWORDS = {
 }
 
 _CORRECTION_MARKERS = (
-    "correction",
-    "final correction",
+    "correction:",
+    "final correction:",
     "instead of",
     "supersedes",
-    "updated",
     "update:",
     "final:",
     "from now on",
@@ -51,6 +50,36 @@ _NOISE_MARKERS = (
     "distractor",
     "bulk archive",
     "unrelated",
+)
+
+_QUERY_FILLER_TOKENS = {
+    "about", "answer", "answers", "ask", "asked", "call", "called", "mean",
+    "means", "mention", "mentions", "name", "named", "need", "needed",
+    "needs", "record", "recorded", "rule", "say", "says", "tell", "tells",
+}
+
+_SUPERSESSION_SUBJECT_STOPWORDS = _QUERY_FILLER_TOKENS | {
+    "cannot", "cited", "citing", "cite", "correct", "corrected", "correction",
+    "decision", "final", "instead", "must", "no", "not", "only", "replace",
+    "replaced", "replaces", "supersede", "superseded", "supersedes", "update",
+    "updated",
+}
+
+_NEGATING_CORRECTION_MARKERS = (
+    "not",
+    "never",
+    "wrong",
+    "incorrect",
+    "isn't",
+    "is not",
+    "aren't",
+    "are not",
+    "cannot",
+    "can't",
+    "must not",
+    "do not",
+    "don't",
+    "instead of",
 )
 
 
@@ -143,6 +172,48 @@ def _content_tokens(text: str) -> List[str]:
     return [tok for tok in tokenize(text) if tok not in _STOPWORDS and len(tok) >= 2]
 
 
+def _canonical_content_tokens(text: str) -> List[str]:
+    normalized = re.sub(r"[-_/]+", " ", (text or "").lower())
+    normalized = re.sub(r"[^\w\s]", " ", normalized)
+    return [
+        tok for tok in normalized.split()
+        if tok and tok not in _STOPWORDS and len(tok) >= 2
+    ]
+
+
+def _query_focus_tokens(text: str) -> List[str]:
+    return [tok for tok in _canonical_content_tokens(text) if tok not in _QUERY_FILLER_TOKENS]
+
+
+def _supersession_subject_tokens(text: str) -> List[str]:
+    clean = re.sub(
+        r"^(remember that|remember this|from now on|going forward|final decision:|"
+        r"decision:|final correction:|correction:|update:)\s*",
+        "",
+        (text or "").strip(),
+        flags=re.IGNORECASE,
+    )
+    return [
+        tok for tok in _canonical_content_tokens(clean)
+        if tok not in _SUPERSESSION_SUBJECT_STOPWORDS
+    ]
+
+
+def _is_specific_stale_value(value: str) -> bool:
+    raw = (value or "").strip(".,;:!?")
+    if not raw:
+        return False
+    lowered = raw.lower()
+    if lowered in _STOPWORDS or lowered in _SUPERSESSION_SUBJECT_STOPWORDS:
+        return False
+    return bool(
+        re.search(r"\d", raw)
+        or re.search(r"[_./:-]", raw)
+        or re.search(r"[a-z][A-Z]|[A-Z].*[A-Z]", raw)
+        or len(raw) >= 12
+    )
+
+
 def _normalize_topic(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
 
@@ -180,6 +251,21 @@ def _is_correction_text(text: str, tags: Sequence[str], supersedes: Optional[str
     )
 
 
+def _can_infer_supersession(text: str, tags: Sequence[str], supersedes: Optional[str]) -> bool:
+    if supersedes:
+        return True
+    tag_set = {tag.lower() for tag in tags}
+    if {"correction", "update", "decision"} & tag_set:
+        return True
+    lowered = re.sub(r"\s+", " ", (text or "").strip().lower())
+    return bool(
+        lowered.startswith(("correction:", "final correction:", "update:", "decision:", "final:"))
+        or lowered.startswith(("from now on", "going forward"))
+        or " instead of " in f" {lowered} "
+        or " supersedes " in f" {lowered} "
+    )
+
+
 def _is_open_loop_text(text: str, tags: Sequence[str], page_type: str = "") -> bool:
     lowered = (text or "").lower()
     tag_set = {tag.lower() for tag in tags}
@@ -199,6 +285,43 @@ def _is_noise_text(text: str, tags: Sequence[str], importance: float = 0.5) -> b
         or any(marker in lowered for marker in _NOISE_MARKERS)
         or importance < 0.15
     )
+
+
+def _is_pending_review_event(event: "ContextEvent") -> bool:
+    return (
+        "pending_review" in {tag.lower() for tag in event.tags}
+        or event.metadata.get("memory_status") == "pending_review"
+    )
+
+
+def _durable_query_match(query: str, text: str, *, is_durable: bool) -> float:
+    if not is_durable:
+        return 0.0
+    query_tokens = _query_focus_tokens(query)
+    if not query_tokens:
+        return 0.0
+    text_tokens = _canonical_content_tokens(text)
+    if not text_tokens:
+        return 0.0
+
+    query_set = set(query_tokens)
+    text_set = set(text_tokens)
+    coverage = len(query_set & text_set) / len(query_set)
+
+    longest_phrase = 0
+    max_n = min(len(query_tokens), 6)
+    for n in range(max_n, 1, -1):
+        needles = {tuple(query_tokens[start:start + n]) for start in range(0, len(query_tokens) - n + 1)}
+        for idx in range(0, len(text_tokens) - n + 1):
+            if tuple(text_tokens[idx:idx + n]) in needles:
+                longest_phrase = n
+                break
+        if longest_phrase:
+            break
+    phrase_score = longest_phrase / len(query_tokens) if query_tokens else 0.0
+    if coverage < 0.6 and phrase_score < 0.5:
+        return 0.0
+    return _clamp01(max(coverage, phrase_score))
 
 
 def _source_confidence_for_event(event: RawEvent) -> float:
@@ -228,6 +351,65 @@ def _mechanical_summary(text: str, max_chars: int = 180) -> str:
     return clean[: max_chars - 3].rstrip() + "..."
 
 
+def _window_around_token(clean: str, tokens: Sequence[str], max_chars: int) -> str:
+    lowered = clean.lower()
+    positions = [
+        lowered.find(token)
+        for token in tokens
+        if token and lowered.find(token) >= 0
+    ]
+    if not positions:
+        return clean[: max_chars - 3].rstrip() + "..."
+    center = min(positions)
+    start = max(0, center - max_chars // 3)
+    end = min(len(clean), start + max_chars - 3)
+    start = max(0, end - (max_chars - 3))
+    snippet = clean[start:end].strip()
+    if start > 0:
+        snippet = "..." + snippet.lstrip()
+    if end < len(clean):
+        snippet = snippet.rstrip() + "..."
+    return snippet
+
+
+def _query_aware_summary(text: str, query: str, max_chars: int = 180) -> str:
+    clean = re.sub(r"\s+", " ", (text or "").strip())
+    if len(clean) <= max_chars:
+        return clean
+    query_tokens = _query_focus_tokens(query)
+    if not query_tokens:
+        return _mechanical_summary(clean, max_chars=max_chars)
+
+    query_set = set(query_tokens)
+    spans = [
+        span.strip(" -\t")
+        for span in re.split(r"(?<=[.!?])\s+|\n+|;\s+", clean)
+        if span.strip(" -\t")
+    ]
+    if not spans:
+        return _window_around_token(clean, query_tokens, max_chars)
+
+    best_idx = 0
+    best_score: Tuple[int, int, int, int] = (-1, -1, -1, 0)
+    for idx, span in enumerate(spans):
+        span_tokens = set(_canonical_content_tokens(span))
+        overlap = len(query_set & span_tokens)
+        identifiers = len(re.findall(r"\b[A-Za-z][A-Za-z0-9_./:-]{2,}\b", span))
+        numbers = len(re.findall(r"\b\d+(?:\.\d+)?\b", span))
+        # Negative length keeps ties deterministic while preferring compact spans.
+        score = (overlap, identifiers, numbers, -len(span))
+        if score > best_score:
+            best_score = score
+            best_idx = idx
+
+    best = spans[best_idx]
+    if best_score[0] <= 0:
+        return _window_around_token(clean, query_tokens, max_chars)
+    if len(best) <= max_chars:
+        return best
+    return _window_around_token(best, query_tokens, max_chars)
+
+
 def _active_claim_summary(text: str, max_chars: int = 180) -> str:
     clean = re.sub(r"\s+", " ", (text or "").strip())
     clean = re.sub(r"\s+instead of\s+[^.;,]+", "", clean, flags=re.IGNORECASE)
@@ -240,6 +422,8 @@ class ContextCompilerConfig(BaseModel):
     min_score: float = 0.05
     max_selected_items: int = 12
     recency_half_life_events: float = 20.0
+    recency_cap: float = 0.7
+    prior_cap_ratio: Optional[float] = 1.0
     # Selection scoring profile. "baseline" is the original, preregistered
     # behavior. "natural_law" swaps three ad-hoc score shapes for empirically
     # grounded statistical-linguistic / cognitive laws (see module helpers).
@@ -250,6 +434,7 @@ class ContextCompilerConfig(BaseModel):
             "recency": 0.14,
             "query_relevance": 0.30,
             "correction_priority": 0.20,
+            "durable_query_match": 0.12,
             "source_confidence": 0.10,
             "open_loop": 0.08,
             "token_cost_penalty": 0.15,
@@ -263,6 +448,7 @@ class ContextCompilerConfig(BaseModel):
             "dispersion": 0.06,  # spacing effect (temporal spread)
             "query_relevance": 0.30,
             "correction_priority": 0.20,
+            "durable_query_match": 0.12,
             "source_confidence": 0.10,
             "open_loop": 0.08,
             "token_cost_penalty": 0.15,
@@ -343,6 +529,7 @@ class ContextCompiler:
         wiki_pages: Iterable[WikiPage | Dict[str, Any]] = (),
     ) -> List[ContextEvent]:
         segmented: List[ContextEvent] = []
+        source_order = 0
         for raw in events:
             event = raw if isinstance(raw, RawEvent) else RawEvent.model_validate(raw)
             topics, entities = self._detect_topics_and_entities(
@@ -370,10 +557,12 @@ class ContextCompiler:
                         "event_id": event.event_id,
                         "source_type": event.source_type,
                         "source_ref": event.source_ref,
+                        "_source_order": source_order,
                         **(event.metadata or {}),
                     },
                 )
             )
+            source_order += 1
         for raw in wiki_pages:
             page = raw if isinstance(raw, WikiPage) else WikiPage.model_validate(raw)
             text = f"{page.title}\n{page.content}".strip()
@@ -402,11 +591,13 @@ class ContextCompiler:
                         "title": page.title,
                         "page_type": page.type,
                         "sources": list(page.sources),
+                        "_source_order": source_order,
                         **(page.metadata or {}),
                     },
                 )
             )
-        segmented.sort(key=lambda item: (_parse_ts(item.timestamp), item.source_id))
+            source_order += 1
+        segmented.sort(key=lambda item: (_parse_ts(item.timestamp), item.metadata.get("_source_order", 0), item.source_id))
         return segmented
 
     def detect_topics(self, events: Iterable[ContextEvent]) -> List[TopicRecord]:
@@ -437,7 +628,7 @@ class ContextCompiler:
         for idx, event in enumerate(segmented):
             for topic in event.topics:
                 topic_positions.setdefault(topic, []).append(idx)
-        superseded_by = self._build_supersession_index(segmented)
+        superseded_by, supersession_basis = self._build_supersession_index(segmented)
         bm25_scores = self._bm25_scores(user_prompt, segmented)
         candidates = [
             self._score_event(
@@ -448,6 +639,7 @@ class ContextCompiler:
                 topic_frequency,
                 topic_positions,
                 superseded_by,
+                supersession_basis,
                 bm25_scores,
                 effective_budget,
             )
@@ -493,38 +685,48 @@ class ContextCompiler:
             include_full_history=self.config.include_full_history,
             all_events=segmented,
         )
-        # Graceful degradation: the fully-assembled patch can exceed the budget
-        # even though every greedy per-item check passed, because the final render
-        # also includes the "Avoid Stale/Superseded" block (for stale items ranked
-        # below the greedy cutoff) and the full provenance line -- neither of which
-        # the per-item trial render fully accounted for. Rather than discard ALL
-        # context (which left users with an empty patch on the default budget once
-        # a store accumulated stale facts), drop the lowest-scoring selected items
-        # one at a time until the patch fits.
-        while selected and estimate_tokens(patch) > effective_budget:
-            dropped = selected.pop()  # selected is in descending-score order
-            excluded.append(dropped.model_copy(update={"selected": False, "exclusion_reasons": ["over_token_budget"]}))
-            patch = self._render_patch(
-                conversation_id=conversation_id,
-                selected=selected,
-                excluded=excluded,
-                topic_index=topic_index,
-                include_full_history=self.config.include_full_history,
-                all_events=segmented,
-            )
         if estimate_tokens(patch) > effective_budget:
-            # Only now -- when even an empty selection's boilerplate exceeds the
-            # budget (budget set far too small) -- fall back to the tiny placeholder.
-            selected = []
+            # The final render can be larger than each greedy trial because
+            # excluded stale items are rendered in the Avoid block after the
+            # selection loop. Prefer dropping optional stale guidance, then
+            # trim the lowest-scoring selected items. Returning an empty
+            # force_tiny patch is the last resort, not the first overflow path.
             patch = self._render_patch(
                 conversation_id=conversation_id,
                 selected=selected,
                 excluded=excluded,
                 topic_index=topic_index,
                 include_full_history=False,
-                all_events=[],
-                force_tiny=True,
+                all_events=segmented,
+                stale_limit=0,
             )
+            while selected and estimate_tokens(patch) > effective_budget:
+                dropped = selected.pop()
+                excluded.append(
+                    dropped.model_copy(
+                        update={"selected": False, "exclusion_reasons": ["over_token_budget"]}
+                    )
+                )
+                patch = self._render_patch(
+                    conversation_id=conversation_id,
+                    selected=selected,
+                    excluded=excluded,
+                    topic_index=topic_index,
+                    include_full_history=False,
+                    all_events=segmented,
+                    stale_limit=0,
+                )
+            if estimate_tokens(patch) > effective_budget:
+                selected = []
+                patch = self._render_patch(
+                    conversation_id=conversation_id,
+                    selected=selected,
+                    excluded=excluded,
+                    topic_index=topic_index,
+                    include_full_history=False,
+                    all_events=[],
+                    force_tiny=True,
+                )
 
         return ContextCompilation(
             conversation_id=conversation_id,
@@ -566,33 +768,77 @@ class ContextCompiler:
         topics.extend(tok for tok in _content_tokens(text) if len(tok) >= 4)
         return _stable_unique(topics), entities
 
-    def _build_supersession_index(self, events: Sequence[ContextEvent]) -> Dict[str, str]:
+    def _build_supersession_index(self, events: Sequence[ContextEvent]) -> Tuple[Dict[str, str], Dict[str, Dict[str, Any]]]:
         superseded_by: Dict[str, str] = {}
+        basis_by_source: Dict[str, Dict[str, Any]] = {}
         for event in events:
             if event.supersedes:
                 superseded_by[event.supersedes] = event.source_id
+                basis_by_source[event.supersedes] = {
+                    "kind": "explicit_supersedes",
+                    "newer": event.source_id,
+                }
+
+        lower_texts = {event.source_id: event.text.lower() for event in events}
+        subject_tokens = {
+            event.source_id: set(_supersession_subject_tokens(event.text))
+            for event in events
+        }
 
         # Deterministic fallback for "instead of X" corrections where the
-        # source did not populate `supersedes`.
-        for newer in events:
-            if not _is_correction_text(newer.text, newer.tags, newer.supersedes):
+        # source did not populate `supersedes`, plus correction-marked natural
+        # language that shares a distinctive subject with older claims.
+        for newer_idx, newer in enumerate(events):
+            if (
+                not _can_infer_supersession(newer.text, newer.tags, newer.supersedes)
+                or _is_pending_review_event(newer)
+            ):
                 continue
             stale_values = [
                 value.rstrip(".,;:!?")
-                for value in re.findall(r"instead of\s+([^\s,;!]+)", newer.text, flags=re.IGNORECASE)
+                for value in re.findall(r"instead of\s+([A-Za-z0-9_.:/-]+)", newer.text, flags=re.IGNORECASE)
             ]
-            if not stale_values:
-                continue
-            newer_ts = _parse_ts(newer.timestamp)
-            for older in events:
-                if older.source_id == newer.source_id or _parse_ts(older.timestamp) >= newer_ts:
+            stale_values.extend(
+                value.rstrip(".,;:!?")
+                for value in re.findall(r"\bnot\s+([A-Za-z0-9_.:/-]+)", newer.text)
+                if _is_specific_stale_value(value)
+            )
+            newer_subject = subject_tokens.get(newer.source_id, set())
+            for older_idx, older in enumerate(events):
+                if older.source_id == newer.source_id or older_idx >= newer_idx:
                     continue
                 if newer.project and older.project and _normalize_topic(newer.project) != _normalize_topic(older.project):
                     continue
-                old_text = older.text.lower()
-                if any(value and value.lower() in old_text for value in stale_values):
-                    superseded_by.setdefault(older.source_id, newer.source_id)
-        return superseded_by
+                if _is_pending_review_event(older):
+                    continue
+                old_text = lower_texts.get(older.source_id, older.text.lower())
+                matched_values = sorted({value for value in stale_values if value and value.lower() in old_text})
+                explicit_value_match = bool(matched_values)
+                old_subject = subject_tokens.get(older.source_id, set())
+                shared_subject = newer_subject & old_subject
+                newer_lower = lower_texts.get(newer.source_id, newer.text.lower())
+                has_negating_marker = any(marker in f" {newer_lower} " for marker in _NEGATING_CORRECTION_MARKERS)
+                confidence_ok = newer.confidence + 0.05 >= older.confidence
+                natural_subject_match = (
+                    confidence_ok
+                    and has_negating_marker
+                    and len(shared_subject) >= 4
+                    and len(shared_subject) / max(1, len(newer_subject)) >= 0.5
+                    and len(shared_subject) / max(1, len(old_subject)) >= 0.35
+                )
+                if explicit_value_match or natural_subject_match:
+                    if older.source_id not in superseded_by:
+                        superseded_by[older.source_id] = newer.source_id
+                        basis_by_source[older.source_id] = {
+                            "kind": "explicit_value_match" if explicit_value_match else "negating_subject_match",
+                            "newer": newer.source_id,
+                            "matched_values": matched_values,
+                            "shared_subject": sorted(shared_subject),
+                            "newer_subject_ratio": round(len(shared_subject) / max(1, len(newer_subject)), 3),
+                            "older_subject_ratio": round(len(shared_subject) / max(1, len(old_subject)), 3),
+                            "confidence_ok": confidence_ok,
+                        }
+        return superseded_by, basis_by_source
 
     def _bm25_scores(self, query: str, events: Sequence[ContextEvent]) -> Dict[str, float]:
         if not events:
@@ -615,6 +861,7 @@ class ContextCompiler:
         topic_frequency: Dict[str, int],
         topic_positions: Dict[str, List[int]],
         superseded_by: Dict[str, str],
+        supersession_basis: Dict[str, Dict[str, Any]],
         bm25_scores: Dict[str, float],
         budget: int,
     ) -> ContextCandidate:
@@ -628,9 +875,12 @@ class ContextCompiler:
         overlap = len(query_tokens & event_tokens) / len(query_tokens) if query_tokens else 0.0
         query_relevance = max(overlap, bm25_scores.get(event.source_id, 0.0))
         correction = 1.0 if _is_correction_text(event.text, event.tags, event.supersedes) else 0.0
+        durable_source = event.source_type == "wiki" or bool({"remember", "durable"} & {tag.lower() for tag in event.tags})
+        durable_match = _durable_query_match(query, event.text, is_durable=durable_source)
         open_loop = 1.0 if _is_open_loop_text(event.text, event.tags, event.metadata.get("page_type", "")) else 0.0
         token_cost_penalty = _clamp01(event.token_count / max(float(budget), 1.0))
         stale = event.status in {"stale", "archived", "suppressed"} or event.source_id in superseded_by
+        pending_review = _is_pending_review_event(event)
         noise = _is_noise_text(event.text, event.tags, event.importance)
         stale_noise_penalty = 1.0 if stale else (0.6 if noise else 0.0)
 
@@ -646,7 +896,8 @@ class ContextCompiler:
             max_frequency = max(topic_frequency.values(), default=1)
             recurring_hits = [topic_frequency.get(topic, 0) for topic in event.topics]
             frequency = (max(recurring_hits) / max_frequency) if recurring_hits else 0.0
-            recency = 2.0 ** (-age / half_life)
+            raw_recency = 2.0 ** (-age / half_life)
+            recency = min(raw_recency, max(0.0, float(self.config.recency_cap)))
             weights = self.config.weights
 
         components = {
@@ -654,6 +905,7 @@ class ContextCompiler:
             "recency": round(_clamp01(recency), 6),
             "query_relevance": round(_clamp01(query_relevance), 6),
             "correction_priority": correction,
+            "durable_query_match": round(_clamp01(durable_match), 6),
             "source_confidence": round(_clamp01(event.confidence), 6),
             "open_loop": open_loop,
             "token_cost_penalty": round(token_cost_penalty, 6),
@@ -661,20 +913,43 @@ class ContextCompiler:
         }
         if natural_law:
             components["dispersion"] = round(_clamp01(dispersion), 6)
-        final = (
+        prior_score = (
             weights["frequency"] * components["frequency"]
             + weights["recency"] * components["recency"]
-            + weights["query_relevance"] * components["query_relevance"]
-            + weights["correction_priority"] * components["correction_priority"]
             + weights["source_confidence"] * components["source_confidence"]
-            + weights["open_loop"] * components["open_loop"]
             + weights.get("dispersion", 0.0) * components.get("dispersion", 0.0)
+        )
+        relevance_score = (
+            weights["query_relevance"] * components["query_relevance"]
+            + weights["correction_priority"] * components["correction_priority"]
+            + weights.get("durable_query_match", 0.0) * components["durable_query_match"]
+            + weights["open_loop"] * components["open_loop"]
+        )
+        prior_cap_applied = 0.0
+        if (
+            self.config.prior_cap_ratio is not None
+            and relevance_score > 0.0
+            and not durable_source
+            and not correction
+            and not open_loop
+        ):
+            capped_prior = min(prior_score, max(0.0, float(self.config.prior_cap_ratio)) * relevance_score)
+            prior_cap_applied = max(0.0, prior_score - capped_prior)
+            prior_score = capped_prior
+        components["prior_score"] = round(prior_score, 6)
+        components["relevance_score"] = round(relevance_score, 6)
+        components["prior_cap_applied"] = round(prior_cap_applied, 6)
+        final = (
+            prior_score
+            + relevance_score
             - weights["token_cost_penalty"] * components["token_cost_penalty"]
             - weights["stale_noise_penalty"] * components["stale_noise_penalty"]
         )
         reasons: List[str] = []
         if stale:
             reasons.append("stale_or_superseded")
+        if pending_review:
+            reasons.append("pending_review")
         if event.status == "suppressed":
             reasons.append("suppressed")
         if noise and not correction:
@@ -682,7 +957,7 @@ class ContextCompiler:
         return ContextCandidate(
             source_id=event.source_id,
             source_type=event.source_type,
-            summary=_active_claim_summary(event.text) if correction else _mechanical_summary(event.text),
+            summary=_active_claim_summary(event.text) if correction else _query_aware_summary(event.text, query),
             provenance=[event.source_id],
             topics=event.topics[:8],
             entities=event.entities[:8],
@@ -694,7 +969,10 @@ class ContextCompiler:
             supersedes=event.supersedes,
             superseded_by=superseded_by.get(event.source_id),
             status=event.status,
-            metadata=event.metadata,
+            metadata={
+                **event.metadata,
+                **({"supersession_basis": supersession_basis[event.source_id]} if event.source_id in supersession_basis else {}),
+            },
         )
 
     def _render_patch(
@@ -707,6 +985,7 @@ class ContextCompiler:
         include_full_history: bool,
         all_events: Sequence[ContextEvent],
         force_tiny: bool = False,
+        stale_limit: int = 6,
     ) -> str:
         if force_tiny:
             return "Context Merge Patch:\n- No selected context fits the configured budget.\nProvenance: (none)"
@@ -733,9 +1012,9 @@ class ContextCompiler:
             lines.append("- (none)")
 
         stale = [candidate for candidate in excluded if "stale_or_superseded" in candidate.exclusion_reasons]
-        if stale:
+        if stale and stale_limit > 0:
             lines.append("Avoid Stale/Superseded:")
-            for candidate in stale[:6]:
+            for candidate in stale[:stale_limit]:
                 if candidate.superseded_by:
                     lines.append(f"- {candidate.source_id} superseded_by {candidate.superseded_by}")
                 elif candidate.status != "active":

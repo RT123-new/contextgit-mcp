@@ -3,7 +3,8 @@
 Every context compilation appends one JSONL row recording how many tokens the
 compiled patch cost versus what sending the full history would have cost. The
 ledger is what powers `contextgit stats` and the `context_stats` MCP tool, so
-users can see exactly how many tokens contextgit saved them and when.
+users can see the signed net token impact, including calls where the patch cost
+more than the full history.
 """
 
 from __future__ import annotations
@@ -41,6 +42,7 @@ class UsageLedger:
             "patch_tokens": int(patch_tokens),
             "full_history_tokens": int(full_history_tokens),
             "saved_tokens": int(full_history_tokens) - int(patch_tokens),
+            "net_saved_tokens": int(full_history_tokens) - int(patch_tokens),
             "budget": int(budget),
             "selected_count": int(selected_count),
             "excluded_count": int(excluded_count),
@@ -88,6 +90,8 @@ class UsageLedger:
         def _net(r):
             return r.get("full_history_tokens", 0) - r.get("patch_tokens", 0)
         saved_total = sum(_net(r) for r in compilations)
+        gross_saved_total = sum(max(0, _net(r)) for r in compilations)
+        loss_total = sum(min(0, _net(r)) for r in compilations)
         overhead = sum(1 for r in compilations if _net(r) < 0)
         by_day: Dict[str, Dict[str, int]] = {}
         for r in compilations:
@@ -101,7 +105,10 @@ class UsageLedger:
             "patch_tokens_total": patch_total,
             "full_history_tokens_total": full_total,
             "saved_tokens_total": saved_total,
-            "net_tokens_saved": saved_total,
+            "net_saved_tokens_total": saved_total,
+            "gross_saved_tokens_total": gross_saved_total,
+            "loss_tokens_total": loss_total,
+            "net_tokens_saved": saved_total,  # PR#9 alias for net_saved_tokens_total
             "overhead_compilations": overhead,  # calls where the patch cost MORE than full history
             "savings_pct": round(100.0 * saved_total / full_total, 2) if full_total else 0.0,
             "avg_patch_tokens": round(patch_total / len(compilations), 1) if compilations else 0.0,
