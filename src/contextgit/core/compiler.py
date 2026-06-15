@@ -494,16 +494,47 @@ class ContextCompiler:
             all_events=segmented,
         )
         if estimate_tokens(patch) > effective_budget:
-            selected = []
+            # The final render can be larger than each greedy trial because
+            # excluded stale items are rendered in the Avoid block after the
+            # selection loop. Prefer dropping optional stale guidance, then
+            # trim the lowest-scoring selected items. Returning an empty
+            # force_tiny patch is the last resort, not the first overflow path.
             patch = self._render_patch(
                 conversation_id=conversation_id,
                 selected=selected,
                 excluded=excluded,
                 topic_index=topic_index,
                 include_full_history=False,
-                all_events=[],
-                force_tiny=True,
+                all_events=segmented,
+                stale_limit=0,
             )
+            while selected and estimate_tokens(patch) > effective_budget:
+                dropped = selected.pop()
+                excluded.append(
+                    dropped.model_copy(
+                        update={"selected": False, "exclusion_reasons": ["over_token_budget"]}
+                    )
+                )
+                patch = self._render_patch(
+                    conversation_id=conversation_id,
+                    selected=selected,
+                    excluded=excluded,
+                    topic_index=topic_index,
+                    include_full_history=False,
+                    all_events=segmented,
+                    stale_limit=0,
+                )
+            if estimate_tokens(patch) > effective_budget:
+                selected = []
+                patch = self._render_patch(
+                    conversation_id=conversation_id,
+                    selected=selected,
+                    excluded=excluded,
+                    topic_index=topic_index,
+                    include_full_history=False,
+                    all_events=[],
+                    force_tiny=True,
+                )
 
         return ContextCompilation(
             conversation_id=conversation_id,
@@ -610,6 +641,10 @@ class ContextCompiler:
         open_loop = 1.0 if _is_open_loop_text(event.text, event.tags, event.metadata.get("page_type", "")) else 0.0
         token_cost_penalty = _clamp01(event.token_count / max(float(budget), 1.0))
         stale = event.status in {"stale", "archived", "suppressed"} or event.source_id in superseded_by
+        pending_review = (
+            "pending_review" in {tag.lower() for tag in event.tags}
+            or event.metadata.get("memory_status") == "pending_review"
+        )
         noise = _is_noise_text(event.text, event.tags, event.importance)
         stale_noise_penalty = 1.0 if stale else (0.6 if noise else 0.0)
 
@@ -654,6 +689,8 @@ class ContextCompiler:
         reasons: List[str] = []
         if stale:
             reasons.append("stale_or_superseded")
+        if pending_review:
+            reasons.append("pending_review")
         if event.status == "suppressed":
             reasons.append("suppressed")
         if noise and not correction:
@@ -686,6 +723,7 @@ class ContextCompiler:
         include_full_history: bool,
         all_events: Sequence[ContextEvent],
         force_tiny: bool = False,
+        stale_limit: int = 6,
     ) -> str:
         if force_tiny:
             return "Context Merge Patch:\n- No selected context fits the configured budget.\nProvenance: (none)"
@@ -712,9 +750,9 @@ class ContextCompiler:
             lines.append("- (none)")
 
         stale = [candidate for candidate in excluded if "stale_or_superseded" in candidate.exclusion_reasons]
-        if stale:
+        if stale and stale_limit > 0:
             lines.append("Avoid Stale/Superseded:")
-            for candidate in stale[:6]:
+            for candidate in stale[:stale_limit]:
                 if candidate.superseded_by:
                     lines.append(f"- {candidate.source_id} superseded_by {candidate.superseded_by}")
                 elif candidate.status != "active":

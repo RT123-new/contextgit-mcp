@@ -271,7 +271,10 @@ def cmd_install(args: argparse.Namespace) -> int:
         print(snippets(store=args.store, budget=args.budget))
         return 0
     installer = INSTALLERS[args.client]
-    print(installer(store=args.store, budget=args.budget))
+    kwargs = {"store": args.store, "budget": args.budget}
+    if args.client == "codex":
+        kwargs["force"] = args.force
+    print(installer(**kwargs))
     return 0
 
 
@@ -383,6 +386,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("client", choices=[*sorted(INSTALLERS), "print"])
     p.add_argument("--store", help="pin the server to a specific store path")
     p.add_argument("--budget", type=int, help="token budget per patch")
+    p.add_argument("--force", action="store_true", help="replace an existing contextgit block when supported")
     p.set_defaults(func=cmd_install)
 
     p = sub.add_parser("export", help="dump a full JSON snapshot of the store")

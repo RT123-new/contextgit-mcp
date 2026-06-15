@@ -41,6 +41,24 @@ _DURABLE_MARKERS = (
     "instead of",
 )
 
+_QUESTION_STARTERS = (
+    "what ", "when ", "where ", "which ", "who ", "why ", "how ",
+    "can ", "could ", "should ", "would ", "is ", "are ", "do ", "does ",
+)
+
+_RISKY_DURABLE_PATTERNS = (
+    r"https?://",
+    r"\bbase[-_ ]?url\b",
+    r"\bproxy\b",
+    r"\broute\s+through\b",
+    r"\bapi[_-]?key\b",
+    r"\bsecret\b",
+    r"\btoken\b",
+    r"\bpassword\b",
+    r"\bcredential\b",
+    r"\bNEXT_PUBLIC_[A-Z0-9_]*\b",
+)
+
 
 def resolve_store_dir(explicit: Optional[str] = None, cwd: Optional[str] = None) -> str:
     """Resolve which context store to use, git-style."""
@@ -74,13 +92,31 @@ def _looks_durable(text: str) -> bool:
     return any(marker in lowered for marker in _DURABLE_MARKERS)
 
 
+def _is_question_like(text: str) -> bool:
+    clean = re.sub(r"\s+", " ", (text or "").strip())
+    lowered = clean.lower()
+    return clean.endswith("?") or lowered.startswith(_QUESTION_STARTERS)
+
+
+def _looks_risky_durable(text: str) -> bool:
+    return any(re.search(pattern, text or "", flags=re.IGNORECASE) for pattern in _RISKY_DURABLE_PATTERNS)
+
+
+def _review_required_reason(text: str) -> Optional[str]:
+    if _is_question_like(text):
+        return "question-shaped text should not auto-merge as durable memory"
+    if _looks_risky_durable(text):
+        return "security-sensitive durable instruction requires review"
+    return None
+
+
 def _durable_claim(text: str) -> str:
     clean = re.sub(r"\s+", " ", (text or "").strip())
     clean = re.sub(
         r"^(remember that|remember this|from now on|going forward|final decision:|decision:|correction:|update:)\s*",
         "", clean, flags=re.IGNORECASE,
     )
-    return clean[:300]
+    return clean.strip(" \t\r\n,;:-")[:300]
 
 
 def _target_page_for_prompt(text: str) -> str:
@@ -309,13 +345,14 @@ class ContextGit:
                 excluded_count=len(compilation.excluded_context),
                 token_source=token_count_source(),
             )
-        saved = max(0, full_tokens - compilation.estimated_tokens)
+        saved = full_tokens - compilation.estimated_tokens
         return {
             "context": compilation.rendered_patch,
             "estimated_tokens": compilation.estimated_tokens,
             "budget": compilation.budget,
             "full_history_tokens": full_tokens,
             "saved_tokens": saved,
+            "net_saved_tokens": saved,
             "savings_pct": round(100.0 * saved / full_tokens, 2) if full_tokens else 0.0,
             "selected": [
                 {
@@ -404,22 +441,66 @@ class ContextGit:
         assistant_answer: str,
         conversation_id: str = "default",
     ) -> Dict[str, Any]:
-        user_event = self._append_event("user", user_prompt, conversation_id, tags=["turn"])
+        durable_prompt = _looks_durable(user_prompt)
+        review_reason = _review_required_reason(user_prompt) if durable_prompt else None
+        user_tags = ["turn"]
+        user_metadata: Dict[str, Any] = {}
+        user_importance = 0.5
+        if review_reason:
+            user_tags.append("pending_review")
+            user_metadata["memory_status"] = "pending_review"
+            user_metadata["review_required_reason"] = review_reason
+            user_importance = 0.1
+        user_event = self._append_event(
+            "user",
+            user_prompt,
+            conversation_id,
+            tags=user_tags,
+            metadata=user_metadata,
+            importance=user_importance,
+        )
         assistant_event = self._append_event("assistant", assistant_answer, conversation_id, tags=["turn"])
         mutation_id = None
         durable_claim = None
-        if _looks_durable(user_prompt):
+        pending_id = None
+        if durable_prompt:
             durable_claim = _durable_claim(user_prompt)
-            mutation = self.runtime.record_mutation(
-                "save",
-                source_event_ids=[user_event.event_id],
-                new_claim=durable_claim,
-                target_page=_target_page_for_prompt(user_prompt),
-                policy_reason="deterministic durable-phrasing detection on commit_turn",
-                confidence=0.85,
-                decision_mode="autonomous",
-            )
-            mutation_id = mutation.mutation_id
+            if review_reason:
+                mutation = self.runtime.record_mutation(
+                    "pending",
+                    source_event_ids=[user_event.event_id],
+                    new_claim=durable_claim,
+                    target_page=_target_page_for_prompt(user_prompt),
+                    policy_reason=review_reason,
+                    confidence=0.55,
+                    decision_mode="review-required",
+                    metadata={
+                        "pending_item": {
+                            "type": "decision",
+                            "content": durable_claim,
+                            "target_page": _target_page_for_prompt(user_prompt),
+                            "source_refs": [f"event:{user_event.event_id}"],
+                            "confidence": "medium",
+                            "reason": review_reason,
+                            "created_timestamp": user_event.timestamp,
+                            "origin_speaker": "user",
+                            "review_required_reason": review_reason,
+                        },
+                        "reason_codes": ["review_required_durable_marker"],
+                    },
+                )
+                pending_id = mutation.mutation_id
+            else:
+                mutation = self.runtime.record_mutation(
+                    "save",
+                    source_event_ids=[user_event.event_id],
+                    new_claim=durable_claim,
+                    target_page=_target_page_for_prompt(user_prompt),
+                    policy_reason="deterministic durable-phrasing detection on commit_turn",
+                    confidence=0.85,
+                    decision_mode="autonomous",
+                )
+                mutation_id = mutation.mutation_id
         return {
             "ok": True,
             "conversation_id": conversation_id,
@@ -430,6 +511,11 @@ class ContextGit:
             "durable_merge": (
                 {"ref": f"mut:{mutation_id}", "claim": durable_claim}
                 if mutation_id
+                else None
+            ),
+            "pending_merge": (
+                {"ref": f"mut:{pending_id}", "claim": durable_claim}
+                if pending_id
                 else None
             ),
             "total_events": self.runtime.event_journal.event_count(),

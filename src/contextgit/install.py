@@ -11,6 +11,7 @@ from __future__ import annotations
 import json
 import os
 import platform
+import re
 import shutil
 import sys
 from typing import Any, Dict, List, Optional, Tuple
@@ -102,10 +103,26 @@ def install_cursor(store: Optional[str] = None, budget: Optional[int] = None) ->
     return f"Added 'contextgit' to {path}\nRestart Cursor to load it."
 
 
-def install_codex(store: Optional[str] = None, budget: Optional[int] = None) -> str:
+_CODEX_CONTEXTGIT_BLOCK_RE = re.compile(
+    r"(?ms)^\[mcp_servers\.contextgit\]\n.*?(?=^\[|\Z)"
+)
+
+
+def _codex_block(store: Optional[str], budget: Optional[int]) -> str:
+    command, args = server_command(store, budget)
+    args_toml = ", ".join(json.dumps(a) for a in args)
+    return (
+        f"\n[mcp_servers.contextgit]\n"
+        f"command = {json.dumps(command)}\n"
+        f"args = [{args_toml}]\n"
+    )
+
+
+def install_codex(store: Optional[str] = None, budget: Optional[int] = None, force: bool = False) -> str:
     """Adds an [mcp_servers.contextgit] block to ~/.codex/config.toml."""
     path = os.path.join(os.path.expanduser("~"), ".codex", "config.toml")
     existing = ""
+    has_existing = False
     if os.path.exists(path):
         with open(path, "r", encoding="utf-8") as f:
             existing = f.read()
@@ -113,25 +130,34 @@ def install_codex(store: Optional[str] = None, budget: Optional[int] = None) -> 
             try:
                 parsed = tomllib.loads(existing)
                 if "contextgit" in (parsed.get("mcp_servers") or {}):
-                    return f"'contextgit' is already configured in {path}; nothing changed."
+                    has_existing = True
             except Exception:
                 pass  # unparseable config: fall back to the substring check below
         if "[mcp_servers.contextgit]" in existing:
-            return f"'contextgit' is already configured in {path}; nothing changed."
-    command, args = server_command(store, budget)
-    args_toml = ", ".join(json.dumps(a) for a in args)
-    block = (
-        f"\n[mcp_servers.contextgit]\n"
-        f"command = {json.dumps(command)}\n"
-        f"args = [{args_toml}]\n"
-    )
+            has_existing = True
+    if has_existing and not force:
+        return (
+            f"'contextgit' is already configured in {path}; nothing changed. "
+            "Use --force to replace the existing block."
+        )
+    block = _codex_block(store, budget)
+    if has_existing:
+        next_config = _CODEX_CONTEXTGIT_BLOCK_RE.sub("", existing).rstrip()
+        if next_config:
+            next_config += "\n"
+        next_config += block.lstrip()
+        action = "Updated"
+    else:
+        next_config = existing
+        if next_config and not next_config.endswith("\n"):
+            next_config += "\n"
+        next_config += block
+        action = "Added"
     _backup(path)
     os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, "a", encoding="utf-8") as f:
-        if existing and not existing.endswith("\n"):
-            f.write("\n")
-        f.write(block)
-    return f"Added 'contextgit' to {path}\nRestart Codex to load it."
+    with open(path, "w", encoding="utf-8") as f:
+        f.write(next_config.rstrip() + "\n")
+    return f"{action} 'contextgit' in {path}\nRestart Codex to load it."
 
 
 def snippets(store: Optional[str] = None, budget: Optional[int] = None) -> str:

@@ -1,0 +1,348 @@
+{
+  "test": "long_session_drift_220_turns",
+  "targets": 5,
+  "noise_turns": 220,
+  "total_events": 448,
+  "by_checkpoint": {
+    "0": {
+      "found_at_5_rate": 1.0,
+      "anchor_visible_rate": 1.0
+    },
+    "50": {
+      "found_at_5_rate": 1.0,
+      "anchor_visible_rate": 1.0
+    },
+    "100": {
+      "found_at_5_rate": 0.6,
+      "anchor_visible_rate": 1.0
+    },
+    "220": {
+      "found_at_5_rate": 0.0,
+      "anchor_visible_rate": 0.4
+    }
+  },
+  "rows": [
+    {
+      "after_noise_turns": 0,
+      "kind": "raw_event",
+      "query": "Which provider does the early raw lab fact name?",
+      "expected_ref": "event:drift_00001_user_13a2028a",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00001_user_13a2028a",
+        "wiki:Strict Provider Memory",
+        "event:drift_00005_user_0c0f352b",
+        "event:drift_00003_user_2c51467a",
+        "wiki:Project Store Memory"
+      ]
+    },
+    {
+      "after_noise_turns": 0,
+      "kind": "raw_event",
+      "query": "Which config path does the early raw Codex fact mention?",
+      "expected_ref": "event:drift_00003_user_2c51467a",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00003_user_2c51467a",
+        "event:drift_00001_user_13a2028a",
+        "event:drift_00005_user_0c0f352b",
+        "wiki:Strict Provider Memory",
+        "wiki:Project Store Memory"
+      ]
+    },
+    {
+      "after_noise_turns": 0,
+      "kind": "raw_event",
+      "query": "What evidence label does the early raw evidence fact use?",
+      "expected_ref": "event:drift_00005_user_0c0f352b",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00005_user_0c0f352b",
+        "event:drift_00003_user_2c51467a",
+        "event:drift_00001_user_13a2028a",
+        "wiki:Strict Provider Memory",
+        "wiki:Project Store Memory"
+      ]
+    },
+    {
+      "after_noise_turns": 0,
+      "kind": "wiki",
+      "query": "What does the durable strict-provider fact require?",
+      "expected_ref": "wiki:Strict Provider Memory",
+      "rank": 2,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:remember_00007_user_a1fd03bb",
+        "wiki:Strict Provider Memory",
+        "wiki:Project Store Memory",
+        "event:remember_00008_user_e8ee7e73",
+        "event:drift_00001_user_13a2028a"
+      ]
+    },
+    {
+      "after_noise_turns": 0,
+      "kind": "wiki",
+      "query": "Where does project-scoped contextgit memory live?",
+      "expected_ref": "wiki:Project Store Memory",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "wiki:Project Store Memory",
+        "event:remember_00008_user_e8ee7e73",
+        "wiki:Strict Provider Memory",
+        "event:remember_00007_user_a1fd03bb",
+        "event:drift_00005_user_0c0f352b"
+      ]
+    },
+    {
+      "after_noise_turns": 50,
+      "kind": "raw_event",
+      "query": "Which provider does the early raw lab fact name?",
+      "expected_ref": "event:drift_00001_user_13a2028a",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00001_user_13a2028a",
+        "event:drift_00103_user_0cf0fc35",
+        "event:drift_00067_user_8d40b7f9",
+        "event:drift_00005_user_0c0f352b",
+        "event:drift_00003_user_2c51467a"
+      ]
+    },
+    {
+      "after_noise_turns": 50,
+      "kind": "raw_event",
+      "query": "Which config path does the early raw Codex fact mention?",
+      "expected_ref": "event:drift_00003_user_2c51467a",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00003_user_2c51467a",
+        "event:drift_00067_user_8d40b7f9",
+        "event:drift_00103_user_0cf0fc35",
+        "event:drift_00001_user_13a2028a",
+        "event:drift_00005_user_0c0f352b"
+      ]
+    },
+    {
+      "after_noise_turns": 50,
+      "kind": "raw_event",
+      "query": "What evidence label does the early raw evidence fact use?",
+      "expected_ref": "event:drift_00005_user_0c0f352b",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00005_user_0c0f352b",
+        "event:drift_00103_user_0cf0fc35",
+        "event:drift_00067_user_8d40b7f9",
+        "event:drift_00003_user_2c51467a",
+        "event:drift_00001_user_13a2028a"
+      ]
+    },
+    {
+      "after_noise_turns": 50,
+      "kind": "wiki",
+      "query": "What does the durable strict-provider fact require?",
+      "expected_ref": "wiki:Strict Provider Memory",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "wiki:Strict Provider Memory",
+        "event:remember_00007_user_a1fd03bb",
+        "event:drift_00103_user_0cf0fc35",
+        "event:drift_00067_user_8d40b7f9",
+        "event:drift_00035_user_a471333e"
+      ]
+    },
+    {
+      "after_noise_turns": 50,
+      "kind": "wiki",
+      "query": "Where does project-scoped contextgit memory live?",
+      "expected_ref": "wiki:Project Store Memory",
+      "rank": 1,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "wiki:Project Store Memory",
+        "event:remember_00008_user_e8ee7e73",
+        "wiki:Conversation Memory",
+        "event:drift_00103_user_0cf0fc35",
+        "event:drift_00035_user_a471333e"
+      ]
+    },
+    {
+      "after_noise_turns": 100,
+      "kind": "raw_event",
+      "query": "Which provider does the early raw lab fact name?",
+      "expected_ref": "event:drift_00001_user_13a2028a",
+      "rank": 2,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00203_user_f8c9070b",
+        "event:drift_00001_user_13a2028a",
+        "event:drift_00201_user_ae0ed7c9",
+        "event:drift_00137_user_42797e38",
+        "event:drift_00149_user_97ab6c6f"
+      ]
+    },
+    {
+      "after_noise_turns": 100,
+      "kind": "raw_event",
+      "query": "Which config path does the early raw Codex fact mention?",
+      "expected_ref": "event:drift_00003_user_2c51467a",
+      "rank": 2,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00203_user_f8c9070b",
+        "event:drift_00003_user_2c51467a",
+        "event:drift_00201_user_ae0ed7c9",
+        "event:drift_00149_user_97ab6c6f",
+        "event:drift_00137_user_42797e38"
+      ]
+    },
+    {
+      "after_noise_turns": 100,
+      "kind": "raw_event",
+      "query": "What evidence label does the early raw evidence fact use?",
+      "expected_ref": "event:drift_00005_user_0c0f352b",
+      "rank": 2,
+      "found_at_5": true,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00203_user_f8c9070b",
+        "event:drift_00005_user_0c0f352b",
+        "event:drift_00201_user_ae0ed7c9",
+        "event:drift_00149_user_97ab6c6f",
+        "event:drift_00137_user_42797e38"
+      ]
+    },
+    {
+      "after_noise_turns": 100,
+      "kind": "wiki",
+      "query": "What does the durable strict-provider fact require?",
+      "expected_ref": "wiki:Strict Provider Memory",
+      "rank": 7,
+      "found_at_5": false,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00203_user_f8c9070b",
+        "event:drift_00201_user_ae0ed7c9",
+        "event:drift_00149_user_97ab6c6f",
+        "event:drift_00137_user_42797e38",
+        "event:drift_00205_user_98ee25b6"
+      ]
+    },
+    {
+      "after_noise_turns": 100,
+      "kind": "wiki",
+      "query": "Where does project-scoped contextgit memory live?",
+      "expected_ref": "wiki:Project Store Memory",
+      "rank": 6,
+      "found_at_5": false,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00203_user_f8c9070b",
+        "event:drift_00201_user_ae0ed7c9",
+        "event:drift_00137_user_42797e38",
+        "event:drift_00149_user_97ab6c6f",
+        "event:drift_00035_user_a471333e"
+      ]
+    },
+    {
+      "after_noise_turns": 220,
+      "kind": "raw_event",
+      "query": "Which provider does the early raw lab fact name?",
+      "expected_ref": "event:drift_00001_user_13a2028a",
+      "rank": null,
+      "found_at_5": false,
+      "anchor_visible_in_patch": false,
+      "selected_top5": [
+        "wiki:SLM Memory",
+        "wiki:NextGenResearcher Memory",
+        "event:drift_00445_user_3cd3e158",
+        "event:drift_00215_user_811c97ce",
+        "event:drift_00261_user_c0aa4688"
+      ]
+    },
+    {
+      "after_noise_turns": 220,
+      "kind": "raw_event",
+      "query": "Which config path does the early raw Codex fact mention?",
+      "expected_ref": "event:drift_00003_user_2c51467a",
+      "rank": 7,
+      "found_at_5": false,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "wiki:SLM Memory",
+        "wiki:NextGenResearcher Memory",
+        "event:drift_00445_user_3cd3e158",
+        "event:drift_00431_user_b6847c05",
+        "event:drift_00215_user_811c97ce"
+      ]
+    },
+    {
+      "after_noise_turns": 220,
+      "kind": "raw_event",
+      "query": "What evidence label does the early raw evidence fact use?",
+      "expected_ref": "event:drift_00005_user_0c0f352b",
+      "rank": 6,
+      "found_at_5": false,
+      "anchor_visible_in_patch": true,
+      "selected_top5": [
+        "event:drift_00261_user_c0aa4688",
+        "wiki:NextGenResearcher Memory",
+        "wiki:SLM Memory",
+        "event:drift_00445_user_3cd3e158",
+        "event:drift_00215_user_811c97ce"
+      ]
+    },
+    {
+      "after_noise_turns": 220,
+      "kind": "wiki",
+      "query": "What does the durable strict-provider fact require?",
+      "expected_ref": "wiki:Strict Provider Memory",
+      "rank": null,
+      "found_at_5": false,
+      "anchor_visible_in_patch": false,
+      "selected_top5": [
+        "event:drift_00425_user_ae008aa1",
+        "event:drift_00203_user_f8c9070b",
+        "event:drift_00261_user_c0aa4688",
+        "event:drift_00257_user_81a7b187",
+        "wiki:SLM Memory"
+      ]
+    },
+    {
+      "after_noise_turns": 220,
+      "kind": "wiki",
+      "query": "Where does project-scoped contextgit memory live?",
+      "expected_ref": "wiki:Project Store Memory",
+      "rank": null,
+      "found_at_5": false,
+      "anchor_visible_in_patch": false,
+      "selected_top5": [
+        "wiki:SLM Memory",
+        "wiki:NextGenResearcher Memory",
+        "event:drift_00445_user_3cd3e158",
+        "event:drift_00425_user_ae008aa1",
+        "event:drift_00261_user_c0aa4688"
+      ]
+    }
+  ],
+  "finding": "Measures whether early raw and durable facts remain retrievable as recency decays and the store grows.",
+  "proposed_solution_if_negative": "Add durable fact promotion, rehearsal/recurrence boosts, or per-project archive indexes that do not rely on recency."
+}

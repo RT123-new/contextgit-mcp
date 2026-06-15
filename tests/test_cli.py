@@ -62,3 +62,34 @@ def test_install_print(capsys, store):
     assert "Claude Desktop" in out
     assert "mcp_servers.contextgit" in out
     assert "claude mcp add" in out
+
+
+def test_install_codex_force_replaces_existing_block(capsys, store, tmp_path, monkeypatch):
+    monkeypatch.setenv("HOME", str(tmp_path))
+    config_dir = tmp_path / ".codex"
+    config_dir.mkdir()
+    config = config_dir / "config.toml"
+    config.write_text(
+        'model = "gpt-test"\n'
+        "\n[mcp_servers.contextgit]\n"
+        'command = "/old/python"\n'
+        'args = ["-m", "contextgit", "serve"]\n'
+        "\n[projects.\"/tmp/example\"]\n"
+        'trust_level = "trusted"\n',
+        encoding="utf-8",
+    )
+
+    code, out = run(capsys, "install", "codex", "--store", store)
+    assert code == 0
+    assert "nothing changed" in out
+    assert "/old/python" in config.read_text(encoding="utf-8")
+
+    code, out = run(capsys, "install", "codex", "--store", store, "--budget", "500", "--force")
+    assert code == 0
+    updated = config.read_text(encoding="utf-8")
+    assert "Updated 'contextgit'" in out
+    assert "/old/python" not in updated
+    assert f'"{store}"' in updated
+    assert '"--budget", "500"' in updated
+    assert '[projects."/tmp/example"]' in updated
+    assert (config_dir / "config.toml.bak").exists()
