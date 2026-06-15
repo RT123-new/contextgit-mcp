@@ -103,8 +103,13 @@ def install_cursor(store: Optional[str] = None, budget: Optional[int] = None) ->
     return f"Added 'contextgit' to {path}\nRestart Cursor to load it."
 
 
+# Match the contextgit table under [mcp_servers] in every spelling tomllib treats
+# as the same key: bare, double/single-quoted, and with optional TOML whitespace
+# around the dot and inside/after the brackets. Without this, `install codex
+# --force` against a quoted/whitespaced existing block would fail to strip it and
+# append a duplicate table, breaking config.toml parsing.
 _CODEX_CONTEXTGIT_BLOCK_RE = re.compile(
-    r"(?ms)^\[mcp_servers\.contextgit\]\n.*?(?=^\[|\Z)"
+    r"(?ms)^\[[ \t]*mcp_servers[ \t]*\.[ \t]*(?:contextgit|\"contextgit\"|'contextgit')[ \t]*\][ \t]*\n.*?(?=^\[|\Z)"
 )
 
 

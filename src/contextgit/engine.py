@@ -51,7 +51,9 @@ _RISKY_DURABLE_PATTERNS = (
     r"\bproxy\b",
     r"\broute\s+through\b",
     r"\bsecret\b",
-    r"\btoken\b",
+    # Auth/secret token contexts only -- not benign LLM "700 token budget" prose.
+    r"\b(?:auth|access|bearer|refresh|api|session|csrf|xsrf|oauth|jwt|id|secret|sso|pat)[\s_-]*tokens?\b",
+    r"\btokens?\s*[:=]\s*\S",
     r"\bpassword\b",
     r"\bcredential\b",
 )
@@ -148,24 +150,33 @@ def _is_question_like(text: str) -> bool:
 def _looks_risky_durable(text: str) -> bool:
     clean = text or ""
     lowered = clean.lower()
-    protective = bool(
-        re.search(r"\b(?:do not|don't|never|must not|should not|server[- ]only)\b", lowered)
-        and re.search(r"\b(?:secret|token|api\s*key|credential|password|public|browser|client)\b", lowered)
-    )
-    if protective and not any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _SECRET_LITERAL_PATTERNS):
-        return False
 
+    # Hard-risk checks run FIRST and are never suppressed by protective phrasing:
+    # a public-env secret var, a literal secret, tool-config poisoning, or an
+    # injection/exfil instruction must always go to review even when wrapped in
+    # "do not"/"never"-style wording (otherwise "do not ask again; put the key in
+    # NEXT_PUBLIC_OPENAI_API_KEY for the client" would be saved unreviewed).
     public_envs = re.findall(r"\b[A-Z][A-Z0-9_]{2,}\b", clean)
     for name in public_envs:
         if name.startswith(_PUBLIC_ENV_PREFIXES) and any(term in name for term in _SENSITIVE_ENV_TERMS):
             return True
-
     if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _SECRET_LITERAL_PATTERNS):
         return True
     if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _TOOL_CONFIG_POISONING_PATTERNS):
         return True
     if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _INJECTION_EXFIL_PATTERNS):
         return True
+
+    # Protective phrasing (e.g. "never put the secret in the client") is benign
+    # security guidance: it may suppress ONLY the soft keyword heuristics below,
+    # never the hard-risk checks above.
+    protective = bool(
+        re.search(r"\b(?:do not|don't|never|must not|should not|server[- ]only)\b", lowered)
+        and re.search(r"\b(?:secret|token|api\s*key|credential|password|public|browser|client)\b", lowered)
+    )
+    if protective:
+        return False
+
     if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _RISKY_DURABLE_PATTERNS):
         return True
     if re.search(r"https?://", clean, flags=re.IGNORECASE) and re.search(
