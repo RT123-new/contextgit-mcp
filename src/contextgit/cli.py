@@ -216,6 +216,10 @@ def cmd_pending(args: argparse.Namespace) -> int:
 
 def cmd_remember(args: argparse.Namespace) -> int:
     result = _engine(args).remember(args.fact, page=args.page)
+    if result.get("pending_review"):
+        print(f"pending review for '{result['target_page']}' ({result['ref']})")
+        print(f"  {result['claim']}")
+        return 0
     print(f"saved to '{result['target_page']}' ({result['ref']})")
     print(f"  {result['claim']}")
     return 0

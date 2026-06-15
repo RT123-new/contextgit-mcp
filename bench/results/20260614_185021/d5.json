@@ -1,8 +1,0 @@
-{
-  "dimension": "D5 cross_session",
-  "durable_fact_recalls_in_new_conversation": true,
-  "durable_patch": "Context Merge Patch:\n- conversation_id: B\n- generation: deterministic mechanical compiler\n- recurring_topics: turn(4), codename(2), falcon9x(2), project(2)\nSelected Context:\n- [event:A_00001_user_d3051a32] event; score=0.667; Remember that the project codename is Falcon9x\n- [wiki:Conversation Memory] wiki; score=0.627; Conversation Memory - the project codename is Falcon9x\n- [event:A_00003_user_b0855489] event; score=0.419; In passing, Marmaduke7 was mentioned during the A standup\n- [event:A_00004_assistant_8b26f9b7] event; score=0.373; ok\n- [event:A_00002_assistant_38533880] event; score=0.363; Noted.\nProvenance: event:A_00001_user_d3051a32, wiki:Conversation Memory, event:A_00003_user_b0855489, event:A_00004_assistant_8b26f9b7, event:A_00002_assistant_38533880",
-  "raw_event_from_other_conversation_visible": true,
-  "note": "conversation_id is a label on events, not a partition: durable wiki facts recall everywhere (intended); raw events are globally visible across conversations.",
-  "_elapsed_s": 0.0
-}

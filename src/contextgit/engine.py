@@ -47,16 +47,63 @@ _QUESTION_STARTERS = (
 )
 
 _RISKY_DURABLE_PATTERNS = (
-    r"https?://",
     r"\bbase[-_ ]?url\b",
     r"\bproxy\b",
     r"\broute\s+through\b",
-    r"\bapi[_-]?key\b",
     r"\bsecret\b",
     r"\btoken\b",
     r"\bpassword\b",
     r"\bcredential\b",
-    r"\bNEXT_PUBLIC_[A-Z0-9_]*\b",
+)
+
+_PUBLIC_ENV_PREFIXES = (
+    "NEXT_PUBLIC_",
+    "VITE_",
+    "REACT_APP_",
+    "EXPO_PUBLIC_",
+    "NUXT_PUBLIC_",
+    "GATSBY_",
+    "PUBLIC_",
+)
+
+_SENSITIVE_ENV_TERMS = (
+    "API",
+    "KEY",
+    "SECRET",
+    "TOKEN",
+    "PASSWORD",
+    "CREDENTIAL",
+    "SERVICE_ROLE",
+    "OPENAI",
+    "ANTHROPIC",
+    "STRIPE",
+    "SUPABASE",
+)
+
+_SECRET_LITERAL_PATTERNS = (
+    r"\bsk-[A-Za-z0-9_-]{20,}\b",
+    r"\bghp_[A-Za-z0-9_]{20,}\b",
+    r"\bAKIA[0-9A-Z]{16}\b",
+    r"\beyJ[A-Za-z0-9_-]{20,}\.[A-Za-z0-9_-]{10,}\.[A-Za-z0-9_-]{10,}\b",
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----",
+)
+
+_TOOL_CONFIG_POISONING_PATTERNS = (
+    r"\bcurl\b.+\|\s*(?:sh|bash)\b",
+    r"\b(?:disable|bypass|skip)\s+(?:approval|confirmation|review)\b",
+    r"\bauto[- ]?approve\b",
+    r"\bmcp_servers\b",
+    r"\bclaude_desktop_config\.json\b",
+    r"\.mcp\.json\b",
+    r"\btool\s+(?:description|schema|config|configuration)\b",
+    r"\b(?:npx|uvx)\b.+\bmcp\b",
+)
+
+_INJECTION_EXFIL_PATTERNS = (
+    r"\bignore\s+(?:all\s+)?(?:previous|system|developer)\s+instructions\b",
+    r"\bexfiltrat\w*\b",
+    r"\bleak\s+(?:the\s+)?(?:secret|token|key|credential)",
+    r"\bsend\s+(?:all\s+)?(?:secrets?|tokens?|keys?|credentials?)\b",
 )
 
 
@@ -99,7 +146,35 @@ def _is_question_like(text: str) -> bool:
 
 
 def _looks_risky_durable(text: str) -> bool:
-    return any(re.search(pattern, text or "", flags=re.IGNORECASE) for pattern in _RISKY_DURABLE_PATTERNS)
+    clean = text or ""
+    lowered = clean.lower()
+    protective = bool(
+        re.search(r"\b(?:do not|don't|never|must not|should not|server[- ]only)\b", lowered)
+        and re.search(r"\b(?:secret|token|api\s*key|credential|password|public|browser|client)\b", lowered)
+    )
+    if protective and not any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _SECRET_LITERAL_PATTERNS):
+        return False
+
+    public_envs = re.findall(r"\b[A-Z][A-Z0-9_]{2,}\b", clean)
+    for name in public_envs:
+        if name.startswith(_PUBLIC_ENV_PREFIXES) and any(term in name for term in _SENSITIVE_ENV_TERMS):
+            return True
+
+    if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _SECRET_LITERAL_PATTERNS):
+        return True
+    if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _TOOL_CONFIG_POISONING_PATTERNS):
+        return True
+    if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _INJECTION_EXFIL_PATTERNS):
+        return True
+    if any(re.search(pattern, clean, flags=re.IGNORECASE) for pattern in _RISKY_DURABLE_PATTERNS):
+        return True
+    if re.search(r"https?://", clean, flags=re.IGNORECASE) and re.search(
+        r"\b(?:base[-_ ]?url|proxy|route\s+through|webhook|callback|curl|secret|token|api[_ -]?key)\b",
+        clean,
+        flags=re.IGNORECASE,
+    ):
+        return True
+    return False
 
 
 def _review_required_reason(text: str) -> Optional[str]:
@@ -108,6 +183,18 @@ def _review_required_reason(text: str) -> Optional[str]:
     if _looks_risky_durable(text):
         return "security-sensitive durable instruction requires review"
     return None
+
+
+def _is_pending_review_raw_event(event: RawEvent) -> bool:
+    return (
+        "pending_review" in {tag.lower() for tag in event.tags}
+        or (event.metadata or {}).get("memory_status") == "pending_review"
+    )
+
+
+def _redacted_pending_event_content(event: RawEvent) -> str:
+    reason = (event.metadata or {}).get("review_required_reason") or "pending review"
+    return f"[pending review redacted: {reason}]"
 
 
 def _durable_claim(text: str) -> str:
@@ -175,13 +262,14 @@ class ContextGit:
         events = self.runtime.list_events()
         out = []
         for event in events[-limit:][::-1]:
+            content = _redacted_pending_event_content(event) if _is_pending_review_raw_event(event) else event.content
             out.append({
                 "ref": f"event:{event.event_id}",
                 "timestamp": event.timestamp,
                 "speaker": event.speaker,
                 "tags": event.tags,
-                "tokens": estimate_tokens(event.content),
-                "summary": re.sub(r"\s+", " ", event.content.strip())[:160],
+                "tokens": estimate_tokens(content),
+                "summary": re.sub(r"\s+", " ", content.strip())[:160],
             })
         return out
 
@@ -200,7 +288,7 @@ class ContextGit:
                     "timestamp": e.timestamp,
                     "speaker": e.speaker,
                     "tags": e.tags,
-                    "content": e.content,
+                    "content": _redacted_pending_event_content(e) if _is_pending_review_raw_event(e) else e.content,
                 }
                 for e in window
             ],
@@ -221,7 +309,11 @@ class ContextGit:
         if kind == "event":
             for event in self.runtime.list_events():
                 if event.event_id == ident:
-                    return {"ref": ref, "kind": "event", **event.model_dump()}
+                    data = event.model_dump()
+                    if _is_pending_review_raw_event(event):
+                        data["content"] = _redacted_pending_event_content(event)
+                        data.setdefault("metadata", {})["redacted"] = True
+                    return {"ref": ref, "kind": "event", **data}
             raise KeyError(f"no event with id {ident!r}")
         if kind == "wiki":
             history = self.runtime.wiki_store.get_page_history(ident)
@@ -253,7 +345,7 @@ class ContextGit:
         )
 
     def search(self, query: str, limit: int = 8) -> List[Dict[str, Any]]:
-        events = self.runtime.list_events()
+        events = [event for event in self.runtime.list_events() if not _is_pending_review_raw_event(event)]
         pages = self.runtime.wiki_store.list_pages()
         ids: List[str] = [f"event:{e.event_id}" for e in events]
         texts: List[str] = [e.content for e in events]
@@ -391,6 +483,7 @@ class ContextGit:
                 "score_components": c.score_components,
                 "exclusion_reasons": c.exclusion_reasons,
                 "superseded_by": c.superseded_by,
+                "supersession_basis": c.metadata.get("supersession_basis"),
                 "status": c.status,
                 "summary": c.summary,
             }
@@ -435,6 +528,39 @@ class ContextGit:
         self.runtime.append_raw_event(event)
         return event
 
+    def _record_pending_claim(
+        self,
+        *,
+        source_event: RawEvent,
+        claim: str,
+        target_page: str,
+        review_reason: str,
+        reason_codes: Optional[List[str]] = None,
+    ):
+        return self.runtime.record_mutation(
+            "pending",
+            source_event_ids=[source_event.event_id],
+            new_claim=claim,
+            target_page=target_page,
+            policy_reason=review_reason,
+            confidence=0.55,
+            decision_mode="review-required",
+            metadata={
+                "pending_item": {
+                    "type": "decision",
+                    "content": claim,
+                    "target_page": target_page,
+                    "source_refs": [f"event:{source_event.event_id}"],
+                    "confidence": "medium",
+                    "reason": review_reason,
+                    "created_timestamp": source_event.timestamp,
+                    "origin_speaker": source_event.speaker,
+                    "review_required_reason": review_reason,
+                },
+                "reason_codes": reason_codes or ["review_required_durable_marker"],
+            },
+        )
+
     def commit_turn(
         self,
         user_prompt: str,
@@ -466,28 +592,12 @@ class ContextGit:
         if durable_prompt:
             durable_claim = _durable_claim(user_prompt)
             if review_reason:
-                mutation = self.runtime.record_mutation(
-                    "pending",
-                    source_event_ids=[user_event.event_id],
-                    new_claim=durable_claim,
+                mutation = self._record_pending_claim(
+                    source_event=user_event,
+                    claim=durable_claim,
                     target_page=_target_page_for_prompt(user_prompt),
-                    policy_reason=review_reason,
-                    confidence=0.55,
-                    decision_mode="review-required",
-                    metadata={
-                        "pending_item": {
-                            "type": "decision",
-                            "content": durable_claim,
-                            "target_page": _target_page_for_prompt(user_prompt),
-                            "source_refs": [f"event:{user_event.event_id}"],
-                            "confidence": "medium",
-                            "reason": review_reason,
-                            "created_timestamp": user_event.timestamp,
-                            "origin_speaker": "user",
-                            "review_required_reason": review_reason,
-                        },
-                        "reason_codes": ["review_required_durable_marker"],
-                    },
+                    review_reason=review_reason,
+                    reason_codes=["review_required_durable_marker"],
                 )
                 pending_id = mutation.mutation_id
             else:
@@ -527,14 +637,41 @@ class ContextGit:
         page: Optional[str] = None,
         confidence: float = 0.9,
     ) -> Dict[str, Any]:
+        review_reason = _review_required_reason(fact)
+        tags = ["remember", "durable"]
+        metadata: Dict[str, Any] = {}
+        importance = 0.9
+        if review_reason:
+            tags.append("pending_review")
+            metadata["memory_status"] = "pending_review"
+            metadata["review_required_reason"] = review_reason
+            importance = 0.1
         event = self._append_event(
-            "user", fact, "remember", tags=["remember", "durable"], importance=0.9,
+            "user", fact, "remember", tags=tags, metadata=metadata, importance=importance,
         )
+        claim = _durable_claim(fact)
+        target_page = page or _target_page_for_prompt(fact)
+        if review_reason:
+            mutation = self._record_pending_claim(
+                source_event=event,
+                claim=claim,
+                target_page=target_page,
+                review_reason=review_reason,
+                reason_codes=["review_required_explicit_remember"],
+            )
+            return {
+                "ok": True,
+                "ref": f"mut:{mutation.mutation_id}",
+                "target_page": target_page,
+                "claim": claim,
+                "pending_review": True,
+                "pending_merge": {"ref": f"mut:{mutation.mutation_id}", "claim": claim},
+            }
         mutation = self.runtime.record_mutation(
             "save",
             source_event_ids=[event.event_id],
-            new_claim=_durable_claim(fact),
-            target_page=page or _target_page_for_prompt(fact),
+            new_claim=claim,
+            target_page=target_page,
             policy_reason="explicit remember",
             confidence=confidence,
             decision_mode="human-approved",
@@ -545,6 +682,7 @@ class ContextGit:
             "ref": f"mut:{mutation.mutation_id}",
             "target_page": mutation.target_page,
             "claim": mutation.new_claim,
+            "pending_review": False,
         }
 
     def mark_stale(self, page: str, superseded_by: Optional[str] = None) -> Dict[str, Any]:
@@ -565,6 +703,11 @@ class ContextGit:
             raise KeyError(f"no pending merge item with content {content!r}")
         item = matches[0]
         if action == "approve":
+            if _looks_risky_durable(item.content):
+                raise ValueError(
+                    "security-sensitive pending item still requires explicit review; "
+                    "reject it or re-save a safe, non-sensitive version"
+                )
             mutation = self.runtime.record_mutation(
                 "promote",
                 new_claim=item.content,
