@@ -84,16 +84,22 @@ class UsageLedger:
         compilations = [r for r in rows if r.get("kind") == "prepare_context"]
         patch_total = sum(r.get("patch_tokens", 0) for r in compilations)
         full_total = sum(r.get("full_history_tokens", 0) for r in compilations)
-        saved_total = sum(r.get("saved_tokens", 0) for r in compilations)
-        gross_saved_total = sum(max(0, r.get("saved_tokens", 0)) for r in compilations)
-        loss_total = sum(min(0, r.get("saved_tokens", 0)) for r in compilations)
+        # Recompute saved as the true net (full - patch) per row, independent of the
+        # stored field, so historical rows written with the old clamp-to-zero are
+        # reported honestly too. A net loss is shown as a negative number.
+        def _net(r):
+            return r.get("full_history_tokens", 0) - r.get("patch_tokens", 0)
+        saved_total = sum(_net(r) for r in compilations)
+        gross_saved_total = sum(max(0, _net(r)) for r in compilations)
+        loss_total = sum(min(0, _net(r)) for r in compilations)
+        overhead = sum(1 for r in compilations if _net(r) < 0)
         by_day: Dict[str, Dict[str, int]] = {}
         for r in compilations:
             day = (r.get("ts") or "")[:10]
             bucket = by_day.setdefault(day, {"compilations": 0, "patch_tokens": 0, "saved_tokens": 0})
             bucket["compilations"] += 1
             bucket["patch_tokens"] += r.get("patch_tokens", 0)
-            bucket["saved_tokens"] += r.get("saved_tokens", 0)
+            bucket["saved_tokens"] += _net(r)
         return {
             "compilations": len(compilations),
             "patch_tokens_total": patch_total,
@@ -102,6 +108,8 @@ class UsageLedger:
             "net_saved_tokens_total": saved_total,
             "gross_saved_tokens_total": gross_saved_total,
             "loss_tokens_total": loss_total,
+            "net_tokens_saved": saved_total,  # PR#9 alias for net_saved_tokens_total
+            "overhead_compilations": overhead,  # calls where the patch cost MORE than full history
             "savings_pct": round(100.0 * saved_total / full_total, 2) if full_total else 0.0,
             "avg_patch_tokens": round(patch_total / len(compilations), 1) if compilations else 0.0,
             "by_day": dict(sorted(by_day.items())),
