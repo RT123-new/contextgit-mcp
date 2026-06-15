@@ -1,0 +1,190 @@
+{
+  "test": "multi_hop_synthesis_completeness",
+  "probes": 4,
+  "mean_selected_completeness": 0.0,
+  "mean_patch_visible_completeness": 0.0,
+  "rows": [
+    {
+      "id": "mh01",
+      "q": "How should a strict real-provider evaluation be configured and audited?",
+      "required_groups": [
+        [
+          "OPENAI_API_KEY"
+        ],
+        [
+          "RealAPIProvider(allow_fallback=False)"
+        ],
+        [
+          "strict_no_fallback"
+        ],
+        [
+          "metadata.json"
+        ]
+      ],
+      "selected_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "patch_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "selected_completeness": 0.0,
+      "patch_visible_completeness": 0.0,
+      "selected_top10": [
+        "event:corpus_00635_user_be395873",
+        "event:corpus_00579_user_fc3c8bd3",
+        "event:corpus_00597_user_380cfc6f",
+        "event:corpus_00640_assistant_2263dbe9",
+        "event:corpus_00638_assistant_77cac315",
+        "event:corpus_00636_assistant_0555fe30",
+        "event:corpus_00634_assistant_4ad8c96e",
+        "event:corpus_00632_assistant_8f7890a0",
+        "event:corpus_00630_assistant_e6571b18",
+        "event:corpus_00628_assistant_3204e350"
+      ],
+      "patch_tokens": 697
+    },
+    {
+      "id": "mh02",
+      "q": "What makes branch-and-merge different from full-context and BM25 baselines?",
+      "required_groups": [
+        [
+          "Raw Event Log"
+        ],
+        [
+          "Durable Wiki Memory"
+        ],
+        [
+          "Working Branch Builder"
+        ],
+        [
+          "Lexical Raw-Event BM25",
+          "naive_rag"
+        ]
+      ],
+      "selected_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "patch_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "selected_completeness": 0.0,
+      "patch_visible_completeness": 0.0,
+      "selected_top10": [
+        "event:corpus_00579_user_fc3c8bd3",
+        "event:corpus_00635_user_be395873",
+        "event:corpus_00597_user_380cfc6f",
+        "event:corpus_00640_assistant_2263dbe9",
+        "event:corpus_00638_assistant_77cac315",
+        "event:corpus_00636_assistant_0555fe30",
+        "event:corpus_00634_assistant_4ad8c96e",
+        "event:corpus_00583_user_f256688e",
+        "event:corpus_00632_assistant_8f7890a0"
+      ],
+      "patch_tokens": 668
+    },
+    {
+      "id": "mh03",
+      "q": "What should benchmark reports separate when provider calls can fail?",
+      "required_groups": [
+        [
+          "provider/API errors"
+        ],
+        [
+          "successful-call accuracy"
+        ],
+        [
+          "pessimistic attempted accuracy"
+        ],
+        [
+          "Evidence Classification"
+        ]
+      ],
+      "selected_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "patch_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "selected_completeness": 0.0,
+      "patch_visible_completeness": 0.0,
+      "selected_top10": [
+        "event:corpus_00597_user_380cfc6f",
+        "event:corpus_00579_user_fc3c8bd3",
+        "wiki:Conversation Memory",
+        "event:corpus_00640_assistant_2263dbe9",
+        "event:corpus_00635_user_be395873",
+        "event:corpus_00638_assistant_77cac315",
+        "event:corpus_00636_assistant_0555fe30",
+        "event:corpus_00634_assistant_4ad8c96e",
+        "event:corpus_00632_assistant_8f7890a0",
+        "event:corpus_00630_assistant_e6571b18"
+      ],
+      "patch_tokens": 693
+    },
+    {
+      "id": "mh04",
+      "q": "How does a user wire contextgit into Codex with an isolated store?",
+      "required_groups": [
+        [
+          "contextgit install codex"
+        ],
+        [
+          "~/.codex/config.toml"
+        ],
+        [
+          "--store"
+        ],
+        [
+          "Restart Codex"
+        ]
+      ],
+      "selected_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "patch_group_hits": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "selected_completeness": 0.0,
+      "patch_visible_completeness": 0.0,
+      "selected_top10": [
+        "event:corpus_00635_user_be395873",
+        "event:corpus_00579_user_fc3c8bd3",
+        "event:corpus_00597_user_380cfc6f",
+        "event:corpus_00640_assistant_2263dbe9",
+        "event:corpus_00638_assistant_77cac315",
+        "event:corpus_00636_assistant_0555fe30",
+        "event:corpus_00634_assistant_4ad8c96e",
+        "event:corpus_00632_assistant_8f7890a0",
+        "event:corpus_00630_assistant_e6571b18",
+        "event:corpus_00628_assistant_3204e350"
+      ],
+      "patch_tokens": 697
+    }
+  ],
+  "finding": "Compares whether all required facts are retrieved at all vs. visible after the 180-char summaries and budget.",
+  "proposed_solution_if_negative": "Represent compound/multi-hop facts as structured bullets with non-truncating summaries or explicit 'more facts omitted' markers."
+}

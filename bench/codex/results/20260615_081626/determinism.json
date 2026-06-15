@@ -1,0 +1,10 @@
+{
+  "test": "determinism_same_store_same_prompt",
+  "runs": 6,
+  "unique_hashes": [
+    "e66c250d3c81c90faf72865cf2d7d9388c6ade94721f135701103893549c77a3"
+  ],
+  "byte_identical": true,
+  "patch_token_count": 698,
+  "proposed_solution_if_negative": "Remove runtime-dependent fields from rendering, or make timestamps/usage writes explicitly outside patch generation."
+}

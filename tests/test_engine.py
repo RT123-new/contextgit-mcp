@@ -149,14 +149,68 @@ def test_mark_stale_excludes_from_branch(engine):
 
 
 def test_correction_supersedes_old_value(engine):
-    engine.commit_turn("For Atlas use PostgreSQL for storage.", "Noted: PostgreSQL.")
+    old = engine.commit_turn("For Atlas use PostgreSQL for storage.", "Noted: PostgreSQL.")
     engine.commit_turn(
         "Correction: use MySQL instead of PostgreSQL for Atlas.",
         "Understood, MySQL supersedes PostgreSQL.",
     )
     result = engine.prepare("What database does Atlas use?")
     selected_text = " ".join(row["summary"] for row in result["selected"])
+    selected_refs = [row["ref"] for row in result["selected"]]
     assert "MySQL" in selected_text
+    assert old["committed_event_refs"][0] not in selected_refs
+
+
+def test_natural_language_correction_supersedes_prior_claim(engine):
+    old = engine.commit_turn(
+        "The evidence protocol says deterministic smoke artifacts are "
+        "publication-grade model performance evidence.",
+        "Recorded.",
+    )
+    correction = engine.commit_turn(
+        "Correction: deterministic artifacts are smoke-only and must not be cited "
+        "as real-model performance evidence.",
+        "Understood; deterministic artifacts are smoke-only evidence.",
+    )
+
+    result = engine.prepare(
+        "Can I cite deterministic smoke artifacts as real model performance evidence?",
+        record_usage=False,
+    )
+    selected_refs = [row["ref"] for row in result["selected"]]
+    assert old["committed_event_refs"][0] not in selected_refs
+    assert correction["committed_event_refs"][0] in selected_refs
+
+    explanation = engine.explain(
+        "Can I cite deterministic smoke artifacts as real model performance evidence?"
+    )
+    old_row = next(row for row in explanation["excluded"] if row["ref"] == old["committed_event_refs"][0])
+    assert "stale_or_superseded" in old_row["exclusion_reasons"]
+    assert old_row["superseded_by"] == correction["committed_event_refs"][0]
+
+
+def test_durable_exact_match_beats_recent_same_topic_chatter(engine):
+    for idx in range(8):
+        engine.remember(
+            f"Background durable Codex fact {idx}: contextgit reports include provider and evidence notes.",
+            page="Conversation Memory",
+        )
+    engine.remember(
+        "Codex drift sentinel: project-scoped contextgit memory should be pinned with --store.",
+        page="Conversation Memory",
+    )
+    for idx in range(40):
+        engine.commit_turn(
+            f"Codex drift note {idx}: contextgit memory tests discuss store flags, MCP ranking, "
+            "and project-scoped docs without recording the sentinel rule.",
+            f"Handled Codex drift note {idx}.",
+            conversation_id="drift",
+        )
+
+    result = engine.prepare("What does the Codex drift sentinel say?", record_usage=False)
+    refs = [row["ref"] for row in result["selected"]]
+    assert "wiki:Conversation Memory" in refs[:5]
+    assert "Codex drift sentinel" in result["context"]
 
 
 def test_search_finds_events_and_wiki(engine):

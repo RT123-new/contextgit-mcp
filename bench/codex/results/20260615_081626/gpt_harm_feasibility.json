@@ -1,0 +1,7 @@
+{
+  "test": "cross_model_gpt_harm_feasibility",
+  "ran_model_calls": false,
+  "openai_api_key_in_environment": false,
+  "reason": "No programmatic GPT A/B was run from this harness. This Codex session has a GPT reasoning model, but not a repeatable model-call API surface exposed to the script without a separately approved API key/run.",
+  "proposed_solution": "Add an optional `--run-openai` lane that uses a user-approved OPENAI_API_KEY, retrieval-gates stale patches with explain_selection, pads prompts, and runs K>=5 per arm."
+}

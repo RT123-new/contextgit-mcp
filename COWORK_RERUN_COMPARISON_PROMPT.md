@@ -2,6 +2,8 @@
 
 Use this after the local fixes are installed into the MCP server Cowork is running.
 
+Latest local verification: `bench/codex/results/20260615_081626/` from this checkout. In that run, long-session drift was `found_at_5_rate=1.0` through 220 turns, auto-merge precision/recall stayed `1.0/1.0`, empty force-tiny did not reproduce, and signed token savings reported `-1090` net tokens for the tiny loss case.
+
 ## When to rerun
 
 Rerun the Cowork comparison after all of these are true:

@@ -20,11 +20,10 @@ _STOPWORDS = {
 }
 
 _CORRECTION_MARKERS = (
-    "correction",
-    "final correction",
+    "correction:",
+    "final correction:",
     "instead of",
     "supersedes",
-    "updated",
     "update:",
     "final:",
     "from now on",
@@ -52,6 +51,19 @@ _NOISE_MARKERS = (
     "bulk archive",
     "unrelated",
 )
+
+_QUERY_FILLER_TOKENS = {
+    "about", "answer", "answers", "ask", "asked", "call", "called", "mean",
+    "means", "mention", "mentions", "name", "named", "need", "needed",
+    "needs", "record", "recorded", "rule", "say", "says", "tell", "tells",
+}
+
+_SUPERSESSION_SUBJECT_STOPWORDS = _QUERY_FILLER_TOKENS | {
+    "cannot", "cited", "citing", "cite", "correct", "corrected", "correction",
+    "decision", "final", "instead", "must", "no", "not", "only", "replace",
+    "replaced", "replaces", "supersede", "superseded", "supersedes", "update",
+    "updated",
+}
 
 
 def _clamp01(value: float) -> float:
@@ -143,6 +155,33 @@ def _content_tokens(text: str) -> List[str]:
     return [tok for tok in tokenize(text) if tok not in _STOPWORDS and len(tok) >= 2]
 
 
+def _canonical_content_tokens(text: str) -> List[str]:
+    normalized = re.sub(r"[-_/]+", " ", (text or "").lower())
+    normalized = re.sub(r"[^\w\s]", " ", normalized)
+    return [
+        tok for tok in normalized.split()
+        if tok and tok not in _STOPWORDS and len(tok) >= 2
+    ]
+
+
+def _query_focus_tokens(text: str) -> List[str]:
+    return [tok for tok in _canonical_content_tokens(text) if tok not in _QUERY_FILLER_TOKENS]
+
+
+def _supersession_subject_tokens(text: str) -> List[str]:
+    clean = re.sub(
+        r"^(remember that|remember this|from now on|going forward|final decision:|"
+        r"decision:|final correction:|correction:|update:)\s*",
+        "",
+        (text or "").strip(),
+        flags=re.IGNORECASE,
+    )
+    return [
+        tok for tok in _canonical_content_tokens(clean)
+        if tok not in _SUPERSESSION_SUBJECT_STOPWORDS
+    ]
+
+
 def _normalize_topic(value: str) -> str:
     return re.sub(r"[^a-z0-9]+", "_", value.lower()).strip("_")
 
@@ -180,6 +219,21 @@ def _is_correction_text(text: str, tags: Sequence[str], supersedes: Optional[str
     )
 
 
+def _can_infer_supersession(text: str, tags: Sequence[str], supersedes: Optional[str]) -> bool:
+    if supersedes:
+        return True
+    tag_set = {tag.lower() for tag in tags}
+    if {"correction", "update", "decision"} & tag_set:
+        return True
+    lowered = re.sub(r"\s+", " ", (text or "").strip().lower())
+    return bool(
+        lowered.startswith(("correction:", "final correction:", "update:", "decision:", "final:"))
+        or lowered.startswith(("from now on", "going forward"))
+        or " instead of " in f" {lowered} "
+        or " supersedes " in f" {lowered} "
+    )
+
+
 def _is_open_loop_text(text: str, tags: Sequence[str], page_type: str = "") -> bool:
     lowered = (text or "").lower()
     tag_set = {tag.lower() for tag in tags}
@@ -199,6 +253,43 @@ def _is_noise_text(text: str, tags: Sequence[str], importance: float = 0.5) -> b
         or any(marker in lowered for marker in _NOISE_MARKERS)
         or importance < 0.15
     )
+
+
+def _is_pending_review_event(event: "ContextEvent") -> bool:
+    return (
+        "pending_review" in {tag.lower() for tag in event.tags}
+        or event.metadata.get("memory_status") == "pending_review"
+    )
+
+
+def _durable_query_match(query: str, text: str, *, is_durable: bool) -> float:
+    if not is_durable:
+        return 0.0
+    query_tokens = _query_focus_tokens(query)
+    if not query_tokens:
+        return 0.0
+    text_tokens = _canonical_content_tokens(text)
+    if not text_tokens:
+        return 0.0
+
+    query_set = set(query_tokens)
+    text_set = set(text_tokens)
+    coverage = len(query_set & text_set) / len(query_set)
+
+    longest_phrase = 0
+    max_n = min(len(query_tokens), 6)
+    for n in range(max_n, 1, -1):
+        needles = {tuple(query_tokens[start:start + n]) for start in range(0, len(query_tokens) - n + 1)}
+        for idx in range(0, len(text_tokens) - n + 1):
+            if tuple(text_tokens[idx:idx + n]) in needles:
+                longest_phrase = n
+                break
+        if longest_phrase:
+            break
+    phrase_score = longest_phrase / len(query_tokens) if query_tokens else 0.0
+    if coverage < 0.6 and phrase_score < 0.5:
+        return 0.0
+    return _clamp01(max(coverage, phrase_score))
 
 
 def _source_confidence_for_event(event: RawEvent) -> float:
@@ -250,6 +341,7 @@ class ContextCompilerConfig(BaseModel):
             "recency": 0.14,
             "query_relevance": 0.30,
             "correction_priority": 0.20,
+            "durable_query_match": 0.12,
             "source_confidence": 0.10,
             "open_loop": 0.08,
             "token_cost_penalty": 0.15,
@@ -263,6 +355,7 @@ class ContextCompilerConfig(BaseModel):
             "dispersion": 0.06,  # spacing effect (temporal spread)
             "query_relevance": 0.30,
             "correction_priority": 0.20,
+            "durable_query_match": 0.12,
             "source_confidence": 0.10,
             "open_loop": 0.08,
             "token_cost_penalty": 0.15,
@@ -582,25 +675,48 @@ class ContextCompiler:
             if event.supersedes:
                 superseded_by[event.supersedes] = event.source_id
 
+        lower_texts = {event.source_id: event.text.lower() for event in events}
+        subject_tokens = {
+            event.source_id: set(_supersession_subject_tokens(event.text))
+            for event in events
+        }
+
         # Deterministic fallback for "instead of X" corrections where the
-        # source did not populate `supersedes`.
-        for newer in events:
-            if not _is_correction_text(newer.text, newer.tags, newer.supersedes):
+        # source did not populate `supersedes`, plus correction-marked natural
+        # language that shares a distinctive subject with older claims.
+        for newer_idx, newer in enumerate(events):
+            if (
+                not _can_infer_supersession(newer.text, newer.tags, newer.supersedes)
+                or _is_pending_review_event(newer)
+            ):
                 continue
             stale_values = [
                 value.rstrip(".,;:!?")
-                for value in re.findall(r"instead of\s+([^\s,;!]+)", newer.text, flags=re.IGNORECASE)
+                for value in re.findall(r"instead of\s+([A-Za-z0-9_.:/-]+)", newer.text, flags=re.IGNORECASE)
             ]
-            if not stale_values:
-                continue
-            newer_ts = _parse_ts(newer.timestamp)
-            for older in events:
-                if older.source_id == newer.source_id or _parse_ts(older.timestamp) >= newer_ts:
+            stale_values.extend(
+                value.rstrip(".,;:!?")
+                for value in re.findall(r"\bnot\s+([A-Za-z0-9_.:/-]+)", newer.text, flags=re.IGNORECASE)
+                if value.lower() not in _STOPWORDS
+            )
+            newer_subject = subject_tokens.get(newer.source_id, set())
+            for older_idx, older in enumerate(events):
+                if older.source_id == newer.source_id or older_idx >= newer_idx:
                     continue
                 if newer.project and older.project and _normalize_topic(newer.project) != _normalize_topic(older.project):
                     continue
-                old_text = older.text.lower()
-                if any(value and value.lower() in old_text for value in stale_values):
+                if _is_pending_review_event(older):
+                    continue
+                old_text = lower_texts.get(older.source_id, older.text.lower())
+                explicit_value_match = any(value and value.lower() in old_text for value in stale_values)
+                old_subject = subject_tokens.get(older.source_id, set())
+                shared_subject = newer_subject & old_subject
+                natural_subject_match = (
+                    len(shared_subject) >= 3
+                    and len(shared_subject) / max(1, len(newer_subject)) >= 0.25
+                    and len(shared_subject) / max(1, len(old_subject)) >= 0.25
+                )
+                if explicit_value_match or natural_subject_match:
                     superseded_by.setdefault(older.source_id, newer.source_id)
         return superseded_by
 
@@ -638,13 +754,12 @@ class ContextCompiler:
         overlap = len(query_tokens & event_tokens) / len(query_tokens) if query_tokens else 0.0
         query_relevance = max(overlap, bm25_scores.get(event.source_id, 0.0))
         correction = 1.0 if _is_correction_text(event.text, event.tags, event.supersedes) else 0.0
+        durable_source = event.source_type == "wiki" or bool({"remember", "durable"} & {tag.lower() for tag in event.tags})
+        durable_match = _durable_query_match(query, event.text, is_durable=durable_source)
         open_loop = 1.0 if _is_open_loop_text(event.text, event.tags, event.metadata.get("page_type", "")) else 0.0
         token_cost_penalty = _clamp01(event.token_count / max(float(budget), 1.0))
         stale = event.status in {"stale", "archived", "suppressed"} or event.source_id in superseded_by
-        pending_review = (
-            "pending_review" in {tag.lower() for tag in event.tags}
-            or event.metadata.get("memory_status") == "pending_review"
-        )
+        pending_review = _is_pending_review_event(event)
         noise = _is_noise_text(event.text, event.tags, event.importance)
         stale_noise_penalty = 1.0 if stale else (0.6 if noise else 0.0)
 
@@ -668,6 +783,7 @@ class ContextCompiler:
             "recency": round(_clamp01(recency), 6),
             "query_relevance": round(_clamp01(query_relevance), 6),
             "correction_priority": correction,
+            "durable_query_match": round(_clamp01(durable_match), 6),
             "source_confidence": round(_clamp01(event.confidence), 6),
             "open_loop": open_loop,
             "token_cost_penalty": round(token_cost_penalty, 6),
@@ -680,6 +796,7 @@ class ContextCompiler:
             + weights["recency"] * components["recency"]
             + weights["query_relevance"] * components["query_relevance"]
             + weights["correction_priority"] * components["correction_priority"]
+            + weights.get("durable_query_match", 0.0) * components["durable_query_match"]
             + weights["source_confidence"] * components["source_confidence"]
             + weights["open_loop"] * components["open_loop"]
             + weights.get("dispersion", 0.0) * components.get("dispersion", 0.0)
